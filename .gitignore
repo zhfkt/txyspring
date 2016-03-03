@@ -1,9 +1,7 @@
 /target/
 
 .classpath
-.project
 .settings/
-.springBeans
 
 *.jar
 *.war
