@@ -25,15 +25,15 @@ public class AjaxResponseBody {
 		}
 		else if(status==101)
 		{
-			msg = "Î´µÇÂ¼";
+			msg = "æœªç™»å½•";
 		}
 		else if(status==102)
 		{
-			msg = "²ÎÊı´íÎó";
+			msg = "å‚æ•°é”™è¯¯";
 		}
 		else if(status==500)
 		{
-			msg = "·şÎñÆ÷´íÎó";
+			msg = "æœåŠ¡å™¨é”™è¯¯";
 		}
 		else
 		{
