@@ -26,13 +26,17 @@ public class Sliders implements java.io.Serializable {
 	
 	@JsonView(AjaxJsonViews.Public.class)
 	private String image;
+	
+	@JsonView(AjaxJsonViews.Public.class)
+	private String link;
 
 	public Sliders() {
 	}
 
-	public Sliders(String title, String image) {
+	public Sliders(String title, String image,String link) {
 		this.title = title;
 		this.image = image;
+		this.link = link;
 	}
 
 	@Id
@@ -63,6 +67,15 @@ public class Sliders implements java.io.Serializable {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+	
+	@Column(name = "LINK", nullable = false, length = 65535)
+	public String getLink() {
+		return this.link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 
 }
