@@ -28,7 +28,7 @@ public class SlidersDao {
 	
 	public List<Sliders> listSliders()
 	{
-		List<Sliders> sl_list = session.createQuery("from Sliders").list();
+		List<Sliders> sl_list = session.createCriteria(Sliders.class).list();
 		return sl_list;
 	}
 	
