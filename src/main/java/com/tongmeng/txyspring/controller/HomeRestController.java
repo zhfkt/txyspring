@@ -16,6 +16,7 @@ import com.tongmeng.txyspring.ajaxmodel.AjaxSliders;
 import com.tongmeng.txyspring.model.Sliders;
 import com.tongmeng.txyspring.dao.SlidersDao;
 
+@CrossOrigin
 @RestController
 public class HomeRestController {
 
