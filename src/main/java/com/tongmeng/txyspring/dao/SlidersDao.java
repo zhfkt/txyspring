@@ -5,10 +5,9 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tongmeng.txyspring.model.Sliders;
 
@@ -16,19 +15,19 @@ import com.tongmeng.txyspring.model.Sliders;
 @Repository
 public class SlidersDao {
 
-	private Session session;
-	
+	@Autowired(required=true)
+    private SessionFactory sessionFactory;
+		
 	public SlidersDao()
 	{		
-		Configuration configuration = new Configuration().configure();
-		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
-		SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-		session = sessionFactory.openSession();
 	}
 	
+	@Transactional(readOnly=true)
 	public List<Sliders> listSliders()
 	{
-		List<Sliders> sl_list = session.createCriteria(Sliders.class).list();
+		Session session = sessionFactory.getCurrentSession();
+		
+		List<Sliders> sl_list = (List<Sliders>) session.createCriteria(Sliders.class).list();
 		return sl_list;
 	}
 	

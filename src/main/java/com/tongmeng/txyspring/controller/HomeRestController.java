@@ -4,6 +4,7 @@ package com.tongmeng.txyspring.controller;
 import java.util.List;
 import java.util.Locale;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,11 +21,14 @@ import com.tongmeng.txyspring.dao.SlidersDao;
 @RestController
 public class HomeRestController {
 
+	@Autowired
+	private SlidersDao sd;
+	
 	@JsonView(AjaxJsonViews.Public.class)
 	@RequestMapping(value = "/api/home/GetSliders", method = RequestMethod.GET)
 	public AjaxSliders GetSliders(Locale locale, Model model) {
 		
-		List<Sliders> sl_arr = new SlidersDao().listSliders();
+		List<Sliders> sl_arr = sd.listSliders();
 		AjaxSliders AjaxResult = new AjaxSliders(200, sl_arr);
 		return AjaxResult;
 	}
