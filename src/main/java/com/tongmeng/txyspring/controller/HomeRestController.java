@@ -2,6 +2,7 @@ package com.tongmeng.txyspring.controller;
 
 
 import java.util.Locale;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -11,8 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import com.tongmeng.txyspring.ajaxmodel.AjaxJsonViews;
-import com.tongmeng.txyspring.ajaxmodel.AjaxSliders;
+import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody;
+//import com.tongmeng.txyspring.ajaxmodel.AjaxSliders;
 import com.tongmeng.txyspring.dao.SlidersDao;
+import com.tongmeng.txyspring.model.Sliders;;
 
 
 @RestController
@@ -23,10 +26,17 @@ public class HomeRestController {
 	
 	@JsonView(AjaxJsonViews.Public.class)
 	@RequestMapping(value = "/api/home/GetSliders", method = RequestMethod.GET)
-	public AjaxSliders GetSliders(Locale locale, Model model) {
+	public AjaxResponseBody<List<Sliders> > GetSliders(Locale locale, Model model) {
 		
-		AjaxSliders AjaxResult = new AjaxSliders(200, sd.listSliders());
-		return AjaxResult;
+		try
+		{
+			AjaxResponseBody<List<Sliders> > AjaxResult = new AjaxResponseBody<List<Sliders> >(200, sd.listSliders());
+			return AjaxResult;
+		}
+		catch(Exception e)
+		{
+			return new AjaxResponseBody<List<Sliders> >(500, null);
+		}
 	}
 
 }

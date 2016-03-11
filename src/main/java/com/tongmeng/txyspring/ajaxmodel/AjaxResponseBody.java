@@ -2,7 +2,7 @@ package com.tongmeng.txyspring.ajaxmodel;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
-public class AjaxResponseBody {
+public class AjaxResponseBody<T> {
 	
 	@JsonView(AjaxJsonViews.Public.class)
 	private int status;
@@ -10,11 +10,23 @@ public class AjaxResponseBody {
 	@JsonView(AjaxJsonViews.Public.class)
 	private String msg;
 	
-	public AjaxResponseBody(int status)
+	@JsonView(AjaxJsonViews.Public.class)
+	T result;
+		
+	
+	public AjaxResponseBody(int status,T result)
 	{
 		setStatus(status);
+		setResult(result);
 	}
 
+
+	
+	void setResult(T result) 
+	{
+		this.result = result;
+	}
+	
 	void setStatus(int status) {
 
 		String msg = "";
@@ -25,15 +37,15 @@ public class AjaxResponseBody {
 		}
 		else if(status==101)
 		{
-			msg = "æœªç™»å½•";
+			msg = "Î´µÇÂ¼";
 		}
 		else if(status==102)
 		{
-			msg = "å‚æ•°é”™è¯¯";
+			msg = "²ÎÊı´íÎó";
 		}
 		else if(status==500)
 		{
-			msg = "æœåŠ¡å™¨é”™è¯¯";
+			msg = "·şÎñÆ÷´íÎó";
 		}
 		else
 		{
