@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import com.tongmeng.txyspring.ajaxmodel.AjaxJsonViews;
 import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody;
-//import com.tongmeng.txyspring.ajaxmodel.AjaxSliders;
+import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody.RESPONSE_STATUS;
 import com.tongmeng.txyspring.dao.SlidersDao;
 import com.tongmeng.txyspring.model.Sliders;;
 
@@ -28,15 +28,10 @@ public class HomeRestController {
 	@RequestMapping(value = "/api/home/GetSliders", method = RequestMethod.GET)
 	public AjaxResponseBody<List<Sliders> > GetSliders(Locale locale, Model model) {
 		
-		try
-		{
-			AjaxResponseBody<List<Sliders> > AjaxResult = new AjaxResponseBody<List<Sliders> >(200, sd.listSliders());
-			return AjaxResult;
-		}
-		catch(Exception e)
-		{
-			return new AjaxResponseBody<List<Sliders> >(500, null);
-		}
+		AjaxResponseBody<List<Sliders> > AjaxResult = 
+				new AjaxResponseBody<List<Sliders> >(RESPONSE_STATUS.SUCCESS, sd.listSliders());
+		return AjaxResult;
+
 	}
 
 }
