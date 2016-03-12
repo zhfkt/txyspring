@@ -1,7 +1,9 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+
 <!DOCTYPE html>
 <html>
   <head>
-    <title>噼里啪啦</title>
+    <title>同萌科技</title>
     <meta charset="utf-8">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta content="yes" name="apple-touch-fullscreen">
