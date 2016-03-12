@@ -46,17 +46,17 @@ public class AjaxResponseBody<T> {
 				break;
 				
 			case NOT_LOGIN:
-				this.msg = "Î´µÇÂ¼";
+				this.msg = "æœªç™»å½•";
 				this.status = 101;
 				break;
 				
 			case PARAMETRR_ERROR:
-				this.msg = "²ÎÊı´íÎó";
+				this.msg = "å‚æ•°é”™è¯¯";
 				this.status = 102;
 				break;
 				
 			case SERVER_ERROR:
-				this.msg = "·şÎñÆ÷´íÎó";
+				this.msg = "æœåŠ¡å™¨é”™è¯¯";
 				this.status = 500;
 				break;
 				
