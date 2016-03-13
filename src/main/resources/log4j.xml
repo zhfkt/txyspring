@@ -12,6 +12,7 @@
 	
 	<appender name="file" class="org.apache.log4j.RollingFileAppender">
 	    <param name="append" value="false" />
+	    <param name="immediateFlush" value="true" />
 	    <param name="maxFileSize" value="10MB" />
 	    <param name="maxBackupIndex" value="10" />
 	    <param name="file" value="/usr/share/tomcat7/logs/txyspring.log" />
