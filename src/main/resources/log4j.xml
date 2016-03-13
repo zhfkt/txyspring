@@ -26,8 +26,7 @@
 	<logger name="com.tongmeng.txyspring">
 		<level value="warn" />
 	</logger>
-	
-	<!-- 
+	 
 	<logger name="org.springframework.core">
 		<level value="info" />
 	</logger>
@@ -43,7 +42,6 @@
 	<logger name="org.springframework.web">
 		<level value="info" />
 	</logger>
-	-->
 
 	<!-- Root Logger -->
 	<root>
