@@ -12,18 +12,26 @@ import com.tongmeng.txyspring.ajaxmodel.AjaxJsonViews;
 import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody;
 import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody.RESPONSE_STATUS;
 
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+
 
 @ControllerAdvice(annotations = RestController.class)
 public class RestExceptionHandlerControllerAdvice {
 
+	private static final Logger logger = LoggerFactory.getLogger(RestExceptionHandlerControllerAdvice.class);
+	
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @JsonView(AjaxJsonViews.Public.class)
     @ResponseBody
     public AjaxResponseBody<Void> exception(Exception exception, WebRequest request) {
-    	  	return new AjaxResponseBody<Void>(RESPONSE_STATUS.SERVER_ERROR);
+    	
+    	logger.error(exception.getMessage().toString());
+    	logger.error(exception.getCause().toString());
+    	
+    	return new AjaxResponseBody<Void>(RESPONSE_STATUS.SERVER_ERROR);
     }
 	
 }
