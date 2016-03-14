@@ -93,31 +93,31 @@ CREATE TABLE JOB_EXTRA_INFO(
 # const data insert
 
 insert SCH_CODE(Sch_Code,Area_Code,Description)
-values (1,0,'Í¬¼Ã´óÑ§');
+values (1,0,'åŒæµå¤§å­¦');
 
 insert SCH_CODE(Sch_Code,Area_Code,Description)
-values (1,1,'Í¬¼Ã´óÑ§¼Î¶¨Ğ£Çø');
+values (1,1,'åŒæµå¤§å­¦å˜‰å®šæ ¡åŒº');
 
 insert SCH_CODE(Sch_Code,Area_Code,Description)
-values (1,2,'Í¬¼Ã´óÑ§ËÄÆ½Â·Ğ£Çø');
+values (1,2,'åŒæµå¤§å­¦å››å¹³è·¯æ ¡åŒº');
 
 insert ACT_CODE(Act_Type,Act_Subtype,Description_Subtype)
-values (1,0,'Ğ£Ô°»î¶¯');
+values (1,0,'æ ¡å›­æ´»åŠ¨');
 
 insert ACT_CODE(Act_Type,Act_Subtype,Description_Subtype)
-values (1,11,'¹«¹²½²×ù');
+values (1,11,'å…¬å…±è®²åº§');
 
 insert ACT_CODE(Act_Type,Act_Subtype,Description_Subtype)
-values (1,12,'ÎÄÒÕÑİ³ö');
+values (1,12,'æ–‡è‰ºæ¼”å‡º');
 
 insert ACT_CODE(Act_Type,Act_Subtype,Description_Subtype)
-values (2,0,'ÕĞÆ¸Ğû½²');
+values (2,0,'æ‹›è˜å®£è®²');
 
 insert ACT_CODE(Act_Type,Act_Subtype,Description_Subtype)
-values (3,0,'¼æÖ°×¬Ç®');
+values (3,0,'å…¼èŒèµšé’±');
 
 insert ACT_CODE(Act_Type,Act_Subtype,Description_Subtype)
-values (4,0,'Éú»îÖÜ±ß');
+values (4,0,'ç”Ÿæ´»å‘¨è¾¹');
 
 
 #---------------------------------
@@ -131,12 +131,12 @@ values ('Test data 2','https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b
 
 insert COMMON_ACT_INFO(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
 	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Sch_Code,Area_Code,Act_Type,Act_subtype)
-values ('Test data','2016-07-01 23:22:11','2016-08-01 23:22:11','2016-06-01 23:22:11','Ó£»¨´óµÀ','10','12','11','https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png','TEST DATA',
+values ('Test data','2016-07-01 23:22:11','2016-08-01 23:22:11','2016-06-01 23:22:11','å¦¯è¾«å§³æ¾¶Ñ‡äº¾','10','12','11','https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png','TEST DATA',
 	'110','xxx@ggg.com','123456','http://weibo.com',1,1,1,1,11);
 	
 insert COMMON_ACT_INFO(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
 	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Sch_Code,Area_Code,Act_Type,Act_subtype)
-values ('Test data 1','2016-07-01 23:22:11','2016-08-01 23:22:11','2016-06-01 23:22:11','Ó£»¨´óµÀ1','10','12','11','https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png','TEST DATA',
+values ('Test data 1','2016-07-01 23:22:11','2016-08-01 23:22:11','2016-06-01 23:22:11','å¦¯è¾«å§³æ¾¶Ñ‡äº¾1','10','12','11','https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png','TEST DATA',
 	'110','xxx@ggg.com','123456','http://weibo.com',1,1,1,1,11);
 	
     
