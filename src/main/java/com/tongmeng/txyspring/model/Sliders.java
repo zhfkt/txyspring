@@ -51,7 +51,7 @@ public class Sliders implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "TITLE", nullable = false, length = 100)
+	@Column(name = "Title", nullable = false, length = 100)
 	public String getTitle() {
 		return this.title;
 	}
@@ -60,7 +60,7 @@ public class Sliders implements java.io.Serializable {
 		this.title = title;
 	}
 
-	@Column(name = "IMAGE", nullable = false, length = 65535)
+	@Column(name = "Image_Path", nullable = false, length = 65535)
 	public String getImage() {
 		return this.image;
 	}
@@ -69,7 +69,7 @@ public class Sliders implements java.io.Serializable {
 		this.image = image;
 	}
 	
-	@Column(name = "LINK", nullable = false, length = 65535)
+	@Column(name = "Link", nullable = false, length = 65535)
 	public String getLink() {
 		return this.link;
 	}
