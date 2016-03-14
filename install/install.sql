@@ -131,12 +131,12 @@ values ('Test data 2','https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b
 
 insert COMMON_ACT_INFO(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
 	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Sch_Code,Area_Code,Act_Type,Act_subtype)
-values ('Test data','2016-07-01 23:22:11','2016-08-01 23:22:11','2016-06-01 23:22:11','妯辫姳澶ч亾','10','12','11','https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png','TEST DATA',
+values ('Test data','2016-07-01 23:22:11','2016-08-01 23:22:11','2016-06-01 23:22:11','樱花大道','10','12','11','https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png','TEST DATA',
 	'110','xxx@ggg.com','123456','http://weibo.com',1,1,1,1,11);
 	
 insert COMMON_ACT_INFO(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
 	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Sch_Code,Area_Code,Act_Type,Act_subtype)
-values ('Test data 1','2016-07-01 23:22:11','2016-08-01 23:22:11','2016-06-01 23:22:11','妯辫姳澶ч亾1','10','12','11','https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png','TEST DATA',
+values ('Test data 1','2016-07-01 23:22:11','2016-08-01 23:22:11','2016-06-01 23:22:11','樱花大道1','10','12','11','https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png','TEST DATA',
 	'110','xxx@ggg.com','123456','http://weibo.com',1,1,1,1,11);
 	
     
