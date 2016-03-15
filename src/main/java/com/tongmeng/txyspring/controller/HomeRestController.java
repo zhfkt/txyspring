@@ -1,11 +1,9 @@
 package com.tongmeng.txyspring.controller;
 
 
-import java.util.Locale;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,14 +17,15 @@ import com.tongmeng.txyspring.model.Sliders;;
 
 
 @RestController
+@RequestMapping(value = "/api/home")
 public class HomeRestController {
 
 	@Autowired
 	private SlidersDao sd;
 	
 	@JsonView(AjaxJsonViews.Public.class)
-	@RequestMapping(value = "/api/home/GetSliders", method = RequestMethod.GET)
-	public AjaxResponseBody<List<Sliders> > GetSliders(Locale locale, Model model) {
+	@RequestMapping(value = "/GetSliders", method = RequestMethod.GET)
+	public AjaxResponseBody<List<Sliders> > GetSliders() {
 		
 		AjaxResponseBody<List<Sliders> > AjaxResult = 
 				new AjaxResponseBody<List<Sliders> >(RESPONSE_STATUS.SUCCESS, sd.listSliders());
