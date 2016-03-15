@@ -35,6 +35,7 @@ public class RestExceptionHandlerControllerAdvice {
     	
     }    	
 	
+    /*
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @JsonView(AjaxJsonViews.Public.class)
@@ -44,9 +45,8 @@ public class RestExceptionHandlerControllerAdvice {
     	logger.error(exception.getMessage().toString());
     	logger.error(exception.getCause().toString());
     	return new AjaxResponseBody<Void>(RESPONSE_STATUS.SERVER_ERROR);   
-    	
-    	
     }
+    */
     
     @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
