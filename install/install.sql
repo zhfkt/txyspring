@@ -89,6 +89,20 @@ CREATE TABLE JOB_EXTRA_INFO(
 	ON UPDATE CASCADE	
 )DEFAULT CHARSET=utf8;
 
+
+
+#---------------------------------
+# create View 
+
+USE txyspring;
+
+CREATE or REPLACE VIEW Activities_View (id,title,image,startTime,endTime,location,personNum,type,subType,hot,isActive,effective,salary,releaseTime)
+as select ID,Title,CovImg_Uri,Start_Date,End_Date,Location,People_Number,Act_Type,Act_subtype,NumRead*0.3+NumFavo*0.7,'isActive','effective','salary',Pub_Time from COMMON_ACT_INFO;
+
+select * from Activities_View;
+
+
+
 #---------------------------------
 # const data insert
 
