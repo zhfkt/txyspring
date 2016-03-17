@@ -21,8 +21,6 @@ public class ActExtraInfo implements java.io.Serializable {
 
 	private int id;
 	private CommonActInfo commonActInfo;
-	private String organizer;
-	private String sponsor;
 
 	public ActExtraInfo() {
 	}
@@ -33,8 +31,6 @@ public class ActExtraInfo implements java.io.Serializable {
 
 	public ActExtraInfo(CommonActInfo commonActInfo, String organizer, String sponsor) {
 		this.commonActInfo = commonActInfo;
-		this.organizer = organizer;
-		this.sponsor = sponsor;
 	}
 
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "commonActInfo"))
@@ -58,24 +54,6 @@ public class ActExtraInfo implements java.io.Serializable {
 
 	public void setCommonActInfo(CommonActInfo commonActInfo) {
 		this.commonActInfo = commonActInfo;
-	}
-
-	@Column(name = "Organizer", length = 100)
-	public String getOrganizer() {
-		return this.organizer;
-	}
-
-	public void setOrganizer(String organizer) {
-		this.organizer = organizer;
-	}
-
-	@Column(name = "Sponsor", length = 100)
-	public String getSponsor() {
-		return this.sponsor;
-	}
-
-	public void setSponsor(String sponsor) {
-		this.sponsor = sponsor;
 	}
 
 }

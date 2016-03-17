@@ -21,8 +21,6 @@ public class JobExtraInfo implements java.io.Serializable {
 
 	private int id;
 	private CommonActInfo commonActInfo;
-	private String vldTime;
-	private String salary;
 
 	public JobExtraInfo() {
 	}
@@ -31,10 +29,8 @@ public class JobExtraInfo implements java.io.Serializable {
 		this.commonActInfo = commonActInfo;
 	}
 
-	public JobExtraInfo(CommonActInfo commonActInfo, String vldTime, String salary) {
+	public JobExtraInfo(CommonActInfo commonActInfo, String vldTime) {
 		this.commonActInfo = commonActInfo;
-		this.vldTime = vldTime;
-		this.salary = salary;
 	}
 
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "commonActInfo"))
@@ -58,24 +54,6 @@ public class JobExtraInfo implements java.io.Serializable {
 
 	public void setCommonActInfo(CommonActInfo commonActInfo) {
 		this.commonActInfo = commonActInfo;
-	}
-
-	@Column(name = "Vld_Time", length = 100)
-	public String getVldTime() {
-		return this.vldTime;
-	}
-
-	public void setVldTime(String vldTime) {
-		this.vldTime = vldTime;
-	}
-
-	@Column(name = "Salary", length = 100)
-	public String getSalary() {
-		return this.salary;
-	}
-
-	public void setSalary(String salary) {
-		this.salary = salary;
 	}
 
 }

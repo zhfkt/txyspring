@@ -31,7 +31,6 @@
         <mapping class="com.tongmeng.txyspring.model.PostExtraInfo" />
         <mapping class="com.tongmeng.txyspring.model.SchCode" />
         <mapping class="com.tongmeng.txyspring.model.SchCodeId" />   
-		<mapping class="com.tongmeng.txyspring.model.ActivitiesView" />
   
     </session-factory>
 </hibernate-configuration>

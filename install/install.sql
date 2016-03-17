@@ -50,6 +50,10 @@ CREATE TABLE COMMON_ACT_INFO (
 	Act_Type INT,
 	Act_subtype INT,
 	
+	Salary VARCHAR(100),
+	Organizer VARCHAR(100),
+	Sponsor VARCHAR(100),	
+	
 	PRIMARY KEY (ID),
 	FOREIGN KEY (Sch_Code,Area_Code) REFERENCES SCH_CODE(Sch_Code,Area_Code)
 	ON DELETE RESTRICT
@@ -61,8 +65,6 @@ CREATE TABLE COMMON_ACT_INFO (
 
 CREATE TABLE ACT_EXTRA_INFO(
 	ID INT NOT NULL,
-	Organizer VARCHAR(100),
-	Sponsor VARCHAR(100),
 	PRIMARY KEY (ID),
 	FOREIGN KEY (ID) REFERENCES COMMON_ACT_INFO(ID)
 	ON DELETE CASCADE
@@ -71,8 +73,6 @@ CREATE TABLE ACT_EXTRA_INFO(
 
 CREATE TABLE POST_EXTRA_INFO(
 	ID INT NOT NULL,
-	Organizer VARCHAR(100),
-	Sponsor VARCHAR(100),
 	PRIMARY KEY (ID),
 	FOREIGN KEY (ID) REFERENCES COMMON_ACT_INFO(ID)
 	ON DELETE CASCADE
@@ -81,25 +81,12 @@ CREATE TABLE POST_EXTRA_INFO(
 
 CREATE TABLE JOB_EXTRA_INFO(
 	ID INT NOT NULL,
-	Vld_Time VARCHAR(100),
-	Salary VARCHAR(100),
 	PRIMARY KEY (ID),
 	FOREIGN KEY (ID) REFERENCES COMMON_ACT_INFO(ID)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE	
 )DEFAULT CHARSET=utf8;
 
-
-
-#---------------------------------
-# create View 
-
-USE txyspring;
-
-CREATE or REPLACE VIEW Activities_View (id,title,image,startTime,endTime,location,personNum,type,subType,hot,isActive,effective,salary,releaseTime)
-as select ID,Title,CovImg_Uri,Start_Date,End_Date,Location,People_Number,Act_Type,Act_subtype,NumRead*0.3+NumFavo*0.7,'isActive','effective','salary',Pub_Time from COMMON_ACT_INFO;
-
-select * from Activities_View;
 
 
 
@@ -144,14 +131,16 @@ insert SLIDERS (Title,Image_Path,Link)
 values ('Test data 2','https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png','http://weibo.com');
 
 insert COMMON_ACT_INFO(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
-	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Sch_Code,Area_Code,Act_Type,Act_subtype)
+	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Sch_Code,Area_Code,Act_Type,Act_subtype,Salary,Organizer,Sponsor)
 values ('Test data','2016-07-01 23:22:11','2016-08-01 23:22:11','2016-06-01 23:22:11','樱花大道','10','12','11','https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png','TEST DATA',
-	'110','xxx@ggg.com','123456','http://weibo.com',1,1,1,1,11);
+	'110','xxx@ggg.com','123456','http://weibo.com',1,1,1,1,11,'','zhfkt','zhfkt');
 	
 insert COMMON_ACT_INFO(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
-	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Sch_Code,Area_Code,Act_Type,Act_subtype)
+	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Sch_Code,Area_Code,Act_Type,Act_subtype,Salary,Organizer,Sponsor)
 values ('Test data 1','2016-07-01 23:22:11','2016-08-01 23:22:11','2016-06-01 23:22:11','樱花大道1','10','12','11','https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png','TEST DATA',
-	'110','xxx@ggg.com','123456','http://weibo.com',1,1,1,1,11);
+	'110','xxx@ggg.com','123456','http://weibo.com',1,1,1,1,11,'','zhfkt','zhfkt');
+	
+# /api/activity/GetActivities?type=1&subtype=11&sort=2&p=0
 	
     
 #---------------------------------
