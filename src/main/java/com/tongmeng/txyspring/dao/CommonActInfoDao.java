@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,14 +34,15 @@ public class CommonActInfoDao {
 	@Transactional(readOnly = true)
 	public List<CommonActInfo> listCommonActInfoByActCodeAndSchCode(int type,int subtype,int startPage,SortOption so) {
 		
-		ActCode actCode = new ActCode( new ActCodeId(type,subtype));
-		//SchCode schCode = new SchCode();		
-				
 		Session session = sessionFactory.getCurrentSession();
-		
+
 		Criteria criteria = session.createCriteria(CommonActInfo.class);
-		//criteria.add(Example.create(actCode));
+		Criteria actcri = criteria.createCriteria( "actCode","act").createCriteria( "act.id","actid");
+		actcri.add( Restrictions.eq( "actid.type", type));
+		//actcri.add( Restrictions.eq( "actid.subtype", subtype));		
 		
+		
+		/*
 		switch(so)
 		{
 			case OrderByStarttime: 
@@ -55,7 +57,7 @@ public class CommonActInfoDao {
 		
 		criteria.setFirstResult(startPage*pageSize);
 		criteria.setMaxResults(pageSize);
-		
+		*/
 
 		List<CommonActInfo> cai_list = criteria.list();
 		return cai_list;
