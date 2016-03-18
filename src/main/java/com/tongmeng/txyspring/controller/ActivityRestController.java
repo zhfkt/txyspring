@@ -27,14 +27,21 @@ public class ActivityRestController {
 	@JsonView(AjaxJsonViews.Public.class)
 	@RequestMapping(value = "/GetActivities", method = RequestMethod.GET)
 	public AjaxResponseBody<List<ActInfoAjax> > GetActivities(
-			@RequestParam("type") int type,
-			@RequestParam("subtype") int subtype,
-			@RequestParam("sort") int sort,
-			@RequestParam("p") int p
+			@RequestParam(value="type", required=true) int type,
+			@RequestParam(value="campus", required=false,defaultValue="0") int campus,
+			@RequestParam(value="subtype", required=false, defaultValue="0") int subtype,
+			@RequestParam(value="sort", required=false, defaultValue="0") int sort,
+			@RequestParam(value="p", required=false, defaultValue="0") int p
 			) {
 		
+		if(subtype==0)
+		{
+			subtype = type * 10000;
+		}
 		
-		List<CommonActInfo> lstAct = as.listActivitiesByActCodeAndSchCode(type,subtype,sort,p);
+		
+
+		List<CommonActInfo> lstAct = as.listActivitiesByActCodeAndSchCode(campus,subtype,sort,p);
 		List<ActInfoAjax> ajaxLstAct = new ArrayList<ActInfoAjax> (); 
 		
 		for(CommonActInfo commonActInfo: lstAct){

@@ -13,9 +13,9 @@ import com.tongmeng.txyspring.dao.CommonActInfoDao.SortOption;;
 public class ActivityService {
 
 	@Autowired
-	CommonActInfoDao caid;
+	CommonActInfoDao commonActInfoDao;
 
-	public List<CommonActInfo> listActivitiesByActCodeAndSchCode(int type, int subtype, int sort, int p) {
+	public List<CommonActInfo> listActivitiesByActCodeAndSchCode(int areacode, int subtype, int sort, int p) {
 
 		SortOption so;
 
@@ -27,10 +27,10 @@ public class ActivityService {
 			so = SortOption.Default;
 		}
 
-		return caid.listCommonActInfoByActCodeAndSchCode(type, subtype, p, so);
+		return commonActInfoDao.listCommonInfoByActAndSch(areacode, subtype, p, so);
 	}
 
 	public CommonActInfo getActivitiyDetail(int id) {
-		return caid.getCommonActInfo(id);
+		return commonActInfoDao.getCommonActInfo(id);
 	}
 }

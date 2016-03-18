@@ -111,6 +111,9 @@ insert act_code(Act_Subtype,Description_Subtype)
 values (10012,'文艺演出');
 
 insert act_code(Act_Subtype,Description_Subtype)
+values (10013,'学术报告');
+
+insert act_code(Act_Subtype,Description_Subtype)
 values (20000,'招聘宣讲');
 
 insert act_code(Act_Subtype,Description_Subtype)
@@ -123,29 +126,57 @@ values (40000,'生活周边');
 #---------------------------------
 # test data insert
 
-insert sliders (Title,Image_Path,Link) 
-values ('Test data','http://tp3.sinaimg.cn/2424186582/180/5746253598/1','http://weibo.com');
+delimiter #
 
-insert sliders (Title,Image_Path,Link) 
-values ('Test data 2','https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png','http://weibo.com');
-
-insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
-	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Salary,Organizer,Sponsor)
-values ('Test data','2016-07-01 23:22:11','2016-08-01 23:22:11','2016-06-01 23:22:11','樱花大道','10','12','11','https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png','TEST DATA',
-	'110','xxx@ggg.com','123456','http://weibo.com',1,10002,10012,'','zhfkt','zhfkt');
+create procedure insertMultipleFakeData()
+begin
 	
+declare fakeCount int;
+declare i int;
+set fakeCount = 10;
+set i = 0;
+
+	start transaction;
+	
+	while i < fakeCount do
+	
+		insert sliders (Title,Image_Path,Link) 
+		values ('Test data','http://tp3.sinaimg.cn/2424186582/180/5746253598/1','http://weibo.com');
+		
+		
+		insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
+			CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Salary,Organizer,Sponsor)
+		values (CONCAT('TEST DATA ', i),'2016-07-01 23:22:11','2016-08-01 23:22:11','2016-06-01 23:22:11','樱花大道',i,i+3,i+7,'https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png',CONCAT('TEST DATA ', i),
+			CONCAT(i,'110'),CONCAT(i,'xxx@ggg.com'),123456+i,'http://weibo.com',1,10002,10012,'','zhfkt','zhfkt');		
+			
+		insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
+			CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Salary,Organizer,Sponsor)
+		values (CONCAT('TEST DATA ', i),'2015-07-01 23:22:11','2015-08-01 23:22:11','2015-06-01 23:22:11','新天地',i,i+3,i+7,'https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png',CONCAT('TEST DATA ', i),
+			CONCAT(i,'110'),CONCAT(i,'xxx@ggg.com'),123456+i,'http://weibo.com',1,10001,10011,'','zhfkt','zhfkt');				
+		
+		set i = i+1;
+	end while;
+	commit;
+
+end #
+
+delimiter ;
+
+
+call insertMultipleFakeData();
+
 	
 insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
 	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Salary,Organizer,Sponsor)
 values ('Test data 1','2016-07-01 23:22:11','2016-08-01 23:22:11','2016-06-01 23:22:11','樱花大道1','10','12','11','https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png','TEST DATA',
-	'110','xxx@ggg.com','123456','http://weibo.com',1,10001,10011,'','zhfkt','zhfkt');
+	'110','xxx@ggg.com','123456','http://weibo.com',1,10001,10013,'','zhfkt','zhfkt');
 	
-# /api/activity/GetActivities?type=1&subtype=10012&sort=2&p=0
-	
-    
+# /api/activity/GetActivities?type=1&subtype=10013&p=0
+# /api/activity/GetActivities?type=1&p=2
 #---------------------------------
 
-#select * from sliders;
+select * from sliders;
+select * from common_act_info;
 
 
 

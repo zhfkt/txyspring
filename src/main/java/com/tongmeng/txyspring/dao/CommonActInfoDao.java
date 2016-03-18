@@ -14,42 +14,58 @@ import com.tongmeng.txyspring.model.CommonActInfo;
 
 @Repository
 public class CommonActInfoDao {
-	
-	public enum SortOption
-	{
-		Default,OrderByStarttime,OrderByHot		
+
+	public enum SortOption {
+		Default, OrderByStarttime, OrderByHot
 	}
 
 	private final int pageSize = 10;
-	
-	
+
 	@Autowired(required = true)
 	private SessionFactory sessionFactory;
 
 	@Transactional(readOnly = true)
-	public List<CommonActInfo> listCommonActInfoByActCodeAndSchCode(int type,int subtype,int startPage,SortOption so) {
-		
+	public List<CommonActInfo> listCommonInfoByActAndSch(int areacode, int subtype, int startPage, SortOption so) {
+
 		Session session = sessionFactory.getCurrentSession();
 
-		Criteria criteria = session.createCriteria(CommonActInfo.class).createAlias("actCode","act");
-		criteria.add( Restrictions.eq( "act.actSubtype", subtype));
-		
-		
-		switch(so)
-		{
-			case OrderByStarttime: 
-				criteria.addOrder(Order.desc("startDate"));
-				break;
-			case OrderByHot:
-				criteria.addOrder(Order.desc("hot"));
-				break;
-			default:
-				
+		Criteria criteria = session.createCriteria(CommonActInfo.class).createAlias("actCode", "act")
+				.createAlias("schCode", "area");
+
+		if (areacode != 0) {
+			if (areacode % 10000 == 0) {
+			
+				int schcode = subtype / 10000;
+				criteria.add(Restrictions.ge("area.areaCode", schcode));
+				criteria.add(Restrictions.lt("area.areaCode", schcode + 1));
+			}
+			else
+			{
+				criteria.add(Restrictions.eq("area.areaCode", areacode));
+			}
 		}
-		
-		criteria.setFirstResult(startPage*pageSize);
+
+		if (subtype % 10000 == 0) {
+			criteria.add(Restrictions.ge("act.actSubtype", subtype));
+			criteria.add(Restrictions.lt("act.actSubtype", subtype + 10000));
+			
+		} else {
+			criteria.add(Restrictions.eq("act.actSubtype", subtype));
+		}
+
+		switch (so) {
+		case OrderByStarttime:
+			criteria.addOrder(Order.desc("startDate"));
+			break;
+		case OrderByHot:
+			criteria.addOrder(Order.desc("hot"));
+			break;
+		default:
+
+		}
+
+		criteria.setFirstResult(startPage * pageSize);
 		criteria.setMaxResults(pageSize);
-		
 
 		List<CommonActInfo> cai_list = criteria.list();
 		return cai_list;
