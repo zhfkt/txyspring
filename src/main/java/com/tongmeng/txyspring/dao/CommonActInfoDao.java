@@ -5,17 +5,12 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.tongmeng.txyspring.model.ActCode;
-import com.tongmeng.txyspring.model.ActCodeId;
 import com.tongmeng.txyspring.model.CommonActInfo;
-import com.tongmeng.txyspring.model.SchCode;
 
 @Repository
 public class CommonActInfoDao {
@@ -36,13 +31,10 @@ public class CommonActInfoDao {
 		
 		Session session = sessionFactory.getCurrentSession();
 
-		Criteria criteria = session.createCriteria(CommonActInfo.class);
-		Criteria actcri = criteria.createCriteria( "actCode","act").createCriteria( "act.id","actid");
-		actcri.add( Restrictions.eq( "actid.type", type));
-		//actcri.add( Restrictions.eq( "actid.subtype", subtype));		
+		Criteria criteria = session.createCriteria(CommonActInfo.class).createAlias("actCode","act");
+		criteria.add( Restrictions.eq( "act.actSubtype", subtype));
 		
 		
-		/*
 		switch(so)
 		{
 			case OrderByStarttime: 
@@ -57,7 +49,7 @@ public class CommonActInfoDao {
 		
 		criteria.setFirstResult(startPage*pageSize);
 		criteria.setMaxResults(pageSize);
-		*/
+		
 
 		List<CommonActInfo> cai_list = criteria.list();
 		return cai_list;
