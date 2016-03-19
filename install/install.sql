@@ -43,8 +43,8 @@ CREATE TABLE common_act_info (
 	OutLink TEXT,
 	Stat_Code INT,
 	
-	Area_Code INT,
-	Act_Subtype INT,
+	Area_Code INT NOT NULL,
+	Act_Subtype INT NOT NULL,
 	
 	Salary VARCHAR(100),
 	Organizer VARCHAR(100),
@@ -83,7 +83,39 @@ CREATE TABLE job_extra_info(
 	ON UPDATE CASCADE	
 )DEFAULT CHARSET=utf8;
 
+CREATE TABLE user_all(
+	ID INT NOT NULL AUTO_INCREMENT,
+    PSW VARCHAR(100),
+	Area_Code INT NOT NULL,
+    Ori_ID VARCHAR(100),
+    Ori_Name VARCHAR(10),
+    Nick_Name VARCHAR(100),
+    Age INT,
+    Major VARCHAR(100),
+	Tel VARCHAR(100),
+	Mail VARCHAR(100),    
+    Gender INT,
+    Hdimg_Uri TEXT,
+    Type_code INT,
+	PRIMARY KEY (ID),
+	FOREIGN KEY (Area_Code) REFERENCES sch_code(Area_Code)
+	ON DELETE RESTRICT
+	ON UPDATE CASCADE	    
+)DEFAULT CHARSET=utf8;
 
+CREATE TABLE user_act_clt(
+	ID INT NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (ID),
+	User_ID INT NOT NULL,
+    Act_ID INT NOT NULL,
+    
+	FOREIGN KEY (User_ID) REFERENCES user_all(ID)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE,
+	FOREIGN KEY (Act_ID) REFERENCES common_act_info(ID)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE        
+)DEFAULT CHARSET=utf8;
 
 
 #---------------------------------
@@ -139,10 +171,9 @@ set i = 0;
 	start transaction;
 	
 	while i < fakeCount do
-	
+	    
 		insert sliders (Title,Image_Path,Link) 
 		values ('Test data','http://tp3.sinaimg.cn/2424186582/180/5746253598/1','http://weibo.com');
-		
 		
 		insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
 			CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Salary,Organizer,Sponsor)
@@ -154,6 +185,13 @@ set i = 0;
 		values (CONCAT('TEST DATA ', i),'2015-07-01 23:22:11','2015-08-01 23:22:11','2015-06-01 23:22:11','新天地',i,i+3,i+7,'https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png',CONCAT('TEST DATA ', i),
 			CONCAT(i,'110'),CONCAT(i,'xxx@ggg.com'),123456+i,'http://weibo.com',1,10001,10011,'','zhfkt','zhfkt');				
 		
+        insert user_all(PSW,Area_Code,Ori_ID,Ori_Name,Nick_Name,Age,Major,Tel,Mail,Gender,Hdimg_Uri,Type_code)
+		values ('',10001, CONCAT('1212', i), CONCAT('比利海灵顿',i), CONCAT('billy',i),40,'Aniki','110',CONCAT(i,'xxx@ggg.com'),0,
+        'https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png',0);
+        
+        insert user_act_clt(User_ID,Act_ID)
+        values (i+1,i+1);
+        
 		set i = i+1;
 	end while;
 	commit;

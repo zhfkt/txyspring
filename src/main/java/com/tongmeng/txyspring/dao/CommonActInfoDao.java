@@ -75,8 +75,8 @@ public class CommonActInfoDao {
 	public CommonActInfo getCommonActInfo(int id) {
 		Session session = sessionFactory.getCurrentSession();
 
-		CommonActInfo cai = (CommonActInfo) session.get(CommonActInfo.class, id);
-		return cai;
+		CommonActInfo commonActInfo = (CommonActInfo) session.get(CommonActInfo.class, id);
+		return commonActInfo;
 	}
 
 }

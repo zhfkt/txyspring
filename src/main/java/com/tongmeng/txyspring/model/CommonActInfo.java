@@ -1,7 +1,9 @@
 package com.tongmeng.txyspring.model;
-// Generated 2016-3-18 12:20:50 by Hibernate Tools 4.3.1.Final
+// Generated 2016-3-19 15:52:39 by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +12,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -45,19 +48,27 @@ public class CommonActInfo implements java.io.Serializable {
 	private String salary;
 	private String organizer;
 	private String sponsor;
-	
-	private double hot;
-	
 	private JobExtraInfo jobExtraInfo;
+	private Set<UserActClt> userActClts = new HashSet<UserActClt>(0);
 	private ActExtraInfo actExtraInfo;
 	private PostExtraInfo postExtraInfo;
-	
-	
 
+	private double hot;
+	@Formula("NumRead*0.3+NumFavo*0.7")
+	public double getHot() {
+		return hot;
+	}
+
+	public void setHot(double hot) {
+		this.hot = hot;
+	}	
+	
 	public CommonActInfo() {
 	}
 
-	public CommonActInfo(String title, Date startDate, Date endDate, Date pubTime) {
+	public CommonActInfo(ActCode actCode, SchCode schCode, String title, Date startDate, Date endDate, Date pubTime) {
+		this.actCode = actCode;
+		this.schCode = schCode;
 		this.title = title;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -67,8 +78,8 @@ public class CommonActInfo implements java.io.Serializable {
 	public CommonActInfo(ActCode actCode, SchCode schCode, String title, Date startDate, Date endDate, Date pubTime,
 			String location, Integer peopleNumber, Integer numRead, Integer numFavo, String covImgUri, String intro,
 			String ctPerTel, String ctPerMail, String ctPerQq, String outLink, Integer statCode, String salary,
-			String organizer, String sponsor, JobExtraInfo jobExtraInfo, ActExtraInfo actExtraInfo,
-			PostExtraInfo postExtraInfo) {
+			String organizer, String sponsor, JobExtraInfo jobExtraInfo, Set<UserActClt> userActClts,
+			ActExtraInfo actExtraInfo, PostExtraInfo postExtraInfo) {
 		this.actCode = actCode;
 		this.schCode = schCode;
 		this.title = title;
@@ -90,6 +101,7 @@ public class CommonActInfo implements java.io.Serializable {
 		this.organizer = organizer;
 		this.sponsor = sponsor;
 		this.jobExtraInfo = jobExtraInfo;
+		this.userActClts = userActClts;
 		this.actExtraInfo = actExtraInfo;
 		this.postExtraInfo = postExtraInfo;
 	}
@@ -106,8 +118,8 @@ public class CommonActInfo implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "Act_Subtype")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "Act_Subtype", nullable = false)
 	public ActCode getActCode() {
 		return this.actCode;
 	}
@@ -117,7 +129,7 @@ public class CommonActInfo implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "Area_Code")
+	@JoinColumn(name = "Area_Code", nullable = false)
 	public SchCode getSchCode() {
 		return this.schCode;
 	}
@@ -290,15 +302,6 @@ public class CommonActInfo implements java.io.Serializable {
 	public void setSponsor(String sponsor) {
 		this.sponsor = sponsor;
 	}
-	
-	@Formula("NumRead*0.3+NumFavo*0.7")
-	public double getHot() {
-		return hot;
-	}
-
-	public void setHot(double hot) {
-		this.hot = hot;
-	}	
 
 	@OneToOne(optional = false, fetch = FetchType.LAZY, mappedBy = "commonActInfo")
 	public JobExtraInfo getJobExtraInfo() {
@@ -307,6 +310,15 @@ public class CommonActInfo implements java.io.Serializable {
 
 	public void setJobExtraInfo(JobExtraInfo jobExtraInfo) {
 		this.jobExtraInfo = jobExtraInfo;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "commonActInfo")
+	public Set<UserActClt> getUserActClts() {
+		return this.userActClts;
+	}
+
+	public void setUserActClts(Set<UserActClt> userActClts) {
+		this.userActClts = userActClts;
 	}
 
 	@OneToOne(optional = false, fetch = FetchType.LAZY, mappedBy = "commonActInfo")
@@ -326,7 +338,5 @@ public class CommonActInfo implements java.io.Serializable {
 	public void setPostExtraInfo(PostExtraInfo postExtraInfo) {
 		this.postExtraInfo = postExtraInfo;
 	}
-	
-	
 
 }

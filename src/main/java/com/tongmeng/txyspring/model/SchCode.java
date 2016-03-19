@@ -1,5 +1,5 @@
 package com.tongmeng.txyspring.model;
-// Generated 2016-3-18 12:20:50 by Hibernate Tools 4.3.1.Final
+// Generated 2016-3-19 15:52:39 by Hibernate Tools 4.3.1.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,6 +20,7 @@ public class SchCode implements java.io.Serializable {
 	private int areaCode;
 	private String description;
 	private Set<CommonActInfo> commonActInfos = new HashSet<CommonActInfo>(0);
+	private Set<UserAll> userAlls = new HashSet<UserAll>(0);
 
 	public SchCode() {
 	}
@@ -28,10 +29,11 @@ public class SchCode implements java.io.Serializable {
 		this.areaCode = areaCode;
 	}
 
-	public SchCode(int areaCode, String description, Set<CommonActInfo> commonActInfos) {
+	public SchCode(int areaCode, String description, Set<CommonActInfo> commonActInfos, Set<UserAll> userAlls) {
 		this.areaCode = areaCode;
 		this.description = description;
 		this.commonActInfos = commonActInfos;
+		this.userAlls = userAlls;
 	}
 
 	@Id
@@ -61,6 +63,15 @@ public class SchCode implements java.io.Serializable {
 
 	public void setCommonActInfos(Set<CommonActInfo> commonActInfos) {
 		this.commonActInfos = commonActInfos;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "schCode")
+	public Set<UserAll> getUserAlls() {
+		return this.userAlls;
+	}
+
+	public void setUserAlls(Set<UserAll> userAlls) {
+		this.userAlls = userAlls;
 	}
 
 }

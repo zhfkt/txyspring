@@ -4,10 +4,14 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.tongmeng.txyspring.model.CommonActInfo;
+import com.tongmeng.txyspring.model.UserActClt;
+
 import org.joda.time.Days;
 import org.joda.time.DateTime;
 
 public class ActInfoAjax {
+
+	// public
 
 	@JsonView(AjaxJsonViews.Public.class)
 	private String title;
@@ -19,49 +23,103 @@ public class ActInfoAjax {
 	private String image;
 
 	@JsonView(AjaxJsonViews.Public.class)
-	private long startTime;
-
-	@JsonView(AjaxJsonViews.Public.class)
-	private long endTime;
-
-	@JsonView(AjaxJsonViews.Public.class)
 	private String location;
 
-	@JsonView(AjaxJsonViews.Public.class)
+	// GetActivities
+
+	@JsonView(AjaxJsonViews.ActInfo.class)
+	private long startTime;
+
+	@JsonView(AjaxJsonViews.ActInfo.class)
+	private long endTime;
+
+	@JsonView(AjaxJsonViews.ActInfo.class)
 	private int personNum;
 
-	@JsonView(AjaxJsonViews.Public.class)
+	@JsonView(AjaxJsonViews.ActInfo.class)
 	private int type;
 
-	@JsonView(AjaxJsonViews.Public.class)
+	@JsonView(AjaxJsonViews.ActInfo.class)
 	private int subType;
 
-	@JsonView(AjaxJsonViews.Public.class)
+	@JsonView(AjaxJsonViews.ActInfo.class)
 	private double hot;
 
-	@JsonView(AjaxJsonViews.Public.class)
+	@JsonView(AjaxJsonViews.ActInfo.class)
 	private int isActive;
 
-	@JsonView(AjaxJsonViews.Public.class)
+	@JsonView(AjaxJsonViews.ActInfo.class)
 	private String effective;
 
-	@JsonView(AjaxJsonViews.Public.class)
+	@JsonView(AjaxJsonViews.ActInfo.class)
 	private String salary;
 
-	@JsonView(AjaxJsonViews.Public.class)
+	@JsonView(AjaxJsonViews.ActInfo.class)
 	private String releaseTime;
 
+	// GetDetail
+
+	@JsonView(AjaxJsonViews.ActDetail.class)
+	private long time;
+
+	@JsonView(AjaxJsonViews.ActDetail.class)
+	private int isFavor;
+
+	@JsonView(AjaxJsonViews.ActDetail.class)
+	private int favorNum;
+
+	@JsonView(AjaxJsonViews.ActDetail.class)
+	private String author;
+
+	@JsonView(AjaxJsonViews.ActDetail.class)
+	String tel;
+
+	@JsonView(AjaxJsonViews.ActDetail.class)
+	String email;
+
+	@JsonView(AjaxJsonViews.ActDetail.class)
+	String qq;
+
+	@JsonView(AjaxJsonViews.ActDetail.class)
+	String detail;
+
+	@JsonView(AjaxJsonViews.ActDetail.class)
+	String more;
+
+	public ActInfoAjax(CommonActInfo commonActInfo, boolean isFavoured) {
+
+		// GetDetail
+
+		this.title = commonActInfo.getTitle();
+		this.id = commonActInfo.getId();
+		this.image = commonActInfo.getCovImgUri();
+		this.location = commonActInfo.getSchCode().getDescription() + ": " + commonActInfo.getLocation();
+
+		this.time = commonActInfo.getStartDate().getTime();
+		this.isFavor = isFavoured ? 1 : 0;
+		this.favorNum = commonActInfo.getNumFavo();
+		this.author = commonActInfo.getOrganizer();
+		this.tel = commonActInfo.getCtPerTel();
+		this.email = commonActInfo.getCtPerMail();
+		this.qq = commonActInfo.getCtPerQq();
+		this.detail = commonActInfo.getIntro();
+		this.more = commonActInfo.getOutLink();
+	}
+
 	public ActInfoAjax(CommonActInfo commonActInfo) {
+
+		// GetActivities
+
 		this.title = commonActInfo.getTitle();
 		this.id = commonActInfo.getId();
 		this.image = commonActInfo.getCovImgUri();
 		this.startTime = commonActInfo.getStartDate().getTime();
 		this.endTime = commonActInfo.getEndDate().getTime();
-		this.location =  commonActInfo.getSchCode().getDescription() + ": "+ commonActInfo.getLocation();
+		this.location = commonActInfo.getSchCode().getDescription() + ": " + commonActInfo.getLocation();
 		this.personNum = commonActInfo.getPeopleNumber();
 		this.subType = commonActInfo.getActCode().getActSubtype();
 		this.type = this.subType / 10000;
-		this.hot = commonActInfo.getHot();
+		this.hot = commonActInfo.getHot() > 15 ? 1 : 0;
 		this.isActive = this.endTime > new Date().getTime() ? 1 : 0;
 
 		if (isActive == 0) {

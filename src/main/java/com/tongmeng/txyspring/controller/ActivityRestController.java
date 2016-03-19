@@ -23,45 +23,47 @@ public class ActivityRestController {
 
 	@Autowired
 	private ActivityService as;
-	
-	@JsonView(AjaxJsonViews.Public.class)
+
+	@JsonView(AjaxJsonViews.ActInfo.class)
 	@RequestMapping(value = "/GetActivities", method = RequestMethod.GET)
-	public AjaxResponseBody<List<ActInfoAjax> > GetActivities(
-			@RequestParam(value="type", required=true) int type,
-			@RequestParam(value="campus", required=false,defaultValue="0") int campus,
-			@RequestParam(value="subtype", required=false, defaultValue="0") int subtype,
-			@RequestParam(value="sort", required=false, defaultValue="0") int sort,
-			@RequestParam(value="p", required=false, defaultValue="0") int p
-			) {
-		
-		if(subtype==0)
-		{
+	public AjaxResponseBody<List<ActInfoAjax>> GetActivities(@RequestParam(value = "type", required = true) int type,
+			@RequestParam(value = "campus", required = false, defaultValue = "0") int campus,
+			@RequestParam(value = "subtype", required = false, defaultValue = "0") int subtype,
+			@RequestParam(value = "sort", required = false, defaultValue = "0") int sort,
+			@RequestParam(value = "p", required = false, defaultValue = "0") int p) {
+
+		if (subtype == 0) {
 			subtype = type * 10000;
 		}
-		
-		
 
-		List<CommonActInfo> lstAct = as.listActivitiesByActCodeAndSchCode(campus,subtype,sort,p);
-		List<ActInfoAjax> ajaxLstAct = new ArrayList<ActInfoAjax> (); 
-		
-		for(CommonActInfo commonActInfo: lstAct){
+		List<CommonActInfo> lstAct = as.listActivitiesByActCodeAndSchCode(campus, subtype, sort, p);
+		List<ActInfoAjax> ajaxLstAct = new ArrayList<ActInfoAjax>();
+
+		for (CommonActInfo commonActInfo : lstAct) {
 			ajaxLstAct.add(new ActInfoAjax(commonActInfo));
 		}
-		
-		return new AjaxResponseBody<List<ActInfoAjax> >(RESPONSE_STATUS.SUCCESS, ajaxLstAct);
+
+		return new AjaxResponseBody<List<ActInfoAjax>>(RESPONSE_STATUS.SUCCESS, ajaxLstAct);
 
 	}
-	
-	@JsonView(AjaxJsonViews.Public.class)
-	@RequestMapping(value = "/GetDetail", method = RequestMethod.GET)
-	public AjaxResponseBody<CommonActInfo > GetDetail(
-			@RequestParam("id") int id
-			) {
-		
-		AjaxResponseBody<CommonActInfo > AjaxResult = 
-				new AjaxResponseBody<CommonActInfo >(RESPONSE_STATUS.SUCCESS, as.getActivitiyDetail(id));
-		return AjaxResult;
 
-	}	
-	
+	@JsonView(AjaxJsonViews.ActDetail.class)
+	@RequestMapping(value = "/GetDetail", method = RequestMethod.GET)
+	public AjaxResponseBody<ActInfoAjax> GetDetail(@RequestParam(value = "id", required = true) int id) {
+
+		ActInfoAjax actInfoAjax = null;
+
+		CommonActInfo commonActInfo = as.getActivitiyDetail(id);
+		if (commonActInfo != null) {
+			boolean isFavoured = as.isFavoured(id);
+			actInfoAjax = new ActInfoAjax(commonActInfo, isFavoured);
+		}
+		/*else
+		{
+			
+		}*/
+
+		return new AjaxResponseBody<ActInfoAjax>(RESPONSE_STATUS.SUCCESS, actInfoAjax);
+	}
+
 }
