@@ -1,11 +1,14 @@
 package com.tongmeng.txyspring.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tongmeng.txyspring.dao.CommonActInfoDao;
 import com.tongmeng.txyspring.dao.UserActCltDao;
+import com.tongmeng.txyspring.model.CommonActInfo;
 
 @Service
 public class UserService {
@@ -44,11 +47,15 @@ public class UserService {
 			}
 			
 			userActCltDao.removeFavoured(id,userid);
-			commonActInfoDao.minusFavour(id);
-			
+			commonActInfoDao.minusFavour(id);	
 		}
-		
-		
 	}
+	
+	@Transactional(readOnly = true)
+	public List<CommonActInfo> getFavorList() {
+		int userid = 1;
+		return userActCltDao.getFavorListByUser(userid);
+	}
+	
 
 }

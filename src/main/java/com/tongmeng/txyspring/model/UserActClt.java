@@ -42,7 +42,7 @@ public class UserActClt implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Act_ID", nullable = false)
 	public CommonActInfo getCommonActInfo() {
 		return this.commonActInfo;

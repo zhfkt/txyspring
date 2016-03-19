@@ -1,5 +1,8 @@
 package com.tongmeng.txyspring.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.tongmeng.txyspring.ajaxmodel.ActInfoAjax;
 import com.tongmeng.txyspring.ajaxmodel.AjaxJsonViews;
 import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody;
 import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody.RESPONSE_STATUS;
+import com.tongmeng.txyspring.model.CommonActInfo;
 import com.tongmeng.txyspring.service.UserService;
 
 import org.slf4j.Logger;
@@ -25,7 +30,7 @@ public class UserRestController {
 	@Autowired
 	private UserService us;
 	
-	@JsonView(AjaxJsonViews.ActDetail.class)
+	@JsonView(AjaxJsonViews.Public.class)
 	@RequestMapping(value = "/AddFavor", method = RequestMethod.POST)
 	public AjaxResponseBody<Void> changeFavour(
 			@RequestParam(value = "id", required = true) int id,
@@ -45,6 +50,21 @@ public class UserRestController {
 		
 		return new AjaxResponseBody<Void>(RESPONSE_STATUS.SUCCESS);
 	}	
+	
+	
+	@JsonView(AjaxJsonViews.ActInfo.class)
+	@RequestMapping(value = "/GetFavorList", method = RequestMethod.GET)
+	public  AjaxResponseBody<List<ActInfoAjax>> getFavorList() {
+		
+		List<CommonActInfo> lstAct = us.getFavorList();
+		List<ActInfoAjax> ajaxLstAct = new ArrayList<ActInfoAjax>();
+
+		for (CommonActInfo commonActInfo : lstAct) {
+			ajaxLstAct.add(new ActInfoAjax(commonActInfo));
+		}		
+		
+		return new AjaxResponseBody<List<ActInfoAjax> >(RESPONSE_STATUS.SUCCESS,ajaxLstAct);
+	}		
 	
 	
 }

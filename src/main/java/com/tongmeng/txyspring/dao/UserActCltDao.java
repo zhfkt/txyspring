@@ -1,5 +1,6 @@
 package com.tongmeng.txyspring.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -57,9 +58,8 @@ public class UserActCltDao {
 	}
 	
 	public boolean isFavoured(int actid,int userid) {
-		Session session = sessionFactory.getCurrentSession();
-
 		
+		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(UserActClt.class)
 				.createAlias("commonActInfo", "common")
 				.createAlias("userAll", "user");
@@ -69,7 +69,7 @@ public class UserActCltDao {
 		
 		List<UserActClt> listUseractclt = (List<UserActClt>) criteria.list();
 		
-		if(listUseractclt.size()==0)
+		if(listUseractclt.isEmpty())
 		{
 			return false;
 		}
@@ -77,7 +77,34 @@ public class UserActCltDao {
 		{
 			return true;
 		}
-	}	
+	}
+	
+	
+	public List<CommonActInfo> getFavorListByUser(int userid)
+	{
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(UserActClt.class)
+				.createAlias("userAll", "user");
+
+		criteria.add(Restrictions.eq("user.id", userid));				
+		List<UserActClt> listUseractclt = (List<UserActClt>) criteria.list();
+		
+		List<CommonActInfo> listCommonActInfo = new ArrayList<CommonActInfo>();
+		if(listUseractclt.isEmpty())
+		{
+			return listCommonActInfo;
+		}
+		else
+		{
+			for(UserActClt useractclt : listUseractclt)
+			{
+				listCommonActInfo.add(useractclt.getCommonActInfo());
+			}
+		}
+			
+		return listCommonActInfo;
+				
+	}
 	
 	
 }
