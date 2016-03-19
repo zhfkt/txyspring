@@ -30,13 +30,11 @@ public class CommonActInfoDao {
 
 		Criteria criteria = session.createCriteria(CommonActInfo.class).createAlias("actCode", "act")
 				.createAlias("schCode", "area");
-
+		
 		if (areacode != 0) {
 			if (areacode % 10000 == 0) {
-
-				int schcode = subtype / 10000;
-				criteria.add(Restrictions.ge("area.areaCode", schcode));
-				criteria.add(Restrictions.lt("area.areaCode", schcode + 1));
+				criteria.add(Restrictions.ge("area.areaCode", areacode));
+				criteria.add(Restrictions.lt("area.areaCode", areacode + 10000));
 			} else {
 				criteria.add(Restrictions.eq("area.areaCode", areacode));
 			}
