@@ -43,7 +43,7 @@ public class ActInfoAjax {
 	private int subType;
 
 	@JsonView(AjaxJsonViews.ActInfo.class)
-	private double hot;
+	private int hot;
 
 	@JsonView(AjaxJsonViews.ActInfo.class)
 	private int isActive;
@@ -119,7 +119,7 @@ public class ActInfoAjax {
 		this.personNum = commonActInfo.getPeopleNumber();
 		this.subType = commonActInfo.getActCode().getActSubtype();
 		this.type = this.subType / 10000;
-		this.hot = commonActInfo.getHot() > 15 ? 1 : 0;
+		this.hot = commonActInfo.getHot() > 10 ? 1 : 0;
 		this.isActive = this.endTime > new Date().getTime() ? 1 : 0;
 
 		if (isActive == 0) {
@@ -220,7 +220,7 @@ public class ActInfoAjax {
 		this.subType = subType;
 	}
 
-	public double getHot() {
+	public int getHot() {
 		return hot;
 	}
 
