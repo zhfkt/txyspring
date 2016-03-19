@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tongmeng.txyspring.dao.CommonActInfoDao;
 import com.tongmeng.txyspring.model.CommonActInfo;
@@ -14,11 +16,9 @@ import com.tongmeng.txyspring.dao.UserActCltDao;;
 public class ActivityService {
 
 	@Autowired
-	CommonActInfoDao commonActInfoDao;
-	
-	@Autowired
-	private UserActCltDao userActCltDao;
+	private CommonActInfoDao commonActInfoDao;
 
+	@Transactional(readOnly = true)
 	public List<CommonActInfo> listActivitiesByActCodeAndSchCode(int areacode, int subtype, int sort, int p) {
 
 		SortOption so;
@@ -34,15 +34,12 @@ public class ActivityService {
 		return commonActInfoDao.listCommonInfoByActAndSch(areacode, subtype, p, so);
 	}
 
+	@Transactional(readOnly = true)
 	public CommonActInfo getActivitiyDetail(int id) {
 		return commonActInfoDao.getCommonActInfo(id);
 	}
+
 	
-	
-	public boolean isFavoured(int id) {
-		int userid = 1;
-		return userActCltDao.isFavoured(id, userid);
-	}
 	
 	
 	

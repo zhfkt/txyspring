@@ -24,7 +24,6 @@ public class CommonActInfoDao {
 	@Autowired(required = true)
 	private SessionFactory sessionFactory;
 
-	@Transactional(readOnly = true)
 	public List<CommonActInfo> listCommonInfoByActAndSch(int areacode, int subtype, int startPage, SortOption so) {
 
 		Session session = sessionFactory.getCurrentSession();
@@ -34,13 +33,11 @@ public class CommonActInfoDao {
 
 		if (areacode != 0) {
 			if (areacode % 10000 == 0) {
-			
+
 				int schcode = subtype / 10000;
 				criteria.add(Restrictions.ge("area.areaCode", schcode));
 				criteria.add(Restrictions.lt("area.areaCode", schcode + 1));
-			}
-			else
-			{
+			} else {
 				criteria.add(Restrictions.eq("area.areaCode", areacode));
 			}
 		}
@@ -48,7 +45,7 @@ public class CommonActInfoDao {
 		if (subtype % 10000 == 0) {
 			criteria.add(Restrictions.ge("act.actSubtype", subtype));
 			criteria.add(Restrictions.lt("act.actSubtype", subtype + 10000));
-			
+
 		} else {
 			criteria.add(Restrictions.eq("act.actSubtype", subtype));
 		}
@@ -71,12 +68,42 @@ public class CommonActInfoDao {
 		return cai_list;
 	}
 
-	@Transactional(readOnly = true)
 	public CommonActInfo getCommonActInfo(int id) {
 		Session session = sessionFactory.getCurrentSession();
 
 		CommonActInfo commonActInfo = (CommonActInfo) session.get(CommonActInfo.class, id);
 		return commonActInfo;
+	}
+
+	public void addFavour(int id) {
+		Session session = sessionFactory.getCurrentSession();
+
+		CommonActInfo commonActInfo = (CommonActInfo) session.get(CommonActInfo.class, id);
+
+		if (commonActInfo == null) {
+			return;
+		} else {
+			commonActInfo.setNumFavo(commonActInfo.getNumFavo() + 1);
+			return;
+		}
+	}
+
+	
+	public void minusFavour(int id) {
+		Session session = sessionFactory.getCurrentSession();
+
+		CommonActInfo commonActInfo = (CommonActInfo) session.get(CommonActInfo.class, id);
+
+		if (commonActInfo == null) {
+			return;
+		} else {
+			int nowFavo = commonActInfo.getNumFavo();
+			if (nowFavo == 0) {
+				return; // for caution
+			}
+			commonActInfo.setNumFavo(nowFavo - 1);
+			return;
+		}
 	}
 
 }

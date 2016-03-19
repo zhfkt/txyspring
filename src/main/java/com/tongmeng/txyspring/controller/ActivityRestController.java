@@ -16,6 +16,7 @@ import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody;
 import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody.RESPONSE_STATUS;
 import com.tongmeng.txyspring.model.CommonActInfo;
 import com.tongmeng.txyspring.service.ActivityService;
+import com.tongmeng.txyspring.service.UserService;
 
 @RestController
 @RequestMapping(value = "/api/activity")
@@ -23,6 +24,9 @@ public class ActivityRestController {
 
 	@Autowired
 	private ActivityService as;
+	
+	@Autowired
+	private UserService us;	
 
 	@JsonView(AjaxJsonViews.ActInfo.class)
 	@RequestMapping(value = "/GetActivities", method = RequestMethod.GET)
@@ -55,7 +59,7 @@ public class ActivityRestController {
 
 		CommonActInfo commonActInfo = as.getActivitiyDetail(id);
 		if (commonActInfo != null) {
-			boolean isFavoured = as.isFavoured(id);
+			boolean isFavoured = us.isFavoured(id);
 			actInfoAjax = new ActInfoAjax(commonActInfo, isFavoured);
 		}
 		/*else
