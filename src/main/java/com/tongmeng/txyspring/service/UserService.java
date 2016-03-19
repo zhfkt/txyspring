@@ -29,7 +29,7 @@ public class UserService {
 		int userid = 1;
 		
 		if(action.equals("add"))
-		{		
+		{	
 			if(!userActCltDao.addFavour(id, userid))
 			{
 				return;
