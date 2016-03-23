@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -68,7 +69,7 @@ public class UserActCltDao {
 		criteria.add(Restrictions.eq("userAll.id", userid));		
 		
 		List<UserActClt> listUseractclt = (List<UserActClt>) criteria.list();
-		
+				
 		if(listUseractclt.isEmpty())
 		{
 			return false;
@@ -98,6 +99,7 @@ public class UserActCltDao {
 		{
 			for(UserActClt useractclt : listUseractclt)
 			{
+				Hibernate.initialize(useractclt.getCommonActInfo());
 				listCommonActInfo.add(useractclt.getCommonActInfo());
 			}
 		}
