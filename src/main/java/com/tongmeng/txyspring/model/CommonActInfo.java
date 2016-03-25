@@ -128,7 +128,7 @@ public class CommonActInfo implements java.io.Serializable {
 		this.actCode = actCode;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "Area_Code", nullable = false)
 	public SchCode getSchCode() {
 		return this.schCode;

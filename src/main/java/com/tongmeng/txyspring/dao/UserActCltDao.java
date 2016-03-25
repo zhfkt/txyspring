@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -68,9 +69,8 @@ public class UserActCltDao {
 		criteria.add(Restrictions.eq("common.id", actid));
 		criteria.add(Restrictions.eq("userAll.id", userid));		
 		
-		List<UserActClt> listUseractclt = (List<UserActClt>) criteria.list();
-				
-		if(listUseractclt.isEmpty())
+
+		if(criteria.uniqueResult()==null)
 		{
 			return false;
 		}
@@ -78,6 +78,7 @@ public class UserActCltDao {
 		{
 			return true;
 		}
+		
 	}
 	
 	
@@ -85,23 +86,16 @@ public class UserActCltDao {
 	{
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(UserActClt.class)
-				.createAlias("userAll", "user");
+				.createAlias("userAll", "user").setFetchMode("commonActInfo", FetchMode.JOIN);
 
 		criteria.add(Restrictions.eq("user.id", userid));				
 		List<UserActClt> listUseractclt = (List<UserActClt>) criteria.list();
 		
 		List<CommonActInfo> listCommonActInfo = new ArrayList<CommonActInfo>();
-		if(listUseractclt.isEmpty())
+		for(UserActClt useractclt : listUseractclt)
 		{
-			return listCommonActInfo;
-		}
-		else
-		{
-			for(UserActClt useractclt : listUseractclt)
-			{
-				Hibernate.initialize(useractclt.getCommonActInfo());
-				listCommonActInfo.add(useractclt.getCommonActInfo());
-			}
+			//Hibernate.initialize(useractclt.getCommonActInfo());
+			listCommonActInfo.add(useractclt.getCommonActInfo());
 		}
 			
 		return listCommonActInfo;

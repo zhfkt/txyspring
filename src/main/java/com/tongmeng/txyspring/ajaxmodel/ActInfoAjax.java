@@ -88,15 +88,15 @@ public class ActInfoAjax {
 
 	public ActInfoAjax(CommonActInfo commonActInfo, boolean isFavoured) {
 
-		// GetDetail
-
+		// Public 
 		this.title = commonActInfo.getTitle();
 		this.id = commonActInfo.getId();
 		this.image = commonActInfo.getCovImgUri();
 		this.location = commonActInfo.getSchCode().getDescription() + ": " + commonActInfo.getLocation();
-
-		this.time = commonActInfo.getStartDate().getTime();
 		this.isFavor = isFavoured ? 1 : 0;
+
+		// GetDetail	
+		this.time = commonActInfo.getStartDate().getTime();
 		this.favorNum = commonActInfo.getNumFavo();
 		this.author = commonActInfo.getOrganizer();
 		this.tel = commonActInfo.getCtPerTel();
@@ -104,18 +104,10 @@ public class ActInfoAjax {
 		this.qq = commonActInfo.getCtPerQq();
 		this.detail = commonActInfo.getIntro();
 		this.more = commonActInfo.getOutLink();
-	}
-
-	public ActInfoAjax(CommonActInfo commonActInfo) {
-
+		
 		// GetActivities
-
-		this.title = commonActInfo.getTitle();
-		this.id = commonActInfo.getId();
-		this.image = commonActInfo.getCovImgUri();
 		this.startTime = commonActInfo.getStartDate().getTime();
 		this.endTime = commonActInfo.getEndDate().getTime();
-		this.location = commonActInfo.getSchCode().getDescription() + ": " + commonActInfo.getLocation();
 		this.personNum = commonActInfo.getPeopleNumber();
 		this.subType = commonActInfo.getActCode().getActSubtype();
 		this.type = this.subType / 10000;
@@ -145,8 +137,9 @@ public class ActInfoAjax {
 		} else {
 			this.releaseTime = "于" + releasedays + "天前发布";
 		}
-
+		
 	}
+
 
 	public String getTitle() {
 		return title;
