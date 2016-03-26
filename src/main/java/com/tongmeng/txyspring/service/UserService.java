@@ -52,9 +52,21 @@ public class UserService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<CommonActInfo> getFavorList() {
+	public List<CommonActInfo> getFavorList(int type) {
 		int userid = 1;
-		return userActCltDao.getFavorListByUser(userid);
+		
+		if(type==1)
+		{
+			return userActCltDao.getFavorListByUser(userid,10000);
+		}
+		else if(type==2)
+		{
+			return userActCltDao.getFavorListByUser(userid,20000);	
+		}
+		else
+		{
+			return userActCltDao.getFavorListByUser(userid,10000);
+		}
 	}
 	
 

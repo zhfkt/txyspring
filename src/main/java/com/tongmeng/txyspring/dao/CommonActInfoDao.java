@@ -37,27 +37,25 @@ public class CommonActInfoDao {
 
 		Criteria criteria = session.createCriteria(CommonActInfo.class);
 
-		criteria.createAlias("actCode", "act").setFetchMode("userActClts", FetchMode.JOIN).setFetchMode("schCode", FetchMode.JOIN);
+		criteria.setFetchMode("schCode", FetchMode.JOIN);
 		
 		if (subtype % 10000 == 0) {
-			criteria.add(Restrictions.ge("act.actSubtype", subtype));
-			criteria.add(Restrictions.lt("act.actSubtype", subtype + 10000));
+			criteria.add(Restrictions.ge("actCode.id", subtype));
+			criteria.add(Restrictions.lt("actCode.id", subtype + 10000));
 
 		} else {
-			criteria.add(Restrictions.eq("act.actSubtype", subtype));
+			criteria.add(Restrictions.eq("actCode.id", subtype));
 		}
 
 		if (areacode != 0) {
-			criteria = criteria.createAlias("schCode", "area");
 
 			if (areacode % 10000 == 0) {
-				criteria.add(Restrictions.ge("area.areaCode", areacode));
-				criteria.add(Restrictions.lt("area.areaCode", areacode + 10000));
+				criteria.add(Restrictions.ge("schCode.id", areacode));
+				criteria.add(Restrictions.lt("schCode。id", areacode + 10000));
 			} else {
-				criteria.add(Restrictions.eq("area.areaCode", areacode));
+				criteria.add(Restrictions.eq("schCode.id", areacode));
 			}
 		}
-		
 
 		switch (so) {
 		case OrderByStarttime:

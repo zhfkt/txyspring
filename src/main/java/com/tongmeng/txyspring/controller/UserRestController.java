@@ -31,7 +31,7 @@ public class UserRestController {
 	private UserService us;
 	
 	@JsonView(AjaxJsonViews.Public.class)
-	@RequestMapping(value = "/AddFavor", method = RequestMethod.GET)
+	@RequestMapping(value = "/AddFavor", method = RequestMethod.POST)
 	public AjaxResponseBody<Void> changeFavour(
 			@RequestParam(value = "id", required = true) int id,
 			@RequestParam(value = "action", required = true) String action			
@@ -54,11 +54,13 @@ public class UserRestController {
 	
 	@JsonView(AjaxJsonViews.ActInfo.class)
 	@RequestMapping(value = "/GetFavorList", method = RequestMethod.GET)
-	public  AjaxResponseBody<List<ActInfoAjax>> getFavorList() {
+	public  AjaxResponseBody<List<ActInfoAjax>> getFavorList(
+			@RequestParam(value = "type", required = false, defaultValue = "1") int type
+			) {
 		
-		List<CommonActInfo> lstAct = us.getFavorList();
+		List<CommonActInfo> lstAct = us.getFavorList(type);
+		
 		List<ActInfoAjax> ajaxLstAct = new ArrayList<ActInfoAjax>();
-
 		//for the logic , always true here
 		for (CommonActInfo commonActInfo : lstAct) {
 			ajaxLstAct.add(new ActInfoAjax(commonActInfo, true));

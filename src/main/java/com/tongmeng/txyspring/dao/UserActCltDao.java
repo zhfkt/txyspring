@@ -62,11 +62,9 @@ public class UserActCltDao {
 	public boolean isFavoured(int actid,int userid) {
 		
 		Session session = sessionFactory.getCurrentSession();
-		Criteria criteria = session.createCriteria(UserActClt.class)
-				.createAlias("commonActInfo", "common")
-				.createAlias("userAll", "user");
+		Criteria criteria = session.createCriteria(UserActClt.class);
 
-		criteria.add(Restrictions.eq("common.id", actid));
+		criteria.add(Restrictions.eq("commonActInfo.id", actid));
 		criteria.add(Restrictions.eq("userAll.id", userid));		
 		
 
@@ -82,15 +80,18 @@ public class UserActCltDao {
 	}
 	
 	
-	public List<CommonActInfo> getFavorListByUser(int userid)
+	public List<CommonActInfo> getFavorListByUser(int userid,int subtype)
 	{
 		Session session = sessionFactory.getCurrentSession();
-		Criteria criteria = session.createCriteria(UserActClt.class)
-				.createAlias("userAll", "user").setFetchMode("commonActInfo", FetchMode.JOIN).
+		Criteria criteria = session.createCriteria(UserActClt.class).createAlias("commonActInfo", "commonAct").
+				setFetchMode("commonActInfo", FetchMode.JOIN).
 				setFetchMode("commonActInfo.schCode", FetchMode.JOIN);
 		// call lazy fetch to eager
 
-		criteria.add(Restrictions.eq("user.id", userid));				
+		criteria.add(Restrictions.eq("userAll.id", userid));		
+		criteria.add(Restrictions.ge("commonAct.actCode.id", subtype));
+		criteria.add(Restrictions.lt("commonAct.actCode.id", subtype + 10000));		
+		
 		List<UserActClt> listUseractclt = (List<UserActClt>) criteria.list();
 		
 		List<CommonActInfo> listCommonActInfo = new ArrayList<CommonActInfo>();
