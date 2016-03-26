@@ -86,7 +86,9 @@ public class UserActCltDao {
 	{
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(UserActClt.class)
-				.createAlias("userAll", "user").setFetchMode("commonActInfo", FetchMode.JOIN);
+				.createAlias("userAll", "user").setFetchMode("commonActInfo", FetchMode.JOIN).
+				setFetchMode("commonActInfo.schCode", FetchMode.JOIN);
+		// call lazy fetch to eager
 
 		criteria.add(Restrictions.eq("user.id", userid));				
 		List<UserActClt> listUseractclt = (List<UserActClt>) criteria.list();

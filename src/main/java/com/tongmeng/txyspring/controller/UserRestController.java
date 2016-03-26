@@ -59,8 +59,9 @@ public class UserRestController {
 		List<CommonActInfo> lstAct = us.getFavorList();
 		List<ActInfoAjax> ajaxLstAct = new ArrayList<ActInfoAjax>();
 
+		//for the logic , always true here
 		for (CommonActInfo commonActInfo : lstAct) {
-			//ajaxLstAct.add(new ActInfoAjax(commonActInfo));
+			ajaxLstAct.add(new ActInfoAjax(commonActInfo, true));
 		}		
 		
 		return new AjaxResponseBody<List<ActInfoAjax> >(RESPONSE_STATUS.SUCCESS,ajaxLstAct);

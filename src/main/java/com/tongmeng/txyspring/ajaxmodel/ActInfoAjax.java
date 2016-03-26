@@ -24,6 +24,12 @@ public class ActInfoAjax {
 
 	@JsonView(AjaxJsonViews.Public.class)
 	private String location;
+	
+	@JsonView(AjaxJsonViews.Public.class)
+	private int isFavor;	
+	
+	@JsonView(AjaxJsonViews.Public.class)
+	private String author;
 
 	// GetActivities
 
@@ -63,13 +69,7 @@ public class ActInfoAjax {
 	private long time;
 
 	@JsonView(AjaxJsonViews.ActDetail.class)
-	private int isFavor;
-
-	@JsonView(AjaxJsonViews.ActDetail.class)
 	private int favorNum;
-
-	@JsonView(AjaxJsonViews.ActDetail.class)
-	private String author;
 
 	@JsonView(AjaxJsonViews.ActDetail.class)
 	String tel;
@@ -85,7 +85,8 @@ public class ActInfoAjax {
 
 	@JsonView(AjaxJsonViews.ActDetail.class)
 	String more;
-
+	
+	
 	public ActInfoAjax(CommonActInfo commonActInfo, boolean isFavoured) {
 
 		// Public 
@@ -94,11 +95,11 @@ public class ActInfoAjax {
 		this.image = commonActInfo.getCovImgUri();
 		this.location = commonActInfo.getSchCode().getDescription() + ": " + commonActInfo.getLocation();
 		this.isFavor = isFavoured ? 1 : 0;
+		this.author = commonActInfo.getOrganizer();
 
 		// GetDetail	
 		this.time = commonActInfo.getStartDate().getTime();
 		this.favorNum = commonActInfo.getNumFavo();
-		this.author = commonActInfo.getOrganizer();
 		this.tel = commonActInfo.getCtPerTel();
 		this.email = commonActInfo.getCtPerMail();
 		this.qq = commonActInfo.getCtPerQq();

@@ -44,7 +44,7 @@ public class ActivityRestController {
 		List<ActInfoAjax> ajaxLstAct = new ArrayList<ActInfoAjax>();
 
 		for (CommonActInfo commonActInfo : lstAct) {
-			ajaxLstAct.add(new ActInfoAjax(commonActInfo));
+			ajaxLstAct.add(new ActInfoAjax(commonActInfo,us.isFavoured(commonActInfo.getId())));
 		}
 
 		return new AjaxResponseBody<List<ActInfoAjax>>(RESPONSE_STATUS.SUCCESS, ajaxLstAct);
