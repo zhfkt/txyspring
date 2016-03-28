@@ -52,6 +52,7 @@ public class CommonActInfo implements java.io.Serializable {
 	private Set<UserActClt> userActClts = new HashSet<UserActClt>(0);
 	private ActExtraInfo actExtraInfo;
 	private PostExtraInfo postExtraInfo;
+	private Set<CommonActImage> commonActImages = new HashSet<CommonActImage>(0);
 
 	private double hot;
 	@Formula("NumRead*0.3+NumFavo*0.7")
@@ -79,7 +80,7 @@ public class CommonActInfo implements java.io.Serializable {
 			String location, Integer peopleNumber, Integer numRead, Integer numFavo, String covImgUri, String intro,
 			String ctPerTel, String ctPerMail, String ctPerQq, String outLink, Integer statCode, String salary,
 			String organizer, String sponsor, JobExtraInfo jobExtraInfo, Set<UserActClt> userActClts,
-			ActExtraInfo actExtraInfo, PostExtraInfo postExtraInfo) {
+			ActExtraInfo actExtraInfo, PostExtraInfo postExtraInfo, Set<CommonActImage> commonActImages) {
 		this.actCode = actCode;
 		this.schCode = schCode;
 		this.title = title;
@@ -104,6 +105,7 @@ public class CommonActInfo implements java.io.Serializable {
 		this.userActClts = userActClts;
 		this.actExtraInfo = actExtraInfo;
 		this.postExtraInfo = postExtraInfo;
+		this.commonActImages = commonActImages;
 	}
 
 	@Id
@@ -212,7 +214,7 @@ public class CommonActInfo implements java.io.Serializable {
 	public void setNumFavo(Integer numFavo) {
 		this.numFavo = numFavo;
 	}
-
+	
 	@Column(name = "CovImg_Uri", length = 65535)
 	public String getCovImgUri() {
 		return this.covImgUri;
@@ -220,7 +222,7 @@ public class CommonActInfo implements java.io.Serializable {
 
 	public void setCovImgUri(String covImgUri) {
 		this.covImgUri = covImgUri;
-	}
+	}	
 
 	@Column(name = "Intro", length = 65535)
 	public String getIntro() {
@@ -339,4 +341,13 @@ public class CommonActInfo implements java.io.Serializable {
 		this.postExtraInfo = postExtraInfo;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "commonActInfo")
+	public Set<CommonActImage> getCommonActImages() {
+		return this.commonActImages;
+	}
+
+	public void setCommonActImages(Set<CommonActImage> commonActImages) {
+		this.commonActImages = commonActImages;
+	}
+	
 }

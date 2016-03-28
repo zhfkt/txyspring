@@ -31,6 +31,7 @@
         <mapping class="com.tongmeng.txyspring.model.Sliders" />
         <mapping class="com.tongmeng.txyspring.model.JobExtraInfo" />
         <mapping class="com.tongmeng.txyspring.model.SchCode" />
+        <mapping class="com.tongmeng.txyspring.model.CommonActImage" />
   
     </session-factory>
 </hibernate-configuration>

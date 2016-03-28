@@ -19,9 +19,6 @@ public class ActInfoAjax {
 	private int id;
 
 	@JsonView(AjaxJsonViews.Public.class)
-	private String image;
-
-	@JsonView(AjaxJsonViews.Public.class)
 	private String location;
 	
 	@JsonView(AjaxJsonViews.Public.class)
@@ -31,6 +28,9 @@ public class ActInfoAjax {
 	private String author;
 
 	// GetActivities
+	
+	@JsonView(AjaxJsonViews.Public.class)
+	private String image;
 
 	@JsonView(AjaxJsonViews.Public.class)
 	private long startTime;

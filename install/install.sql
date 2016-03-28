@@ -117,6 +117,18 @@ CREATE TABLE user_act_clt(
 	ON UPDATE CASCADE        
 )DEFAULT CHARSET=utf8;
 
+CREATE TABLE common_act_image(
+	ID INT NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (ID),
+    
+	Act_ID INT NOT NULL,
+    Image TEXT,
+    
+	FOREIGN KEY (Act_ID) REFERENCES common_act_info(ID)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE        
+)DEFAULT CHARSET=utf8;
+
 
 #---------------------------------
 # const data insert
@@ -180,10 +192,22 @@ set i = 0;
 		values (CONCAT('TEST DATA ', i),'2016-07-01 23:22:11','2016-08-01 23:22:11','2016-06-01 23:22:11','樱花大道',i,i+3,i+7,'http://ww2.sinaimg.cn/small/7b254335gw1f24wt3bb8wj21ao0q9afd.jpg',CONCAT('TEST DATA ', i),
 			CONCAT(i,'110'),CONCAT(i,'xxx@ggg.com'),123456+i,'http://weibo.com',1,10002,10012,'','zhfkt','zhfkt');		
 			
+		insert common_act_image(Act_ID,Image) 
+        values (i+1,'http://ww2.sinaimg.cn/small/7b254335gw1f24wt3bb8wj21ao0q9afd.jpg');
+        
+		insert common_act_image(Act_ID,Image) 
+        values (i+1,'http://ww2.sinaimg.cn/small/7b254335gw1f24wt3bb8wj21ao0q9afd.jpg');                  
+            
 		insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
 			CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Salary,Organizer,Sponsor)
 		values (CONCAT('TEST DATA ', i),'2015-07-01 23:22:11','2015-08-01 23:22:11','2015-06-01 23:22:11','新天地',i,i+3,i+7,'http://ww2.sinaimg.cn/small/7b254335gw1f24wt3bb8wj21ao0q9afd.jpg',CONCAT('TEST DATA ', i),
 			CONCAT(i,'110'),CONCAT(i,'xxx@ggg.com'),123456+i,'http://weibo.com',1,10001,10011,'','zhfkt','zhfkt');				
+            
+		insert common_act_image(Act_ID,Image) 
+        values (i+2,'http://ww2.sinaimg.cn/small/7b254335gw1f24wt3bb8wj21ao0q9afd.jpg');
+        
+		insert common_act_image(Act_ID,Image) 
+        values (i+2,'http://ww2.sinaimg.cn/small/7b254335gw1f24wt3bb8wj21ao0q9afd.jpg');                 		
 		
         insert user_all(PSW,Area_Code,Ori_ID,Ori_Name,Nick_Name,Age,Major,Tel,Mail,Gender,Hdimg_Uri,Type_code)
 		values ('',10001, CONCAT('1212', i), CONCAT('比利海灵顿',i), CONCAT('billy',i),40,'Aniki','110',CONCAT(i,'xxx@ggg.com'),0,
