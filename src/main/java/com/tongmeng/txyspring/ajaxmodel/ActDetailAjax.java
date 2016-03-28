@@ -67,7 +67,7 @@ public class ActDetailAjax {
 		this.images = new ArrayList<String>();
 		for(CommonActImage commonActImages: commonActInfo.getCommonActImages())
 		{
-			images.add(commonActImages.getImage());
+			this.images.add(commonActImages.getImage());
 		}
 		
 		this.time = commonActInfo.getStartDate().getTime();
