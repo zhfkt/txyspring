@@ -18,16 +18,12 @@ import com.tongmeng.txyspring.ajaxmodel.AjaxJsonViews;
 @Table(name = "sliders", catalog = "txyspring")
 public class Sliders implements java.io.Serializable {
 
-	@JsonView(AjaxJsonViews.Public.class)
 	private Integer id;
 	
-	@JsonView(AjaxJsonViews.Public.class)
 	private String title;
-	
-	@JsonView(AjaxJsonViews.Public.class)
+
 	private String imagePath;
 	
-	@JsonView(AjaxJsonViews.Public.class)
 	private String link;
 
 	public Sliders() {

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.tongmeng.txyspring.ajaxmodel.ActInfoAjax;
@@ -18,6 +19,7 @@ import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody;
 import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody.RESPONSE_STATUS;
 import com.tongmeng.txyspring.model.CommonActInfo;
 import com.tongmeng.txyspring.service.UserService;
+
 
 import org.slf4j.Logger;
 
@@ -31,7 +33,7 @@ public class UserRestController {
 	private UserService us;
 	
 	@JsonView(AjaxJsonViews.Public.class)
-	@RequestMapping(value = "/AddFavor", method = RequestMethod.POST)
+	@RequestMapping(value = "/AddFavor", method = RequestMethod.GET)
 	public AjaxResponseBody<Void> changeFavour(
 			@RequestParam(value = "id", required = true) int id,
 			@RequestParam(value = "action", required = true) String action			
@@ -45,6 +47,7 @@ public class UserRestController {
 		{
 			logger.warn("Parse and execute the SQL with failure 'a foreign key constraint fails'");
 			logger.warn(e.toString());
+			throw new MethodArgumentTypeMismatchException(id, null, action, null, e);
 		}
 
 		
@@ -52,20 +55,14 @@ public class UserRestController {
 	}	
 	
 	
-	@JsonView(AjaxJsonViews.ActInfo.class)
+	@JsonView(AjaxJsonViews.Public.class)
 	@RequestMapping(value = "/GetFavorList", method = RequestMethod.GET)
 	public  AjaxResponseBody<List<ActInfoAjax>> getFavorList(
 			@RequestParam(value = "type", required = false, defaultValue = "1") int type
 			) {
 		
-		List<CommonActInfo> lstAct = us.getFavorList(type);
-		
-		List<ActInfoAjax> ajaxLstAct = new ArrayList<ActInfoAjax>();
-		//for the logic , always true here
-		for (CommonActInfo commonActInfo : lstAct) {
-			ajaxLstAct.add(new ActInfoAjax(commonActInfo, true));
-		}		
-		
+
+		List<ActInfoAjax> ajaxLstAct = us.getFavorList(type);			
 		return new AjaxResponseBody<List<ActInfoAjax> >(RESPONSE_STATUS.SUCCESS,ajaxLstAct);
 	}		
 	

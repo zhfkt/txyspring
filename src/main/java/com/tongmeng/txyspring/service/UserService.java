@@ -1,11 +1,13 @@
 package com.tongmeng.txyspring.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tongmeng.txyspring.ajaxmodel.ActInfoAjax;
 import com.tongmeng.txyspring.dao.CommonActInfoDao;
 import com.tongmeng.txyspring.dao.UserActCltDao;
 import com.tongmeng.txyspring.model.CommonActInfo;
@@ -41,32 +43,45 @@ public class UserService {
 		}
 		else if(action.equals("remove"))
 		{
-			if(!userActCltDao.isFavoured(id, userid))
+			if(!userActCltDao.removeFavoured(id,userid))
 			{
 				return;
 			}
-			
-			userActCltDao.removeFavoured(id,userid);
+
 			commonActInfoDao.minusFavour(id);	
 		}
+		
+		return;
 	}
 	
 	@Transactional(readOnly = true)
-	public List<CommonActInfo> getFavorList(int type) {
+	public List<ActInfoAjax> getFavorList(int type) {
+		
 		int userid = 1;
 		
+		List<CommonActInfo> lstAct = null;
+				
 		if(type==1)
 		{
-			return userActCltDao.getFavorListByUser(userid,10000);
+			lstAct = userActCltDao.getFavorListByUser(userid,10000);
 		}
 		else if(type==2)
 		{
-			return userActCltDao.getFavorListByUser(userid,20000);	
+			lstAct = userActCltDao.getFavorListByUser(userid,20000);	
 		}
 		else
 		{
-			return userActCltDao.getFavorListByUser(userid,10000);
-		}
+			lstAct = userActCltDao.getFavorListByUser(userid,10000);
+		}	
+		
+		List<ActInfoAjax> ajaxLstAct = new ArrayList<ActInfoAjax>();
+		//for the logic , always true here
+		for (CommonActInfo commonActInfo : lstAct) {
+			ajaxLstAct.add(new ActInfoAjax(commonActInfo, true));
+		}				
+		
+		return ajaxLstAct;
+		
 	}
 	
 

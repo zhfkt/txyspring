@@ -1,7 +1,7 @@
 package com.tongmeng.txyspring.controller;
 
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,9 +11,9 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import com.tongmeng.txyspring.ajaxmodel.AjaxJsonViews;
 import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody;
+import com.tongmeng.txyspring.ajaxmodel.SlidersAjax;
 import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody.RESPONSE_STATUS;
-import com.tongmeng.txyspring.dao.SlidersDao;
-import com.tongmeng.txyspring.model.Sliders;;
+import com.tongmeng.txyspring.service.SlidersService;;
 
 
 @RestController
@@ -21,14 +21,14 @@ import com.tongmeng.txyspring.model.Sliders;;
 public class HomeRestController {
 
 	@Autowired
-	private SlidersDao sd;
+	private SlidersService slidersService;
 	
 	@JsonView(AjaxJsonViews.Public.class)
 	@RequestMapping(value = "/GetSliders", method = RequestMethod.GET)
-	public AjaxResponseBody<List<Sliders> > GetSliders() {
+	public AjaxResponseBody<ArrayList<SlidersAjax> > GetSliders() {
 		
-		AjaxResponseBody<List<Sliders> > AjaxResult = 
-				new AjaxResponseBody<List<Sliders> >(RESPONSE_STATUS.SUCCESS, sd.listSliders());
+		AjaxResponseBody<ArrayList<SlidersAjax> > AjaxResult = 
+				new AjaxResponseBody<ArrayList<SlidersAjax> >(RESPONSE_STATUS.SUCCESS, slidersService.listSliders());
 		return AjaxResult;
 
 	}

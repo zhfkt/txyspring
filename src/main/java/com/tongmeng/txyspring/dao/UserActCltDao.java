@@ -5,15 +5,12 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
-import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.tongmeng.txyspring.model.CommonActInfo;
 import com.tongmeng.txyspring.model.UserActClt;
@@ -27,15 +24,22 @@ public class UserActCltDao {
 	private SessionFactory sessionFactory;
 
 	
-	public void removeFavoured(int actid,int userid) {		
-		
+	public boolean removeFavoured(int actid,int userid) {		
+			
 		Session session = sessionFactory.getCurrentSession();
 				
 		Query query = session.createQuery("delete UserActClt as uac where uac.commonActInfo.id = :actid and uac.userAll.id = :userid");
 		query.setParameter("actid", actid);
 		query.setParameter("userid", userid);
 		 
-		query.executeUpdate();		
+		if(query.executeUpdate()!=0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	public boolean addFavour(int actid,int userid) {

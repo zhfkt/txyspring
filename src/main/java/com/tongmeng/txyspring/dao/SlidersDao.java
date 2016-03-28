@@ -18,9 +18,6 @@ public class SlidersDao {
 	@Autowired(required=true)
     private SessionFactory sessionFactory;
 		
-	public SlidersDao()
-	{		
-	}
 	
 	@Transactional(readOnly=true)
 	public List<Sliders> listSliders()

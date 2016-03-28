@@ -4,7 +4,6 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.tongmeng.txyspring.model.CommonActInfo;
-import com.tongmeng.txyspring.model.UserActClt;
 
 import org.joda.time.Days;
 import org.joda.time.DateTime;
@@ -33,59 +32,36 @@ public class ActInfoAjax {
 
 	// GetActivities
 
-	@JsonView(AjaxJsonViews.ActInfo.class)
+	@JsonView(AjaxJsonViews.Public.class)
 	private long startTime;
 
-	@JsonView(AjaxJsonViews.ActInfo.class)
+	@JsonView(AjaxJsonViews.Public.class)
 	private long endTime;
 
-	@JsonView(AjaxJsonViews.ActInfo.class)
+	@JsonView(AjaxJsonViews.Public.class)
 	private int personNum;
 
-	@JsonView(AjaxJsonViews.ActInfo.class)
+	@JsonView(AjaxJsonViews.Public.class)
 	private int type;
 
-	@JsonView(AjaxJsonViews.ActInfo.class)
+	@JsonView(AjaxJsonViews.Public.class)
 	private int subType;
 
-	@JsonView(AjaxJsonViews.ActInfo.class)
+	@JsonView(AjaxJsonViews.Public.class)
 	private int hot;
 
-	@JsonView(AjaxJsonViews.ActInfo.class)
+	@JsonView(AjaxJsonViews.Public.class)
 	private int isActive;
 
-	@JsonView(AjaxJsonViews.ActInfo.class)
+	@JsonView(AjaxJsonViews.Public.class)
 	private String effective;
 
-	@JsonView(AjaxJsonViews.ActInfo.class)
+	@JsonView(AjaxJsonViews.Public.class)
 	private String salary;
 
-	@JsonView(AjaxJsonViews.ActInfo.class)
+	@JsonView(AjaxJsonViews.Public.class)
 	private String releaseTime;
 
-	// GetDetail
-
-	@JsonView(AjaxJsonViews.ActDetail.class)
-	private long time;
-
-	@JsonView(AjaxJsonViews.ActDetail.class)
-	private int favorNum;
-
-	@JsonView(AjaxJsonViews.ActDetail.class)
-	String tel;
-
-	@JsonView(AjaxJsonViews.ActDetail.class)
-	String email;
-
-	@JsonView(AjaxJsonViews.ActDetail.class)
-	String qq;
-
-	@JsonView(AjaxJsonViews.ActDetail.class)
-	String detail;
-
-	@JsonView(AjaxJsonViews.ActDetail.class)
-	String more;
-	
 	
 	public ActInfoAjax(CommonActInfo commonActInfo, boolean isFavoured) {
 
@@ -96,15 +72,6 @@ public class ActInfoAjax {
 		this.location = commonActInfo.getSchCode().getDescription() + ": " + commonActInfo.getLocation();
 		this.isFavor = isFavoured ? 1 : 0;
 		this.author = commonActInfo.getOrganizer();
-
-		// GetDetail	
-		this.time = commonActInfo.getStartDate().getTime();
-		this.favorNum = commonActInfo.getNumFavo();
-		this.tel = commonActInfo.getCtPerTel();
-		this.email = commonActInfo.getCtPerMail();
-		this.qq = commonActInfo.getCtPerQq();
-		this.detail = commonActInfo.getIntro();
-		this.more = commonActInfo.getOutLink();
 		
 		// GetActivities
 		this.startTime = commonActInfo.getStartDate().getTime();

@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
@@ -87,31 +88,23 @@ public class CommonActInfoDao {
 	public void addFavour(int id) {
 		Session session = sessionFactory.getCurrentSession();
 
-		CommonActInfo commonActInfo = (CommonActInfo) session.load(CommonActInfo.class, id);
+		Query query = session.createQuery("update CommonActInfo as commonActInfo set commonActInfo.numFavo = commonActInfo.numFavo + 1 "
+				+ "where commonActInfo.id = :commonActInfoId");
+		query.setParameter("commonActInfoId", id);
+		query.executeUpdate();		
 
-		if (commonActInfo == null) {
-			return;
-		} else {
-			commonActInfo.setNumFavo(commonActInfo.getNumFavo() + 1);
-			return;
-		}
 	}
 
 	public void minusFavour(int id) {
+		
 		Session session = sessionFactory.getCurrentSession();
 
-		CommonActInfo commonActInfo = (CommonActInfo) session.load(CommonActInfo.class, id);
-
-		if (commonActInfo == null) {
-			return;
-		} else {
-			int nowFavo = commonActInfo.getNumFavo();
-			if (nowFavo == 0) {
-				return; // for caution
-			}
-			commonActInfo.setNumFavo(nowFavo - 1);
-			return;
-		}
+		Query query = session.createQuery("update CommonActInfo as commonActInfo set commonActInfo.numFavo = commonActInfo.numFavo - 1 "
+				+ "where commonActInfo.numFavo > 0 and commonActInfo.id = :commonActInfoId");
+		query.setParameter("commonActInfoId", id);
+		query.executeUpdate();
+		
+		
 	}
 
 }
