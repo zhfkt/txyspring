@@ -80,7 +80,14 @@ public class CommonActInfoDao {
 		Session session = sessionFactory.getCurrentSession();
 
 		CommonActInfo commonActInfo = (CommonActInfo) session.get(CommonActInfo.class, id);
+		
+		if(commonActInfo==null)
+		{
+			return null;
+		}
+		
 		Hibernate.initialize(commonActInfo.getSchCode());
+		Hibernate.initialize(commonActInfo.getCommonActImages());
 
 		return commonActInfo;
 	}

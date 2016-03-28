@@ -1,8 +1,10 @@
 package com.tongmeng.txyspring.ajaxmodel;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.tongmeng.txyspring.model.CommonActImage;
 import com.tongmeng.txyspring.model.CommonActInfo;
 
 public class ActDetailAjax {
@@ -56,12 +58,18 @@ public class ActDetailAjax {
 		// Public 
 		this.title = commonActInfo.getTitle();
 		this.id = commonActInfo.getId();
-		//this.images = commonActInfo.getCovImgUri();
 		this.location = commonActInfo.getSchCode().getDescription() + ": " + commonActInfo.getLocation();
 		this.isFavor = isFavoured ? 1 : 0;
 		this.author = commonActInfo.getOrganizer();
 
 		// GetDetail	
+		
+		this.images = new ArrayList<String>();
+		for(CommonActImage commonActImages: commonActInfo.getCommonActImages())
+		{
+			images.add(commonActImages.getImage());
+		}
+		
 		this.time = commonActInfo.getStartDate().getTime();
 		this.favorNum = commonActInfo.getNumFavo();
 		this.tel = commonActInfo.getCtPerTel();
@@ -69,7 +77,6 @@ public class ActDetailAjax {
 		this.qq = commonActInfo.getCtPerQq();
 		this.detail = commonActInfo.getIntro();
 		this.more = commonActInfo.getOutLink();
-		
 	}	
 	
 
