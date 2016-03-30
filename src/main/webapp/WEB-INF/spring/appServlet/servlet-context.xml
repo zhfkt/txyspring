@@ -38,4 +38,10 @@
 	    <beans:property name="sessionFactory" ref="sessionFactory" />
 	</beans:bean>
 	
+	
+	<beans:bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">   
+         <beans:property name="synchronizeOnSession" value="true"/>    
+     </beans:bean>  	
+	
+	
 </beans:beans>
