@@ -11,6 +11,7 @@ import com.tongmeng.txyspring.ajaxmodel.ActInfoAjax;
 import com.tongmeng.txyspring.dao.CommonActInfoDao;
 import com.tongmeng.txyspring.dao.UserActCltDao;
 import com.tongmeng.txyspring.model.CommonActInfo;
+import com.tongmeng.txyspring.service.identity.IdentityInterface;
 
 @Service
 public class UserService {
@@ -81,8 +82,22 @@ public class UserService {
 		}				
 		
 		return ajaxLstAct;
-		
 	}
 	
+	
+	@Transactional
+	public int getUserLoginId(String HttpRequest) {
+	
+		IdentityInterface identity = IdentityInterface.getSchFactory(HttpRequest);
+		
+		
+		IdentityInterface.SCHCODE schCode = identity.getSchCode();
+		String oriId = identity.getOriId(HttpRequest);
+		
+		//if select not exist
+		//insert
+		
+		return 0;
+	}	
 
 }

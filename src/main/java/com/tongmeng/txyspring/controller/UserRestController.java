@@ -1,6 +1,5 @@
 package com.tongmeng.txyspring.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.exception.ConstraintViolationException;
@@ -17,7 +16,6 @@ import com.tongmeng.txyspring.ajaxmodel.ActInfoAjax;
 import com.tongmeng.txyspring.ajaxmodel.AjaxJsonViews;
 import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody;
 import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody.RESPONSE_STATUS;
-import com.tongmeng.txyspring.model.CommonActInfo;
 import com.tongmeng.txyspring.service.UserService;
 
 
@@ -57,14 +55,31 @@ public class UserRestController {
 	
 	@JsonView(AjaxJsonViews.Public.class)
 	@RequestMapping(value = "/GetFavorList", method = RequestMethod.GET)
-	public  AjaxResponseBody<List<ActInfoAjax>> getFavorList(
+	public AjaxResponseBody<List<ActInfoAjax>> getFavorList(
 			@RequestParam(value = "type", required = false, defaultValue = "1") int type
 			) {
 		
 
 		List<ActInfoAjax> ajaxLstAct = us.getFavorList(type);			
 		return new AjaxResponseBody<List<ActInfoAjax> >(RESPONSE_STATUS.SUCCESS,ajaxLstAct);
-	}		
+	}
+	
+	
+	//http://data.tongji.edu.cn:8080/dataservice/ws/rest/getSid?ticket=test&appId=00168&appSecret=test&key=101
+	@RequestMapping(value = "/Login", method = RequestMethod.GET)
+	public void login(
+			@RequestParam(value = "ticket", required = false, defaultValue = "") String ticket
+			) {
+		
+		if(!ticket.equals(""))
+		{
+			//getUserid(http get + select from database)
+			//session setter
+		}
+		
+		
+		return;
+	}
 	
 	
 }
