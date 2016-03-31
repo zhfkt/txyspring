@@ -93,7 +93,7 @@ public class UserAll implements java.io.Serializable {
 		this.psw = psw;
 	}
 
-	@Column(name = "Ori_ID", length = 100)
+	@Column(name = "Ori_ID", length = 100, nullable = false)
 	public String getOriId() {
 		return this.oriId;
 	}

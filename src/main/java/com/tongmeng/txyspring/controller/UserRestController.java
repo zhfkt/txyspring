@@ -79,7 +79,7 @@ public class UserRestController {
 		try
 		{
 			int userId = userService.getUserLoginId(request);
-			//session setter
+			//session setter and userInfoSession is session Scope
 			userInfoSession.setUserId(userId);
 		}
 		catch(IllegalArgumentException e)

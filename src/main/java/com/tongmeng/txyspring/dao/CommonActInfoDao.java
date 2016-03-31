@@ -10,14 +10,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.tongmeng.txyspring.ajaxmodel.ActInfoAjax;
 import com.tongmeng.txyspring.model.CommonActInfo;
-import com.tongmeng.txyspring.model.UserActClt;
-import com.tongmeng.txyspring.model.UserAll;
 
 @Repository
 public class CommonActInfoDao {
@@ -66,6 +62,10 @@ public class CommonActInfoDao {
 			criteria.addOrder(Order.desc("hot"));
 			break;
 		default:
+			//default here set to OrderByStarttime
+			criteria.addOrder(Order.desc("startDate"));
+			break;
+			
 		}
 
 		criteria.setFirstResult(startPage * pageSize);

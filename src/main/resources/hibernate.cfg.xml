@@ -23,7 +23,6 @@
 		<property name="hibernate.c3p0.idle_test_period">3000</property>        
         
         <mapping class="com.tongmeng.txyspring.model.ActCode" />
-        <mapping class="com.tongmeng.txyspring.model.PostExtraInfo" />
         <mapping class="com.tongmeng.txyspring.model.UserAll" />
         <mapping class="com.tongmeng.txyspring.model.UserActClt" />
         <mapping class="com.tongmeng.txyspring.model.ActExtraInfo" />

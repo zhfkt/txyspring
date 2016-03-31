@@ -73,13 +73,15 @@ public class ActInfoAjax {
 		this.isFavor = isFavoured ? 1 : 0;
 		this.author = commonActInfo.getOrganizer();
 		
+		final int hotThreshold = 300;
+		
 		// GetActivities
 		this.startTime = commonActInfo.getStartDate().getTime();
 		this.endTime = commonActInfo.getEndDate().getTime();
 		this.personNum = commonActInfo.getPeopleNumber();
 		this.subType = commonActInfo.getActCode().getActSubtype();
 		this.type = this.subType / 10000;
-		this.hot = commonActInfo.getHot() > 10 ? 1 : 0;
+		this.hot = commonActInfo.getHot() > hotThreshold ? 1 : 0;
 		this.isActive = this.endTime > new Date().getTime() ? 1 : 0;
 
 		if (isActive == 0) {

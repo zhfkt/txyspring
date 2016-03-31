@@ -1,7 +1,6 @@
 package com.tongmeng.txyspring.ajaxmodel;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.tongmeng.txyspring.model.CommonActImage;

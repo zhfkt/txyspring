@@ -51,7 +51,6 @@ public class CommonActInfo implements java.io.Serializable {
 	private JobExtraInfo jobExtraInfo;
 	private Set<UserActClt> userActClts = new HashSet<UserActClt>(0);
 	private ActExtraInfo actExtraInfo;
-	private PostExtraInfo postExtraInfo;
 	private Set<CommonActImage> commonActImages = new HashSet<CommonActImage>(0);
 
 	private double hot;
@@ -80,7 +79,7 @@ public class CommonActInfo implements java.io.Serializable {
 			String location, Integer peopleNumber, Integer numRead, Integer numFavo, String covImgUri, String intro,
 			String ctPerTel, String ctPerMail, String ctPerQq, String outLink, Integer statCode, String salary,
 			String organizer, String sponsor, JobExtraInfo jobExtraInfo, Set<UserActClt> userActClts,
-			ActExtraInfo actExtraInfo, PostExtraInfo postExtraInfo, Set<CommonActImage> commonActImages) {
+			ActExtraInfo actExtraInfo, Set<CommonActImage> commonActImages) {
 		this.actCode = actCode;
 		this.schCode = schCode;
 		this.title = title;
@@ -104,7 +103,6 @@ public class CommonActInfo implements java.io.Serializable {
 		this.jobExtraInfo = jobExtraInfo;
 		this.userActClts = userActClts;
 		this.actExtraInfo = actExtraInfo;
-		this.postExtraInfo = postExtraInfo;
 		this.commonActImages = commonActImages;
 	}
 
@@ -330,15 +328,6 @@ public class CommonActInfo implements java.io.Serializable {
 
 	public void setActExtraInfo(ActExtraInfo actExtraInfo) {
 		this.actExtraInfo = actExtraInfo;
-	}
-
-	@OneToOne(optional = false, fetch = FetchType.LAZY, mappedBy = "commonActInfo")
-	public PostExtraInfo getPostExtraInfo() {
-		return this.postExtraInfo;
-	}
-
-	public void setPostExtraInfo(PostExtraInfo postExtraInfo) {
-		this.postExtraInfo = postExtraInfo;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "commonActInfo")

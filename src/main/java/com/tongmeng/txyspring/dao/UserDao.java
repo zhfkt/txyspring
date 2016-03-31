@@ -42,7 +42,8 @@ public class UserDao {
 		
 		Session session = sessionFactory.getCurrentSession();
 
-		UserAll userAll = new UserAll(new SchCode(areaCode), oriId);			
+		SchCode schCode = new SchCode(areaCode);
+		UserAll userAll = new UserAll(schCode, oriId);			
 		session.save(userAll);
 		
 		return userAll;
