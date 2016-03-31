@@ -39,8 +39,9 @@ public class UserAll implements java.io.Serializable {
 	public UserAll() {
 	}
 
-	public UserAll(SchCode schCode) {
+	public UserAll(SchCode schCode, String oriId) {
 		this.schCode = schCode;
+		this.oriId = oriId;
 	}
 
 	public UserAll(SchCode schCode, String psw, String oriId, String oriName, String nickName, Integer age,

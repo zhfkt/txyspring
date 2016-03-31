@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 
 <!DOCTYPE html>
 <html>
@@ -13,7 +15,14 @@
   <body>
     <div id="root" style="height:100%">
     </div>
-    <script src="//cdn.bootcss.com/zepto/1.1.6/zepto.min.js"></script>
-    <script src="/static/bundle.js"></script>
+    
+    <div align="center">
+		<h1>${UserID}</h1>
+	</div>
+    
+    <!-- 
+	    <script src="//cdn.bootcss.com/zepto/1.1.6/zepto.min.js"></script>
+	    <script src="/static/bundle.js"></script>
+     -->
   </body>
 </html>

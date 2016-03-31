@@ -3,6 +3,8 @@ package com.tongmeng.txyspring.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tongmeng.txyspring.ajaxmodel.ActInfoAjax;
 import com.tongmeng.txyspring.dao.CommonActInfoDao;
 import com.tongmeng.txyspring.dao.UserActCltDao;
+import com.tongmeng.txyspring.dao.UserDao;
 import com.tongmeng.txyspring.model.CommonActInfo;
+import com.tongmeng.txyspring.model.UserAll;
 import com.tongmeng.txyspring.service.identity.IdentityInterface;
 
 @Service
@@ -22,6 +26,9 @@ public class UserService {
 	
 	@Autowired
 	private UserActCltDao userActCltDao;
+	
+	@Autowired
+	private UserDao userDao;
 	
 	@Transactional(readOnly = true)
 	public boolean isFavoured(int id) {
@@ -86,18 +93,15 @@ public class UserService {
 	
 	
 	@Transactional
-	public int getUserLoginId(String HttpRequest) {
+	public int getUserLoginId(HttpServletRequest request) {
 	
-		IdentityInterface identity = IdentityInterface.getSchFactory(HttpRequest);
-		
-		
+		IdentityInterface identity = IdentityInterface.getSchFactory(request);
+				
 		IdentityInterface.SCHCODE schCode = identity.getSchCode();
-		String oriId = identity.getOriId(HttpRequest);
-		
-		//if select not exist
-		//insert
-		
-		return 0;
+		String oriId = identity.getOriId(request);
+			
+		UserAll user = userDao.insertOrSelectUser(schCode.getValue(),oriId);
+		return user.getId();
 	}	
 
 }
