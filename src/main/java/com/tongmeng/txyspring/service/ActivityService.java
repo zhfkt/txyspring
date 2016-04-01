@@ -18,31 +18,28 @@ public class ActivityService {
 
 	@Autowired
 	private CommonActInfoDao commonActInfoDao;
-	
+
 	@Autowired
-	private UserService us;	
+	private UserService us;
 
 	@Transactional(readOnly = true)
 	public List<ActInfoAjax> listActivitiesByActCodeAndSchCode(int areacode, int subtype, int sort, int p) {
 
-		SortOption so = SortOption.Default;
+		SortOption so = SortOption.OrderByStarttime;
 
-		if (sort == 1) {
-			so = SortOption.OrderByStarttime;
-		} else if (sort == 2) {
+		if (sort == 2) {
 			so = SortOption.OrderByHot;
 		} else {
-			so = SortOption.Default;
+			so = SortOption.OrderByStarttime;
 		}
 
 		List<CommonActInfo> lstAct = commonActInfoDao.listCommonInfoByActAndSch(areacode, subtype, p, so);
-		
-		
+
 		List<ActInfoAjax> ajaxLstAct = new ArrayList<ActInfoAjax>();
 		for (CommonActInfo commonActInfo : lstAct) {
-			ajaxLstAct.add(new ActInfoAjax(commonActInfo,us.isFavoured(commonActInfo.getId())));
+			ajaxLstAct.add(new ActInfoAjax(commonActInfo, us.isFavoured(commonActInfo.getId())));
 		}
-		
+
 		return ajaxLstAct;
 	}
 
@@ -50,21 +47,15 @@ public class ActivityService {
 	public ActDetailAjax getActivitiyDetail(int id) {
 
 		ActDetailAjax actInfoAjax = null;
-		
+
 		CommonActInfo commonActInfo = commonActInfoDao.getCommonActInfo(id);
 		if (commonActInfo != null) {
 			boolean isFavoured = us.isFavoured(id);
 			actInfoAjax = new ActDetailAjax(commonActInfo, isFavoured);
 		}
-		
+
 		return actInfoAjax;
-		
+
 	}
 
-	
-	
-	
-	
 }
-
-

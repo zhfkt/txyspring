@@ -5,6 +5,7 @@ USE txyspring;
 CREATE TABLE sliders (
 	ID INT NOT NULL AUTO_INCREMENT,
 	Title VARCHAR (100) NOT NULL,
+    
 	Image_Path TEXT NOT NULL,
 	Link TEXT NOT NULL,
 	PRIMARY KEY ( ID )
@@ -127,37 +128,49 @@ CREATE TABLE common_act_image(
 # const data insert
 
 insert sch_code(Area_Code,Description)
-values (1,'校外');
+values (0,'校外');
 
 insert sch_code(Area_Code,Description)
 values (10000,'同济大学');
 
 insert sch_code(Area_Code,Description)
-values (10001,'同济大学嘉定校区');
+values (10011,'同济大学嘉定校区');
 
 insert sch_code(Area_Code,Description)
-values (10002,'同济大学四平路校区');
+values (10012,'同济大学四平路校区');
 
 insert act_code(Act_Subtype,Description_Subtype)
 values (10000,'校园活动');
 
 insert act_code(Act_Subtype,Description_Subtype)
-values (10011,'公共讲座');
+values (10011,'讲座报告');
 
 insert act_code(Act_Subtype,Description_Subtype)
 values (10012,'文艺演出');
 
 insert act_code(Act_Subtype,Description_Subtype)
-values (10013,'学术报告');
+values (10013,'体育赛事');
 
 insert act_code(Act_Subtype,Description_Subtype)
-values (20000,'招聘宣讲');
+values (10014,'社团社交');
 
 insert act_code(Act_Subtype,Description_Subtype)
-values (30000,'兼职赚钱');
+values (10015,'竞赛培训');
 
 insert act_code(Act_Subtype,Description_Subtype)
-values (40000,'生活周边');
+values (10016,'其他活动');
+
+insert act_code(Act_Subtype,Description_Subtype)
+values (20000,'企业直通');
+
+insert act_code(Act_Subtype,Description_Subtype)
+values (20011,'企业宣讲');
+
+insert act_code(Act_Subtype,Description_Subtype)
+values (20012,'工作实习');
+
+insert act_code(Act_Subtype,Description_Subtype)
+values (20013,'其他信息');
 
 
 #---------------------------------
@@ -217,21 +230,109 @@ end #
 
 delimiter ;
 
+#call insertMultipleFakeData();
 
-call insertMultipleFakeData();
 
-	
+
 insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
 	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Salary,Organizer,Sponsor)
-values ('Test data 1','2016-07-01 23:22:11','2016-08-01 23:22:11','2016-06-01 23:22:11','樱花大道1','10','12','11','https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png','TEST DATA',
-	'110','xxx@ggg.com','123456','http://weibo.com',1,10001,10013,'','zhfkt','zhfkt');
-	
-# /api/activity/GetActivities?type=1&subtype=10013&p=0
-# /api/activity/GetActivities?type=1&p=2
+values ('"我的社区我做主"——参与式社区规划的理念与运作机制',
+		'2016-03-01 15:00:00',
+        '2016-03-01 17:00:00',
+        '2016-02-27 17:00:00',
+        '建筑与城市规划学院C楼二楼C1会议室',
+        '200',
+        '18',
+		'5',
+		'https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png',
+        '内容无',
+		'1111',
+        '1210525@qq.com',
+        '415929235',
+        '',
+        1,
+        10002,
+        10011,
+        '',
+        '建筑与城市规划学院',
+        '');
+        
+insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
+	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Salary,Organizer,Sponsor)
+values ('"我的社区我做主"——参与式社区规划的理念与运作机制',
+		'2016-03-01 15:00:00',
+        '2016-03-01 17:00:00',
+        '2016-02-27 17:00:00',
+        '建筑与城市规划学院C楼二楼C1会议室',
+        '200',
+        '18',
+		'5',
+		'https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png',
+        '内容无',
+		'1111',
+        '1210525@qq.com',
+        '415929235',
+        '',
+        1,
+        10002,
+        10011,
+        '',
+        '建筑与城市规划学院',
+        '');        
+
+insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
+	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Salary,Organizer,Sponsor)
+values ('化学系学术报告：Theoretical understanding of water splitting and oxygen reduction',
+		'2016-04-01 10:00:00',
+        '2016-04-01 11:00:00',
+        '2016-03-27 17:00:00',
+        '化学馆 241',
+        '100',
+        '30',
+		'23',
+		'https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png',
+        '内容无',
+		'1111',
+        '1210525@qq.com',
+        '415929235',
+        '',
+        1,
+        10002,
+        10011,
+        '',
+        '化学系',
+        '');    
+        
+insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
+	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Salary,Organizer,Sponsor)
+values ('【茶话清谈】樱花盛开诗意校园',
+		'2016-04-02 10:00:00',
+        '2016-04-02 11:00:00',
+        '2016-03-28 17:00:00',
+        '图书馆十楼（南）闻学堂',
+        '300',
+        '120',
+		'80',
+		'https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png',
+        '人间四月草长莺飞，又到一年樱花烂漫纷飞时节，如云似霞。花团锦簇的同济校园里，飘落的樱花如飞舞的精灵，划过发梢，绕过裙角，香了风，也香了伊人裳……花能解语，亦能通过诗词、歌赋来传情达意。美的无可方物的樱花，被多少诗人赞许、爱怜，化作句句字里行间那轻描淡写的流年的诗篇。',
+		'1111',
+        '1210525@qq.com',
+        '415929235',
+        '',
+        1,
+        10002,
+        10011,
+        '',
+        '化学系',
+        ''); 	
+        
+        
+
+
 #---------------------------------
 
-select * from sliders;
-select * from common_act_info;
+#select * from sliders;
+#select * from common_act_info;
 
 
 
