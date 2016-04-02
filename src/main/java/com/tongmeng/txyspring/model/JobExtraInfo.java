@@ -1,5 +1,5 @@
 package com.tongmeng.txyspring.model;
-// Generated 2016-3-19 15:52:39 by Hibernate Tools 4.3.1.Final
+// Generated 2016-4-2 14:20:28 by Hibernate Tools 4.3.1.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,12 +21,20 @@ public class JobExtraInfo implements java.io.Serializable {
 
 	private int id;
 	private CommonActInfo commonActInfo;
+	private String salary;
+	private String jobInfo;
 
 	public JobExtraInfo() {
 	}
 
 	public JobExtraInfo(CommonActInfo commonActInfo) {
 		this.commonActInfo = commonActInfo;
+	}
+
+	public JobExtraInfo(CommonActInfo commonActInfo, String salary, String jobInfo) {
+		this.commonActInfo = commonActInfo;
+		this.salary = salary;
+		this.jobInfo = jobInfo;
 	}
 
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "commonActInfo"))
@@ -50,6 +58,24 @@ public class JobExtraInfo implements java.io.Serializable {
 
 	public void setCommonActInfo(CommonActInfo commonActInfo) {
 		this.commonActInfo = commonActInfo;
+	}
+
+	@Column(name = "Salary", length = 100)
+	public String getSalary() {
+		return this.salary;
+	}
+
+	public void setSalary(String salary) {
+		this.salary = salary;
+	}
+
+	@Column(name = "Job_Info", length = 100)
+	public String getJobInfo() {
+		return this.jobInfo;
+	}
+
+	public void setJobInfo(String jobInfo) {
+		this.jobInfo = jobInfo;
 	}
 
 }

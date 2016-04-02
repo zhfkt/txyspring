@@ -1,5 +1,7 @@
 package com.tongmeng.txyspring.controller;
 
+import javax.security.auth.login.CredentialException;
+
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -55,11 +57,19 @@ public class RestExceptionHandlerControllerAdvice {
     public AjaxResponseBody<Void> MismatchParException(Exception exception, WebRequest request) {
     	    	
     	logger.error(exception.getMessage().toString());
-    	logger.error(exception.getCause().toString());
+    	//logger.error(exception.getCause().toString());
 
     	return new AjaxResponseBody<Void>(RESPONSE_STATUS.PARAMETRR_ERROR);	
     }    
-    
 
-	
+    @ExceptionHandler(value = CredentialException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @JsonView(AjaxJsonViews.Public.class)
+    @ResponseBody
+    public AjaxResponseBody<Void> CredentialException(Exception exception, WebRequest request) {
+    	    	
+    	logger.error(exception.getMessage().toString());
+    	return new AjaxResponseBody<Void>(RESPONSE_STATUS.NOT_LOGIN);	
+    }    
+    
 }

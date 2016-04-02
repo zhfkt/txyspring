@@ -1,5 +1,5 @@
 package com.tongmeng.txyspring.model;
-// Generated 2016-3-19 15:52:39 by Hibernate Tools 4.3.1.Final
+// Generated 2016-4-2 14:20:28 by Hibernate Tools 4.3.1.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -93,7 +93,7 @@ public class UserAll implements java.io.Serializable {
 		this.psw = psw;
 	}
 
-	@Column(name = "Ori_ID", length = 100, nullable = false)
+	@Column(name = "Ori_ID", nullable = false, length = 100)
 	public String getOriId() {
 		return this.oriId;
 	}

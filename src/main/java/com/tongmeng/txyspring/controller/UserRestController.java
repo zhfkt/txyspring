@@ -2,11 +2,13 @@ package com.tongmeng.txyspring.controller;
 
 import java.util.List;
 
+import javax.security.auth.login.CredentialException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,7 +44,7 @@ public class UserRestController {
 	public AjaxResponseBody<Void> changeFavour(
 			@RequestParam(value = "id", required = true) int id,
 			@RequestParam(value = "action", required = true) String action			
-			) {
+			) throws CredentialException {
 		
 		try
 		{
@@ -64,7 +66,7 @@ public class UserRestController {
 	@RequestMapping(value = "/GetFavorList", method = RequestMethod.GET)
 	public AjaxResponseBody<List<ActInfoAjax>> getFavorList(
 			@RequestParam(value = "type", required = false, defaultValue = "1") int type
-			) {
+			) throws CredentialException {
 		
 
 		List<ActInfoAjax> ajaxLstAct = userService.getFavorList(type);			
@@ -74,7 +76,7 @@ public class UserRestController {
 	
 	//http://localhost:8080/txyspring/api/user/Login?ticket=1
 	@RequestMapping(value = "/Login", method = RequestMethod.GET)
-	public ModelAndView login(HttpServletRequest request) {
+	public ModelAndView login(HttpServletRequest request) throws MissingServletRequestParameterException {
 		
 		try
 		{
@@ -85,6 +87,7 @@ public class UserRestController {
 		catch(IllegalArgumentException e)
 		{
 	    	logger.warn(e.getMessage().toString());
+	    	throw new MissingServletRequestParameterException("auth login ticket", "String");
 		}
 	
 		return new ModelAndView("redirect:/");

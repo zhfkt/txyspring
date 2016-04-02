@@ -61,7 +61,10 @@ public class ActInfoAjax {
 
 	@JsonView(AjaxJsonViews.Public.class)
 	private String releaseTime;
-
+	
+	@JsonView(AjaxJsonViews.Public.class)
+	private int needOrder;
+	
 	
 	public ActInfoAjax(CommonActInfo commonActInfo, boolean isFavoured) {
 
@@ -82,6 +85,7 @@ public class ActInfoAjax {
 		this.subType = commonActInfo.getActCode().getActSubtype();
 		this.type = this.subType / 10000;
 		this.hot = commonActInfo.getHot() > hotThreshold ? 1 : 0;
+		this.needOrder = commonActInfo.getIsReversed();
 		this.isActive = this.endTime > new Date().getTime() ? 1 : 0;
 
 		if (isActive == 0) {
@@ -95,10 +99,16 @@ public class ActInfoAjax {
 			} else {
 				this.effective = "还剩" + left_days + "天";
 			}
-
 		}
 
-		this.salary = commonActInfo.getSalary();
+		if(commonActInfo.getJobExtraInfo()==null)
+		{
+			this.salary = "";
+		}
+		else
+		{
+			this.salary = commonActInfo.getJobExtraInfo().getSalary();
+		}
 
 		Days toStartTime = Days.daysBetween(new DateTime(commonActInfo.getPubTime()), new DateTime(new Date()));
 		int releasedays = toStartTime.getDays();
@@ -107,7 +117,6 @@ public class ActInfoAjax {
 		} else {
 			this.releaseTime = "于" + releasedays + "天前发布";
 		}
-		
 	}
 
 

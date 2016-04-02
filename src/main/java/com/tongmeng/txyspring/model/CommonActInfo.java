@@ -1,5 +1,5 @@
 package com.tongmeng.txyspring.model;
-// Generated 2016-3-19 15:52:39 by Hibernate Tools 4.3.1.Final
+// Generated 2016-4-2 14:20:28 by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -45,12 +45,13 @@ public class CommonActInfo implements java.io.Serializable {
 	private String ctPerQq;
 	private String outLink;
 	private Integer statCode;
-	private String salary;
 	private String organizer;
 	private String sponsor;
+	private Integer isReversed;
 	private JobExtraInfo jobExtraInfo;
 	private Set<UserActClt> userActClts = new HashSet<UserActClt>(0);
 	private ActExtraInfo actExtraInfo;
+	private Set<Sliders> sliderses = new HashSet<Sliders>(0);
 	private Set<CommonActImage> commonActImages = new HashSet<CommonActImage>(0);
 
 	private double hot;
@@ -66,10 +67,9 @@ public class CommonActInfo implements java.io.Serializable {
 	public CommonActInfo() {
 	}
 
-	public CommonActInfo(ActCode actCode, SchCode schCode, String title, Date startDate, Date endDate, Date pubTime) {
+	public CommonActInfo(ActCode actCode, SchCode schCode, Date startDate, Date endDate, Date pubTime) {
 		this.actCode = actCode;
 		this.schCode = schCode;
-		this.title = title;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.pubTime = pubTime;
@@ -77,9 +77,9 @@ public class CommonActInfo implements java.io.Serializable {
 
 	public CommonActInfo(ActCode actCode, SchCode schCode, String title, Date startDate, Date endDate, Date pubTime,
 			String location, Integer peopleNumber, Integer numRead, Integer numFavo, String covImgUri, String intro,
-			String ctPerTel, String ctPerMail, String ctPerQq, String outLink, Integer statCode, String salary,
-			String organizer, String sponsor, JobExtraInfo jobExtraInfo, Set<UserActClt> userActClts,
-			ActExtraInfo actExtraInfo, Set<CommonActImage> commonActImages) {
+			String ctPerTel, String ctPerMail, String ctPerQq, String outLink, Integer statCode, String organizer,
+			String sponsor, Integer isReversed, JobExtraInfo jobExtraInfo, Set<UserActClt> userActClts,
+			ActExtraInfo actExtraInfo, Set<Sliders> sliderses, Set<CommonActImage> commonActImages) {
 		this.actCode = actCode;
 		this.schCode = schCode;
 		this.title = title;
@@ -97,12 +97,13 @@ public class CommonActInfo implements java.io.Serializable {
 		this.ctPerQq = ctPerQq;
 		this.outLink = outLink;
 		this.statCode = statCode;
-		this.salary = salary;
 		this.organizer = organizer;
 		this.sponsor = sponsor;
+		this.isReversed = isReversed;
 		this.jobExtraInfo = jobExtraInfo;
 		this.userActClts = userActClts;
 		this.actExtraInfo = actExtraInfo;
+		this.sliderses = sliderses;
 		this.commonActImages = commonActImages;
 	}
 
@@ -138,7 +139,7 @@ public class CommonActInfo implements java.io.Serializable {
 		this.schCode = schCode;
 	}
 
-	@Column(name = "Title", nullable = false, length = 65535)
+	@Column(name = "Title", length = 65535)
 	public String getTitle() {
 		return this.title;
 	}
@@ -212,7 +213,7 @@ public class CommonActInfo implements java.io.Serializable {
 	public void setNumFavo(Integer numFavo) {
 		this.numFavo = numFavo;
 	}
-	
+
 	@Column(name = "CovImg_Uri", length = 65535)
 	public String getCovImgUri() {
 		return this.covImgUri;
@@ -220,7 +221,7 @@ public class CommonActInfo implements java.io.Serializable {
 
 	public void setCovImgUri(String covImgUri) {
 		this.covImgUri = covImgUri;
-	}	
+	}
 
 	@Column(name = "Intro", length = 65535)
 	public String getIntro() {
@@ -276,15 +277,6 @@ public class CommonActInfo implements java.io.Serializable {
 		this.statCode = statCode;
 	}
 
-	@Column(name = "Salary", length = 100)
-	public String getSalary() {
-		return this.salary;
-	}
-
-	public void setSalary(String salary) {
-		this.salary = salary;
-	}
-
 	@Column(name = "Organizer", length = 100)
 	public String getOrganizer() {
 		return this.organizer;
@@ -301,6 +293,15 @@ public class CommonActInfo implements java.io.Serializable {
 
 	public void setSponsor(String sponsor) {
 		this.sponsor = sponsor;
+	}
+
+	@Column(name = "Is_Reversed")
+	public Integer getIsReversed() {
+		return this.isReversed;
+	}
+
+	public void setIsReversed(Integer isReversed) {
+		this.isReversed = isReversed;
 	}
 
 	@OneToOne(optional = false, fetch = FetchType.LAZY, mappedBy = "commonActInfo")
@@ -331,6 +332,15 @@ public class CommonActInfo implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "commonActInfo")
+	public Set<Sliders> getSliderses() {
+		return this.sliderses;
+	}
+
+	public void setSliderses(Set<Sliders> sliderses) {
+		this.sliderses = sliderses;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "commonActInfo")
 	public Set<CommonActImage> getCommonActImages() {
 		return this.commonActImages;
 	}
@@ -338,5 +348,5 @@ public class CommonActInfo implements java.io.Serializable {
 	public void setCommonActImages(Set<CommonActImage> commonActImages) {
 		this.commonActImages = commonActImages;
 	}
-	
+
 }

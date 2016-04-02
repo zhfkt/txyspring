@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -34,7 +35,9 @@ public class CommonActInfoDao {
 
 		Criteria criteria = session.createCriteria(CommonActInfo.class);
 
-		criteria.setFetchMode("schCode", FetchMode.JOIN);
+		criteria.createCriteria("jobExtraInfo", JoinType.LEFT_OUTER_JOIN);
+		criteria.createCriteria("schCode", JoinType.INNER_JOIN);
+		//criteria.setFetchMode("schCode", FetchMode.JOIN).setFetchMode("", FetchMode.EAGER);
 		
 		if (subtype % 10000 == 0) {
 			criteria.add(Restrictions.ge("actCode.id", subtype));

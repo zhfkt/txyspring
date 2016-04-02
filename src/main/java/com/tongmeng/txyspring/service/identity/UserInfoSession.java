@@ -10,7 +10,8 @@ import org.springframework.web.context.WebApplicationContext;
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class UserInfoSession {
 	
-	private int userId = 0;
+	final int NOT_LOGIN = 0;
+	private int userId = NOT_LOGIN;
 
 	public int getUserId() {
 		return userId;
@@ -19,6 +20,18 @@ public class UserInfoSession {
 	//Multi-thread mutex protected in xml config.
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+	
+	public boolean isLogined()
+	{
+		if(userId == NOT_LOGIN)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 	
 }

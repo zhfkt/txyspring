@@ -4,9 +4,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.tongmeng.txyspring.model.Sliders;
 
 public class SlidersAjax {
-
-	@JsonView(AjaxJsonViews.Public.class)
-	private Integer id;
 	
 	@JsonView(AjaxJsonViews.Public.class)
 	private String title;
@@ -16,19 +13,21 @@ public class SlidersAjax {
 	
 	@JsonView(AjaxJsonViews.Public.class)
 	private String link;
+	
+	@JsonView(AjaxJsonViews.Public.class)
+	private Integer actId;
 
 	public SlidersAjax(Sliders sliders) {
 		this.title = sliders.getTitle();
 		this.imagePath = sliders.getImagePath();
 		this.link = sliders.getLink();
-	}
-
-	public Integer getId() {
-		return this.id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
+		
+		if(sliders.getCommonActInfo()!=null)
+		{
+			this.actId = sliders.getCommonActInfo().getId();
+		}
+		
+		
 	}
 
 	public String getTitle() {

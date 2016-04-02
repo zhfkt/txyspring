@@ -2,6 +2,8 @@ package com.tongmeng.txyspring.controller;
 
 import java.util.List;
 
+import javax.security.auth.login.CredentialException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,7 +23,7 @@ import com.tongmeng.txyspring.service.ActivityService;
 public class ActivityRestController {
 
 	@Autowired
-	private ActivityService as;
+	private ActivityService activityService;
 
 	@JsonView(AjaxJsonViews.Public.class)
 	@RequestMapping(value = "/GetActivities", method = RequestMethod.GET)
@@ -29,13 +31,13 @@ public class ActivityRestController {
 			@RequestParam(value = "campus", required = false, defaultValue = "0") int campus,
 			@RequestParam(value = "subtype", required = false, defaultValue = "0") int subtype,
 			@RequestParam(value = "sort", required = false, defaultValue = "1") int sort,
-			@RequestParam(value = "p", required = false, defaultValue = "0") int p) {
+			@RequestParam(value = "p", required = false, defaultValue = "0") int p) throws CredentialException {
 
 		if (subtype == 0) {
 			subtype = type * 10000;
 		}
 
-		List<ActInfoAjax> ajaxLstAct = as.listActivitiesByActCodeAndSchCode(campus, subtype, sort, p);
+		List<ActInfoAjax> ajaxLstAct = activityService.listActivitiesByActCodeAndSchCode(campus, subtype, sort, p);
 		return new AjaxResponseBody<List<ActInfoAjax>>(RESPONSE_STATUS.SUCCESS, ajaxLstAct);
 
 	}
@@ -44,7 +46,7 @@ public class ActivityRestController {
 	@RequestMapping(value = "/GetDetail", method = RequestMethod.GET)
 	public AjaxResponseBody<ActDetailAjax> GetDetail(@RequestParam(value = "id", required = true) int id) {
 
-		ActDetailAjax actInfoAjax = as.getActivitiyDetail(id);
+		ActDetailAjax actInfoAjax = activityService.getActivitiyDetail(id);
 		return new AjaxResponseBody<ActDetailAjax>(RESPONSE_STATUS.SUCCESS, actInfoAjax);
 	}
 

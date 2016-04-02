@@ -2,22 +2,11 @@ DROP SCHEMA IF EXISTS txyspring;
 CREATE SCHEMA txyspring;
 USE txyspring;
 
-CREATE TABLE sliders (
-	ID INT NOT NULL AUTO_INCREMENT,
-	Title VARCHAR (100) NOT NULL,
-    
-	Image_Path TEXT NOT NULL,
-	Link TEXT NOT NULL,
-	PRIMARY KEY ( ID )
-)DEFAULT CHARSET=utf8;
-
-
 CREATE TABLE sch_code(
 	Area_Code INT NOT NULL,
 	Description VARCHAR(100),
 	PRIMARY KEY (Area_Code)
 )DEFAULT CHARSET=utf8;
-
 
 CREATE TABLE act_code(
 	Act_Subtype INT NOT NULL,
@@ -25,13 +14,12 @@ CREATE TABLE act_code(
 	PRIMARY KEY (Act_Subtype)
 )DEFAULT CHARSET=utf8;
 
-
 CREATE TABLE common_act_info (
 	ID INT NOT NULL AUTO_INCREMENT,
-	Title TEXT NOT NULL,
-	Start_Date TIMESTAMP NOT NULL, 
-	End_Date TIMESTAMP NOT NULL,
-	Pub_Time TIMESTAMP NOT NULL,
+	Title TEXT,
+	Start_Date TIMESTAMP, 
+	End_Date TIMESTAMP,
+	Pub_Time TIMESTAMP,
 	Location TEXT,
 	People_Number INT,
  	NumRead INT,
@@ -43,14 +31,12 @@ CREATE TABLE common_act_info (
 	CtPer_QQ VARCHAR(100),
 	OutLink TEXT,
 	Stat_Code INT,
-	
 	Area_Code INT NOT NULL,
 	Act_Subtype INT NOT NULL,
-	
-	Salary VARCHAR(100),
 	Organizer VARCHAR(100),
-	Sponsor VARCHAR(100),	
-	
+	Sponsor VARCHAR(100),
+    Is_Reversed INT,
+    
 	PRIMARY KEY (ID),
 	FOREIGN KEY (Area_Code) REFERENCES sch_code(Area_Code)
 	ON DELETE RESTRICT
@@ -59,6 +45,20 @@ CREATE TABLE common_act_info (
 	ON DELETE RESTRICT
 	ON UPDATE CASCADE
 )DEFAULT CHARSET=utf8;
+
+CREATE TABLE sliders (
+	ID INT NOT NULL AUTO_INCREMENT,
+	Title VARCHAR (100),
+    Act_ID INT,
+	Image_Path TEXT,
+	Link TEXT,
+	
+    PRIMARY KEY (ID),
+	FOREIGN KEY (Act_ID) REFERENCES common_act_info(ID)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE	
+)DEFAULT CHARSET=utf8;
+
 
 CREATE TABLE act_extra_info(
 	ID INT NOT NULL,
@@ -71,6 +71,9 @@ CREATE TABLE act_extra_info(
 
 CREATE TABLE job_extra_info(
 	ID INT NOT NULL,
+    Salary VARCHAR(100),
+    Job_Info VARCHAR(100),
+    
 	PRIMARY KEY (ID),
 	FOREIGN KEY (ID) REFERENCES common_act_info(ID)
 	ON DELETE CASCADE
@@ -178,64 +181,9 @@ values (20013,'其他信息');
 
 delimiter #
 
-create procedure insertMultipleFakeData()
-begin
-	
-declare fakeCount int;
-declare i int;
-set fakeCount = 10;
-set i = 0;
-
-	start transaction;
-	
-	while i < fakeCount do
-	    
-		insert sliders (Title,Image_Path,Link) 
-		values ('Test data','http://ww2.sinaimg.cn/small/7b254335gw1f24wt3bb8wj21ao0q9afd.jpg','http://weibo.com');
-		
-		insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
-			CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Salary,Organizer,Sponsor)
-		values (CONCAT('TEST DATA ', i),'2016-07-01 23:22:11','2016-08-01 23:22:11','2016-06-01 23:22:11','樱花大道',i,i+3,i+7,'http://ww2.sinaimg.cn/small/7b254335gw1f24wt3bb8wj21ao0q9afd.jpg',CONCAT('TEST DATA ', i),
-			CONCAT(i,'110'),CONCAT(i,'xxx@ggg.com'),123456+i,'http://weibo.com',1,10002,10012,'','zhfkt','zhfkt');		
-			
-		insert common_act_image(Act_ID,Image) 
-        values (i+1,'http://ww2.sinaimg.cn/small/7b254335gw1f24wt3bb8wj21ao0q9afd.jpg');
-        
-		insert common_act_image(Act_ID,Image) 
-        values (i+1,'http://ww2.sinaimg.cn/small/7b254335gw1f24wt3bb8wj21ao0q9afd.jpg');                  
-            
-		insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
-			CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Salary,Organizer,Sponsor)
-		values (CONCAT('TEST DATA ', i),'2015-07-01 23:22:11','2015-08-01 23:22:11','2015-06-01 23:22:11','新天地',i,i+3,i+7,'http://ww2.sinaimg.cn/small/7b254335gw1f24wt3bb8wj21ao0q9afd.jpg',CONCAT('TEST DATA ', i),
-			CONCAT(i,'110'),CONCAT(i,'xxx@ggg.com'),123456+i,'http://weibo.com',1,10001,10011,'','zhfkt','zhfkt');				
-            
-		insert common_act_image(Act_ID,Image) 
-        values (i+2,'http://ww2.sinaimg.cn/small/7b254335gw1f24wt3bb8wj21ao0q9afd.jpg');
-        
-		insert common_act_image(Act_ID,Image) 
-        values (i+2,'http://ww2.sinaimg.cn/small/7b254335gw1f24wt3bb8wj21ao0q9afd.jpg');                 		
-		
-        insert user_all(PSW,Area_Code,Ori_ID,Ori_Name,Nick_Name,Age,Major,Tel,Mail,Gender,Hdimg_Uri,Type_code)
-		values ('',10001, CONCAT('1212', i), CONCAT('比利海灵顿',i), CONCAT('billy',i),40,'Aniki','110',CONCAT(i,'xxx@ggg.com'),0,
-        'http://ww2.sinaimg.cn/small/7b254335gw1f24wt3bb8wj21ao0q9afd.jpg',0);
-        
-        insert user_act_clt(User_ID,Act_ID)
-        values (i+1,i+1);
-        
-		set i = i+1;
-	end while;
-	commit;
-
-end #
-
-delimiter ;
-
-#call insertMultipleFakeData();
-
-
 
 insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
-	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Salary,Organizer,Sponsor)
+	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Organizer,Sponsor,Is_Reversed)
 values ('"我的社区我做主"——参与式社区规划的理念与运作机制',
 		'2016-03-01 15:00:00',
         '2016-03-01 17:00:00',
@@ -251,37 +199,15 @@ values ('"我的社区我做主"——参与式社区规划的理念与运作机
         '415929235',
         '',
         1,
-        10002,
+        10012,
         10011,
-        '',
         '建筑与城市规划学院',
-        '');
-        
-insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
-	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Salary,Organizer,Sponsor)
-values ('"我的社区我做主"——参与式社区规划的理念与运作机制',
-		'2016-03-01 15:00:00',
-        '2016-03-01 17:00:00',
-        '2016-02-27 17:00:00',
-        '建筑与城市规划学院C楼二楼C1会议室',
-        '200',
-        '18',
-		'5',
-		'https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png',
-        '内容无',
-		'1111',
-        '1210525@qq.com',
-        '415929235',
         '',
-        1,
-        10002,
-        10011,
-        '',
-        '建筑与城市规划学院',
-        '');        
+        0);
+         
 
 insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
-	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Salary,Organizer,Sponsor)
+	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Organizer,Sponsor,Is_Reversed)
 values ('化学系学术报告：Theoretical understanding of water splitting and oxygen reduction',
 		'2016-04-01 10:00:00',
         '2016-04-01 11:00:00',
@@ -297,14 +223,14 @@ values ('化学系学术报告：Theoretical understanding of water splitting an
         '415929235',
         '',
         1,
-        10002,
+        10012,
         10011,
-        '',
         '化学系',
-        '');    
+        '',
+        0);    
         
 insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
-	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Salary,Organizer,Sponsor)
+	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Organizer,Sponsor,Is_Reversed)
 values ('【茶话清谈】樱花盛开诗意校园',
 		'2016-04-02 10:00:00',
         '2016-04-02 11:00:00',
@@ -320,21 +246,208 @@ values ('【茶话清谈】樱花盛开诗意校园',
         '415929235',
         '',
         1,
-        10002,
+        10012,
         10011,
+        '闻学堂',
         '',
-        '化学系',
-        ''); 	
+        0); 	
         
         
 
+insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
+	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Organizer,Sponsor,Is_Reversed)
+values ('樱花树演唱会',
+		'2016-04-02 18:00:00',
+        '2016-04-02 20:00:00',
+        '2016-03-30 17:00:00',
+        '129大礼堂',
+        '800',
+        '1024',
+		'460',
+		'https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png',
+        '暂无',
+		'1111',
+        '1210525@qq.com',
+        '415929235',
+        '',
+        1,
+        10012,
+        10011,
+        '化学系',
+        '',
+        1); 	
+              
+insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
+	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Organizer,Sponsor,Is_Reversed)
+values ('U联赛大学生篮球挑战赛',
+		'2016-04-02 00:00:00',
+        '2016-06-03 00:00:00',
+        '2016-04-01 17:00:00',
+        '篮球场',
+        '1000',
+        '600',
+		'20',
+		'https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png',
+        '篮球大赛',
+		'1111',
+        '1210525@qq.com',
+        '415929235',
+        '',
+        1,
+        10011,
+        10012,
+        '团学联体育部',
+        '',
+        1); 	
+
+insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
+	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Organizer,Sponsor,Is_Reversed)
+values ('4月假面舞会',
+		'2016-04-08 19:00:00',
+        '2016-04-08 21:00:00',
+        '2016-04-01 17:00:00',
+        '茶水吧',
+        '200',
+        '601',
+		'302',
+		'https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png',
+        '跳舞吧少年',
+		'1111',
+        '1210525@qq.com',
+        '415929235',
+        '',
+        1,
+        10011,
+        10013,
+        '同济舞鞋',
+        '',
+        1); 	
+
+insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
+	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Organizer,Sponsor,Is_Reversed)
+values ('华为2016校招宣讲会',
+		'2016-04-09 19:00:00',
+        '2016-04-09 20:30:00',
+        '2016-04-02 17:00:00',
+        '智信馆117',
+        '300',
+        '150',
+		'20',
+		'https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png',
+        '招聘吧少年',
+		'1111',
+        '1210525@qq.com',
+        '415929235',
+        '',
+        1,
+        10011,
+        20011,
+        '电信学院研究生会',
+        '',
+        0); 	
+
+insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
+	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Organizer,Sponsor,Is_Reversed)
+values ('安居客2016校招宣讲会',
+		'2016-04-10 19:00:00',
+        '2016-04-10 20:00:00',
+        '2016-04-02 17:00:00',
+        '智信馆307',
+        '300',
+        '15',
+		'20',
+		'https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png',
+        '招聘吧少年',
+		'1111',
+        '1210525@qq.com',
+        '415929235',
+        '',
+        1,
+        10011,
+        20011,
+        '电信学院研究生会',
+        '',
+        0); 	
+
+insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
+	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Organizer,Sponsor,Is_Reversed)
+values ('Oracle暑期实习招聘',
+		'2016-04-02 17:00:00',
+        '2016-05-02 17:00:00',
+        '2016-04-02 17:00:00',
+        '杨浦区某地',
+        '10',
+        '21',
+		'20',
+		'https://pic2.zhimg.com/ec0128df835b2ffaba6d50771c875545_b.png',
+        '招聘吧少年',
+		'1111',
+        '1210525@qq.com',
+        '415929235',
+        '',
+        1,
+        0,
+        20012,
+        '电信学院研究生会',
+        '',
+        0); 	
+
+insert into job_extra_info (ID,Salary,Job_Info) 
+values (LAST_INSERT_ID(),
+		'',
+        '测试、数据库设计');
+        
+create procedure insertMultipleFakeData()
+begin
+	
+declare fakeCount int;
+declare i int;
+set fakeCount = 10;
+set i = 1;
+
+	start transaction;
+	
+	while i < fakeCount do
+	    
+		insert sliders (Title,Act_ID,Image_Path,Link)
+		values ('Test data',i,'http://ww2.sinaimg.cn/small/7b254335gw1f24wt3bb8wj21ao0q9afd.jpg','http://weibo.com');
+			
+		insert common_act_image(Act_ID,Image) 
+        values (i,'http://ww2.sinaimg.cn/small/7b254335gw1f24wt3bb8wj21ao0q9afd.jpg');
+		insert common_act_image(Act_ID,Image) 
+        values (i,'http://ww2.sinaimg.cn/small/7b254335gw1f24wt3bb8wj21ao0q9afd.jpg');
+
+        insert user_all(PSW,Area_Code,Ori_ID,Ori_Name,Nick_Name,Age,Major,Tel,Mail,Gender,Hdimg_Uri,Type_code)
+		values ('',10011, CONCAT('1212', i), CONCAT('比利海灵顿',i), CONCAT('billy',i),40,'Aniki','110',CONCAT(i,'xxx@ggg.com'),0,
+        'http://ww2.sinaimg.cn/small/7b254335gw1f24wt3bb8wj21ao0q9afd.jpg',0);
+        
+        insert user_act_clt(User_ID,Act_ID)
+        values (i,i);
+        
+		set i = i+1;
+	end while;
+    
+    insert sliders (Title,Act_ID,Image_Path,Link)
+		values ('Test data',null,'http://ww2.sinaimg.cn/small/7b254335gw1f24wt3bb8wj21ao0q9afd.jpg','http://weibo.com');
+    
+	commit;
+
+end #
+
+delimiter ;
+
+call insertMultipleFakeData();        
 
 #---------------------------------
 
+
+select * from job_extra_info;
+select * from sliders;
+select * from common_act_info;
 #select * from sliders;
 #select * from common_act_info;
 
-
+ 
 
 
 
