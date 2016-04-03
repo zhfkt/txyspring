@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 
 <!DOCTYPE html>
@@ -13,12 +14,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
   </head>
   <body>
-    <div id="root" style="height:100%">
-    </div>
     
     <div align="center">
 		<h1>${UserID}</h1>
+		<img src='<spring:url value="/resources/images/gorilla.jpg"/>' alt="gorilla" />
 	</div>
+    
+    
+    
+    
     
     <!-- 
 	    <script src="//cdn.bootcss.com/zepto/1.1.6/zepto.min.js"></script>
