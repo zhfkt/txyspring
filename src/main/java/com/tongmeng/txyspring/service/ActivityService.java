@@ -31,8 +31,11 @@ public class ActivityService {
 	@Transactional(readOnly = true)
 	public List<ActInfoAjax> listActivitiesByActCodeAndSchCode(int areacode, int subtype, int sort, int p) throws CredentialException {
 
+		List<ActInfoAjax> ajaxLstAct = new ArrayList<ActInfoAjax>();
+		
 		if (!userInfoSession.isLogined() && subtype >= 20000) {
-			throw new CredentialException("Not login in listActivitiesByActCodeAndSchCode when subtype>=20000 ");
+			return ajaxLstAct;
+			//throw new CredentialException("Not login in listActivitiesByActCodeAndSchCode when subtype>=20000 ");
 		}
 
 		SortOption so = SortOption.OrderByStarttime;
@@ -44,7 +47,6 @@ public class ActivityService {
 		}
 
 		List<CommonActInfo> lstAct = commonActInfoDao.listCommonInfoByActAndSch(areacode, subtype, p, so);
-		List<ActInfoAjax> ajaxLstAct = new ArrayList<ActInfoAjax>();
 		for (CommonActInfo commonActInfo : lstAct) {
 			ajaxLstAct.add(new ActInfoAjax(commonActInfo, userService.isFavoured(commonActInfo.getId())));
 		}

@@ -22,7 +22,6 @@ import com.tongmeng.txyspring.ajaxmodel.AjaxJsonViews;
 import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody;
 import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody.RESPONSE_STATUS;
 import com.tongmeng.txyspring.service.UserService;
-import com.tongmeng.txyspring.service.identity.UserInfoSession;
 
 import org.slf4j.Logger;
 
@@ -35,10 +34,7 @@ public class UserRestController {
 	
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private UserInfoSession userInfoSession; 
-	
+		
 	@JsonView(AjaxJsonViews.Public.class)
 	@RequestMapping(value = "/AddFavor", method = RequestMethod.GET)
 	public AjaxResponseBody<Void> changeFavour(
@@ -80,14 +76,12 @@ public class UserRestController {
 		
 		try
 		{
-			int userId = userService.getUserLoginId(request);
-			//session setter and userInfoSession is session Scope
-			userInfoSession.setUserId(userId);
+			userService.getUserLoginIdAndSetSession(request);
 		}
 		catch(IllegalArgumentException e)
 		{
 	    	logger.warn(e.getMessage().toString());
-	    	throw new MissingServletRequestParameterException("auth login ticket", "String");
+	    	//throw new MissingServletRequestParameterException("auth login ticket", "String");
 		}
 	
 		return new ModelAndView("redirect:/");

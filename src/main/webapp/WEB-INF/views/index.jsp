@@ -16,7 +16,8 @@
   <body>
     
     <div align="center">
-		<h1>${UserID}</h1>
+		<h1>UserID: ${UserID}</h1>
+		<h2>oriId: ${oriId}</h2>
 		<img src='<spring:url value="/resources/images/gorilla.jpg"/>' alt="gorilla" />
 	</div>
     
