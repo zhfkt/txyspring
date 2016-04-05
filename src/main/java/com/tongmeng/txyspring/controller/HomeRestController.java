@@ -1,7 +1,6 @@
 package com.tongmeng.txyspring.controller;
 
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -46,7 +45,7 @@ public class HomeRestController {
 	}
 
 
-	public class AuthTongjiJson
+	public static class AuthTongjiJson
 	{
 		@JsonView(AjaxJsonViews.Public.class)
 		private String type;
