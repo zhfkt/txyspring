@@ -1,25 +1,37 @@
 package com.tongmeng.txyspring.controller;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonView;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tongmeng.txyspring.ajaxmodel.AjaxJsonViews;
 import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody;
 import com.tongmeng.txyspring.ajaxmodel.SlidersAjax;
 import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody.RESPONSE_STATUS;
-import com.tongmeng.txyspring.service.SlidersService;;
+import com.tongmeng.txyspring.service.SlidersService;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 @RequestMapping(value = "/api/home")
 public class HomeRestController {
 
+	
+	private static final Logger logger = LoggerFactory.getLogger(HomeRestController.class);
+	
 	@Autowired
 	private SlidersService slidersService;
 	
@@ -31,6 +43,75 @@ public class HomeRestController {
 				new AjaxResponseBody<ArrayList<SlidersAjax> >(RESPONSE_STATUS.SUCCESS, slidersService.listSliders());
 		return AjaxResult;
 
+	}
+
+
+	public class AuthTongjiJson
+	{
+		 @JsonView(AjaxJsonViews.Public.class)
+		 private String type = "error";
+		
+		 public String getType() {
+			return type;
+		}
+
+		public void setType(String type) {
+			this.type = type;
+		}
+
+		public String getResult() {
+			return result;
+		}
+
+		public void setResult(String result) {
+			this.result = result;
+		}
+
+		@JsonView(AjaxJsonViews.Public.class)
+		 private String result = "12345";
+	}
+	
+	
+	@JsonView(AjaxJsonViews.Public.class)
+	@RequestMapping(value = "/test_return", method = RequestMethod.GET)
+	public AuthTongjiJson testMyReturn() {
+		AuthTongjiJson authTongjiJson =  new AuthTongjiJson();
+		
+		authTongjiJson.setResult("1112");
+		authTongjiJson.setType("error");
+		
+		return authTongjiJson;
+	}
+		
+	
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	public String testMy(Locale locale, Model model) {
+
+		OkHttpClient client = new OkHttpClient();
+		String url= "http://115.28.68.32:8080/api/home/test_return";
+		
+		Request request = new Request.Builder()
+	      .url(url)
+	      .build();
+
+		Response response;
+		try {
+			response = client.newCall(request).execute();
+			String authJson = response.body().string();
+			
+			ObjectMapper mapper = new ObjectMapper();
+			//JSON from String to Object
+			AuthTongjiJson authTongjiJson = mapper.readValue(authJson, AuthTongjiJson.class);
+			
+	    	logger.error(authTongjiJson.getType());
+	    	logger.error(authTongjiJson.getResult());
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return "";
 	}
 
 }
