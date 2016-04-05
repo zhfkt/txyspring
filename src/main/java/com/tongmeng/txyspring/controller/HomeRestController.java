@@ -108,7 +108,7 @@ public class HomeRestController {
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.toString());
 			
 			return "failed";
 		}
