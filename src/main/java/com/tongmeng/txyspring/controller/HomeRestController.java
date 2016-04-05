@@ -48,10 +48,13 @@ public class HomeRestController {
 
 	public class AuthTongjiJson
 	{
-		 @JsonView(AjaxJsonViews.Public.class)
-		 private String type = "error";
-		
-		 public String getType() {
+		@JsonView(AjaxJsonViews.Public.class)
+		private String type;
+
+		@JsonView(AjaxJsonViews.Public.class)
+		private String result;
+		 
+		public String getType() {
 			return type;
 		}
 
@@ -67,8 +70,7 @@ public class HomeRestController {
 			this.result = result;
 		}
 
-		@JsonView(AjaxJsonViews.Public.class)
-		 private String result = "12345";
+
 	}
 	
 	
