@@ -106,12 +106,14 @@ public class HomeRestController {
 	    	logger.error(authTongjiJson.getType());
 	    	logger.error(authTongjiJson.getResult());
 			
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
+			return "failed";
 		}
 
-		return "";
+		return "success";
 	}
 
 }
