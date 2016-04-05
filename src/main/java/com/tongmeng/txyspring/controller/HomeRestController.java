@@ -104,15 +104,33 @@ public class HomeRestController {
 			//JSON from String to Object
 			AuthTongjiJson authTongjiJson = mapper.readValue(authJson, AuthTongjiJson.class);
 			
+			if(authTongjiJson.getType().equals("error"))
+			{
+				//throw illagal(authTongjiJson.getType().getType())
+			}
+			
+			
 	    	logger.error(authTongjiJson.getType());
 	    	logger.error(authTongjiJson.getResult());
 			
-		} catch (Exception e) {
+		} 
+		
+		/*catch(ConnectException e)
+		 {
+		  	//throw ConnectException("login failed due to accessing TONGJI cloud")
+		 }
+		 */		
+		
+		catch (Exception e) {
 			// TODO Auto-generated catch block
 			logger.error(e.toString());
 			
+			//throw Exception(authTongjiJson.getType().getType())
+			
 			return "failed";
 		}
+		
+
 
 		return "success";
 	}

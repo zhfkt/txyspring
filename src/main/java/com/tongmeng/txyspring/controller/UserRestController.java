@@ -83,6 +83,19 @@ public class UserRestController {
 	    	logger.warn(e.getMessage().toString());
 	    	//throw new MissingServletRequestParameterException("auth login ticket", "String");
 		}
+		
+		/*
+		catch(ConnectException e)
+		{
+	    	logger.warn(e.getMessage().toString());
+		}
+		catch(Exception e)
+		{
+	    	logger.warn(e.getMessage().toString());
+		}
+		*/
+		
+
 	
 		return new ModelAndView("redirect:/");
 	}
