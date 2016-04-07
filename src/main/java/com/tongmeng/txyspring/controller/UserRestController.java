@@ -110,7 +110,7 @@ public class UserRestController {
 	
 	
 	@JsonView(AjaxJsonViews.Public.class)
-	@RequestMapping(value = "/ModifyUserName", method = RequestMethod.GET)
+	@RequestMapping(value = "/ModifyUserName", method = RequestMethod.POST)
 	public AjaxResponseBody<Void> modifyUserName(
 			@RequestParam(value = "username", required = true) String username			
 			) throws CredentialException {
