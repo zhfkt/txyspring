@@ -40,7 +40,7 @@ public class UserService {
 		if (!currentUserSession.isLogined()) {
 			return false;
 		}
-		int userId = currentUserSession.getUserAll().getId();
+		int userId = currentUserSession.getUserId();
 
 		return userActCltDao.isFavoured(id, userId);
 	}
@@ -51,7 +51,7 @@ public class UserService {
 		if (!currentUserSession.isLogined()) {
 			throw new CredentialException("Not login in changeFavour");
 		}
-		int userId = currentUserSession.getUserAll().getId();
+		int userId = currentUserSession.getUserId();
 
 		if (action.equals("add")) {
 			if (!userActCltDao.addFavour(id, userId)) {
@@ -75,7 +75,7 @@ public class UserService {
 		if (!currentUserSession.isLogined()) {
 			throw new CredentialException("Not login in getFavorList");
 		}
-		int userId = currentUserSession.getUserAll().getId();
+		int userId = currentUserSession.getUserId();
 
 		List<CommonActInfo> lstAct = null;
 
@@ -97,7 +97,7 @@ public class UserService {
 	}
 
 	@Transactional
-	public void getUserLoginIdAndSetSession(HttpServletRequest request) {
+	public int getUserLoginId(HttpServletRequest request) {
 
 		IdentityInterface identity = IdentityInterface.getSchFactory(request);
 
@@ -105,13 +105,23 @@ public class UserService {
 		String oriId = identity.getOriId(request);
 
 		if (oriId.equals("")) {
-			return;
+			return 0;
 		}
 
 		UserAll user = userDao.insertOrSelectUser(schCode.getValue(), oriId);
+		return user.getId();
+	}
+	
+	
+	@Transactional
+	public void modifyUserName(String username) throws CredentialException {
 
-		// session setter and userInfoSession is session Scope
-		currentUserSession.setUserAll(user);
+		if (!currentUserSession.isLogined()) {
+			throw new CredentialException("Not login in modifyUserName");
+		}
+		int userId = currentUserSession.getUserId();
+
+		userDao.modifyUserName(username, userId);
 	}
 
 }

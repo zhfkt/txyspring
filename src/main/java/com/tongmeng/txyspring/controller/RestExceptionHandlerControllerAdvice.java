@@ -72,4 +72,15 @@ public class RestExceptionHandlerControllerAdvice {
     	return new AjaxResponseBody<Void>(RESPONSE_STATUS.NOT_LOGIN);	
     }    
     
+    
+    @ExceptionHandler(value = IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @JsonView(AjaxJsonViews.Public.class)
+    @ResponseBody
+    public AjaxResponseBody<Void> IllegalArgumentException(Exception exception, WebRequest request) {
+    	    	
+    	logger.error(exception.getMessage().toString());
+    	return new AjaxResponseBody<Void>(RESPONSE_STATUS.PARAMETRR_ERROR);	
+    }  
+    
 }

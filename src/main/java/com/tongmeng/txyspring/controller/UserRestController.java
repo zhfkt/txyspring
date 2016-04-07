@@ -22,6 +22,7 @@ import com.tongmeng.txyspring.ajaxmodel.AjaxJsonViews;
 import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody;
 import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody.RESPONSE_STATUS;
 import com.tongmeng.txyspring.service.UserService;
+import com.tongmeng.txyspring.service.identity.UserInfoSession;
 
 import org.slf4j.Logger;
 
@@ -34,9 +35,12 @@ public class UserRestController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private UserInfoSession currentUserSession;
 		
 	@JsonView(AjaxJsonViews.Public.class)
-	@RequestMapping(value = "/AddFavor", method = RequestMethod.GET)
+	@RequestMapping(value = "/AddFavor", method = RequestMethod.POST)
 	public AjaxResponseBody<Void> changeFavour(
 			@RequestParam(value = "id", required = true) int id,
 			@RequestParam(value = "action", required = true) String action			
@@ -76,7 +80,11 @@ public class UserRestController {
 		
 		try
 		{
-			userService.getUserLoginIdAndSetSession(request);
+			int userId = userService.getUserLoginId(request);
+			
+			// session setter and userInfoSession is session Scope
+			currentUserSession.setUserId(userId);
+			
 		}
 		catch(IllegalArgumentException e)
 		{
@@ -99,6 +107,18 @@ public class UserRestController {
 	
 		return new ModelAndView("redirect:/");
 	}
+	
+	
+	@JsonView(AjaxJsonViews.Public.class)
+	@RequestMapping(value = "/ModifyUserName", method = RequestMethod.GET)
+	public AjaxResponseBody<Void> modifyUserName(
+			@RequestParam(value = "username", required = true) String username			
+			) throws CredentialException {
+		
+
+		userService.modifyUserName(username);	
+		return new AjaxResponseBody<Void>(RESPONSE_STATUS.SUCCESS);
+	}		
 	
 	
 }

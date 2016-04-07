@@ -1,6 +1,7 @@
 package com.tongmeng.txyspring.dao;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -48,5 +49,20 @@ public class UserDao {
 		
 		return userAll;
 	}
+	
+	public void modifyUserName(String username,int userId)
+	{
+		Session session = sessionFactory.getCurrentSession();
+		
+		Query query = session.createQuery("update UserAll as userAll set userAll.nickName = :username "
+				+ "where userAll.id = :userid");
+		query.setParameter("username", username);
+		query.setParameter("userid", userId);
+		if(query.executeUpdate()!=1)
+		{
+			throw new IllegalArgumentException("Inconsistent update result with userId: " + userId);
+		}		
+	}
+	
 
 }

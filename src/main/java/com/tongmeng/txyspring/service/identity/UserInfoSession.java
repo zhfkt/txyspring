@@ -5,27 +5,31 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.tongmeng.txyspring.model.UserAll;
 
 @Component
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class UserInfoSession {
 
-	private UserAll userAll = null;
-
-	public UserAll getUserAll() {
-		return userAll;
+	final int NOT_LOGIN = 0;
+	private int userId = NOT_LOGIN;
+	
+	public int getUserId() {
+		return userId;
 	}
 
-	// Multi-thread mutex protected in xml config.
-	public void setUserAll(UserAll userAll) {
-		this.userAll = userAll;
+	//Multi-thread mutex protected in xml config.
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
-
-	public boolean isLogined() {
-		if (userAll == null) {
+	
+	public boolean isLogined()
+	{
+		if(userId == NOT_LOGIN)
+		{
 			return false;
-		} else {
+		}
+		else
+		{
 			return true;
 		}
 	}
