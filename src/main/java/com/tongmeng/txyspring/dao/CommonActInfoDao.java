@@ -3,7 +3,6 @@ package com.tongmeng.txyspring.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -51,7 +50,7 @@ public class CommonActInfoDao {
 
 			if (areacode % 10000 == 0) {
 				criteria.add(Restrictions.ge("schCode.id", areacode));
-				criteria.add(Restrictions.lt("schCode。id", areacode + 10000));
+				criteria.add(Restrictions.lt("schCode.id", areacode + 10000));
 			} else {
 				criteria.add(Restrictions.eq("schCode.id", areacode));
 			}
