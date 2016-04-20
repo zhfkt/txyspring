@@ -19,7 +19,7 @@ import com.tongmeng.txyspring.model.CommonActInfo;
 public class CommonActInfoDao {
 
 	public enum SortOption {
-		OrderByStarttime, OrderByHot
+		OrderByStarttime, OrderByHot, OrderByPubTime
 	}
 
 	private final int pageSize = 10;
@@ -62,6 +62,9 @@ public class CommonActInfoDao {
 			break;
 		case OrderByHot:
 			criteria.addOrder(Order.desc("hot"));
+			break;
+		case OrderByPubTime:
+			criteria.addOrder(Order.desc("pubTime"));
 			break;
 		default:
 			break;

@@ -33,11 +33,9 @@ public class ActivityRestController {
 			@RequestParam(value = "sort", required = false, defaultValue = "1") int sort,
 			@RequestParam(value = "p", required = false, defaultValue = "0") int p) throws CredentialException {
 
-		if (subtype == 0) {
-			subtype = type * 10000;
-		}
 
-		List<ActInfoAjax> ajaxLstAct = activityService.listActivitiesByActCodeAndSchCode(campus, subtype, sort, p);
+		List<ActInfoAjax> ajaxLstAct = activityService.listActivitiesByActCodeAndSchCode(campus, subtype, sort, p,
+				type);
 		return new AjaxResponseBody<List<ActInfoAjax>>(RESPONSE_STATUS.SUCCESS, ajaxLstAct);
 
 	}
