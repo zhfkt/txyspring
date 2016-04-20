@@ -47,9 +47,10 @@ public class ActivityService {
 		} else {
 
 			if (subtype != 0) {
-				so = SortOption.OrderByPubTime;
-			} else {
 				so = SortOption.OrderByStarttime;
+			} else {
+				//default page
+				so = SortOption.OrderByPubTime;
 			}
 		}
 
