@@ -52,8 +52,8 @@ public class UserRestController {
 		}
 		catch(ConstraintViolationException e)
 		{
-			logger.warn("Parse and execute the SQL with failure 'a foreign key constraint fails'");
-			logger.warn(e.toString());
+			logger.warn("Parse and execute the SQL with failure (a foreign key constraint fails)");
+			logger.warn(e.getMessage());
 			throw new MethodArgumentTypeMismatchException(id, null, action, null, e);
 		}
 
@@ -80,7 +80,7 @@ public class UserRestController {
 		
 		try
 		{
-			int userId = userService.getUserLoginId(request);
+			int userId = userService.insertNewLoginId(request);
 			
 			// session setter and userInfoSession is session Scope
 			currentUserSession.setUserId(userId);
@@ -88,8 +88,17 @@ public class UserRestController {
 		}
 		catch(IllegalArgumentException e)
 		{
-	    	logger.warn(e.getMessage().toString());
+	    	logger.warn(e.getMessage());
 	    	//throw new MissingServletRequestParameterException("auth login ticket", "String");
+		}
+		catch(ConstraintViolationException e)
+		{			
+			logger.info("For the normal existed user login");
+			
+			int userId = userService.selectLoginId(request);		
+			// session setter and userInfoSession is session Scope
+			currentUserSession.setUserId(userId);
+			
 		}
 		
 		/*

@@ -6,11 +6,13 @@ import java.util.List;
 import javax.security.auth.login.CredentialException;
 import javax.servlet.http.HttpServletRequest;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tongmeng.txyspring.ajaxmodel.ActInfoAjax;
+import com.tongmeng.txyspring.controller.UserRestController;
 import com.tongmeng.txyspring.dao.CommonActInfoDao;
 import com.tongmeng.txyspring.dao.UserActCltDao;
 import com.tongmeng.txyspring.dao.UserDao;
@@ -19,8 +21,14 @@ import com.tongmeng.txyspring.model.UserAll;
 import com.tongmeng.txyspring.service.identity.IdentityInterface;
 import com.tongmeng.txyspring.service.identity.UserInfoSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 @Service
 public class UserService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(UserRestController.class);
 
 	@Autowired
 	private CommonActInfoDao commonActInfoDao;
@@ -97,7 +105,7 @@ public class UserService {
 	}
 
 	@Transactional
-	public int getUserLoginId(HttpServletRequest request) {
+	public int insertNewLoginId(HttpServletRequest request) {
 
 		IdentityInterface identity = IdentityInterface.getSchFactory(request);
 
@@ -108,10 +116,38 @@ public class UserService {
 			return 0;
 		}
 
-		UserAll user = userDao.insertOrSelectUser(schCode.getValue(), oriId);
-		return user.getId();
+		
+		UserAll user = userDao.insertUserByOriId(schCode.getValue(), oriId);
+		return user.getId();	
+		
+
 	}
 	
+	@Transactional(readOnly = true)
+	public int selectLoginId(HttpServletRequest request) {
+		
+		IdentityInterface identity = IdentityInterface.getSchFactory(request);
+
+		IdentityInterface.SCHCODE schCode = identity.getSchCode();
+		String oriId = identity.getOriId(request);
+
+		if (oriId.equals("")) {
+			return 0;
+		}
+		
+		
+		UserAll user = userDao.selectUserByOriId(schCode.getValue(), oriId);
+		
+		if(user != null)
+		{
+			return user.getId();
+		}
+		else
+		{
+			return 0;
+		}
+	
+	}
 	
 	@Transactional
 	public void modifyUserName(String username) throws CredentialException {

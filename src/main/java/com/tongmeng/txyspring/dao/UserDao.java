@@ -32,15 +32,8 @@ public class UserDao {
 		return user;
 	}
 
-	public UserAll insertOrSelectUser(int areaCode, String oriId) {
-		
-		UserAll user = selectUserByOriId(areaCode, oriId);
-		
-		if(user != null)
-		{
-			return user;
-		}
-		
+	public UserAll insertUserByOriId(int areaCode, String oriId) {
+				
 		Session session = sessionFactory.getCurrentSession();
 
 		SchCode schCode = new SchCode(areaCode);
