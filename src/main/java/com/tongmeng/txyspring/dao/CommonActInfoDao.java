@@ -58,7 +58,7 @@ public class CommonActInfoDao {
 
 		switch (so) {
 		case OrderByStarttime:
-			criteria.addOrder(Order.desc("startDate"));
+			criteria.addOrder(Order.asc("startDate"));
 			break;
 		case OrderByHot:
 			criteria.addOrder(Order.desc("hot"));
