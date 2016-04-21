@@ -2,6 +2,9 @@
 
 set -v on
 
+cd /root/develop/txyspring
+git pull
+
 service tomcat7 stop
 
 cd /root/develop/txyspring/install
@@ -12,7 +15,7 @@ service tomcat7 start
 #sleep 10
 
 cd /root/develop/txyspring/
-git pull
+
 mvn tomcat7:redeploy
 
 
