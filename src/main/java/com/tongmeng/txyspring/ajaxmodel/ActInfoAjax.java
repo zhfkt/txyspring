@@ -49,6 +49,9 @@ public class ActInfoAjax {
 
 	@JsonView(AjaxJsonViews.Public.class)
 	private int hot;
+	
+	@JsonView(AjaxJsonViews.Public.class)
+	private int needOrder;
 
 	@JsonView(AjaxJsonViews.Public.class)
 	private int isActive;
@@ -57,14 +60,10 @@ public class ActInfoAjax {
 	private String effective;
 
 	@JsonView(AjaxJsonViews.Public.class)
-	private String job;
-
-	@JsonView(AjaxJsonViews.Public.class)
 	private String releaseTime;
 	
 	@JsonView(AjaxJsonViews.Public.class)
-	private int needOrder;
-	
+	private String info;
 	
 	public ActInfoAjax(CommonActInfo commonActInfo, boolean isFavoured) {
 
@@ -103,11 +102,11 @@ public class ActInfoAjax {
 
 		if(commonActInfo.getJobExtraInfo()==null)
 		{
-			this.job = "";
+			this.info = "";
 		}
 		else
 		{
-			this.job = commonActInfo.getJobExtraInfo().getJobInfo();
+			this.info = commonActInfo.getJobExtraInfo().getJobInfo();
 		}
 
 		Days toStartTime = Days.daysBetween(new DateTime(commonActInfo.getPubTime()), new DateTime(new Date()));
@@ -216,12 +215,12 @@ public class ActInfoAjax {
 		this.effective = effective;
 	}
 
-	public String getJob() {
-		return job;
+	public String getInfo() {
+		return info;
 	}
 
-	public void setJob(String job) {
-		this.job = job;
+	public void setInfo(String info) {
+		this.info = info;
 	}
 
 	public String getReleaseTime() {
