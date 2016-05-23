@@ -7,11 +7,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
-  <link rel="stylesheet" type="text/css" href=<spring:url value="lib/semantic.min.css"/> >
-  <link rel="stylesheet" type="text/css" href=<spring:url value="form.css"/>>
+  <link rel="stylesheet" type="text/css" href=<spring:url value="/resources/backend/lib/semantic.min.css"/> >
+  <link rel="stylesheet" type="text/css" href=<spring:url value="/resources/backend/form.css"/>>
   <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-  <script src=<spring:url value="lib/semantic.min.js"/>></script>
-  <script src=<spring:url value="form.js"/>></script>
+  <script src=<spring:url value="/resources/backend/lib/semantic.min.js"/>></script>
+  <script src=<spring:url value="/resources/backend/form.js"/>></script>
 </head>
 <body>
   <div class="container">
