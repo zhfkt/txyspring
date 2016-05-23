@@ -22,6 +22,19 @@
           <input type="text" name="title" placeholder="" style="width: 500px" maxlength="10">
         </div>
         <div class="inline field">
+          <label>活动类别</label>
+          <div class="ui selection dropdown">
+            <input type="hidden" name="actsubtype">
+            <i class="dropdown icon"></i>
+            <div class="default text">请选择类别</div>
+            <div class="menu">
+              <div class="item" data-value="20011">企业宣讲</div>
+              <div class="item" data-value="20012">工作实习</div>
+              <div class="item" data-value="20013">其他信息</div>
+            </div>
+          </div>
+        </div>        
+        <div class="inline field">
           <label>开始时间</label>
           <input type="date" name="startDate" placeholder="">
           <input type="time" name="startTime" placeholder="">
@@ -37,9 +50,13 @@
             <input type="hidden" name="campus">
             <i class="dropdown icon"></i>
             <div class="default text">请选择校区</div>
-            <div class="menu">
-              <div class="item" data-value="1">同济大学四平路校区</div>
-              <div class="item" data-value="0">同济大学嘉定校区</div>
+           <div class="menu">
+              <div class="item" data-value="0">校外</div>
+              <div class="item" data-value="10000">同济大学</div>
+              <div class="item" data-value="10001">同济大学嘉定校区</div>
+              <div class="item" data-value="10002">同济大学四平路校区</div>
+              <div class="item" data-value="10003">同济大学彰武路校区</div>
+              <div class="item" data-value="10004">同济大学沪西校区</div>
             </div>
           </div>
         </div>
