@@ -27,21 +27,4 @@ public class HomeController {
 		return "index";
 	}
 	
-	
-	
-	@RequestMapping(value = "/backend/form", method = RequestMethod.GET)
-	public String form(Locale locale, Model model) {
-
-
-		return "backend/form";
-	}
-	
-	@RequestMapping(value = "/backend/form_info", method = RequestMethod.GET)
-	public String form_info(Locale locale, Model model) {
-
-		return "backend/form-info";
-	}
-	
-	
-	
 }
