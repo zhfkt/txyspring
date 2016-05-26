@@ -1,6 +1,7 @@
 package com.tongmeng.txyspring.controller;
 
 
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tongmeng.txyspring.backendmodel.BackendCommonActInfo;
 
@@ -34,7 +36,13 @@ public class BackendController {
 		
 		logger.error(backendCommonActInfo.getAuthor());
 		
-
+		List<MultipartFile> pictures = backendCommonActInfo.getPictures();
+        if(pictures != null && pictures.size() != 0) {
+            for(MultipartFile picture : pictures) {
+            	logger.error( picture.getOriginalFilename() );
+            }
+        }
+		
 		return "index";
 		//return "backend/form";
 	}

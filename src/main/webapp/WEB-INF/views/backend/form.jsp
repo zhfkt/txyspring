@@ -17,8 +17,7 @@
 <body>
   <div class="container">
       <h2 class="ui dividing header" style="font-family: Microsoft Yahei">活动类录入</h2>
-      <!-- enctype="multipart/form-data" -->
-      <form:form class="ui form" action="form" method="post" id="myform"  modelAttribute="form">
+      <form:form class="ui form" action="form" method="post" id="myform" enctype="multipart/form-data"  modelAttribute="form">
         <div class="inline field">
           <label>活动名称</label>
           <form:input path="title" type="text" name="title" placeholder="" style="width: 500px" maxlength="10" />
@@ -99,7 +98,7 @@
         </div>
         <div class="inline field">
           <label>封面图片</label>
-          <input type="file" name="coverImg" multiple="multiple">
+          <input type="file" name="coverImg">
         </div>        
         <div class="inline field">
           <label>活动图片</label>

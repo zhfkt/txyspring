@@ -1,5 +1,8 @@
 package com.tongmeng.txyspring.backendmodel;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class BackendCommonActInfo {
 
@@ -19,6 +22,9 @@ public class BackendCommonActInfo {
 	private String organizer;
 	private String author;
 	private Integer needOrder;
+	private List<MultipartFile> pictures;
+	private MultipartFile coverImg;
+	
 	
 	public Integer getActsubtype() {
 		return actsubtype;
@@ -115,6 +121,18 @@ public class BackendCommonActInfo {
 	}
 	public void setNeedOrder(Integer needOrder) {
 		this.needOrder = needOrder;
+	}
+	public List<MultipartFile> getPictures() {
+		return pictures;
+	}
+	public void setPictures(List<MultipartFile> pictures) {
+		this.pictures = pictures;
+	}
+	public MultipartFile getCoverImg() {
+		return coverImg;
+	}
+	public void setCoverImg(MultipartFile coverImg) {
+		this.coverImg = coverImg;
 	}
 	
 }
