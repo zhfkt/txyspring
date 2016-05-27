@@ -6,13 +6,11 @@ import java.util.List;
 import javax.security.auth.login.CredentialException;
 import javax.servlet.http.HttpServletRequest;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tongmeng.txyspring.ajaxmodel.ActInfoAjax;
-import com.tongmeng.txyspring.controller.UserRestController;
 import com.tongmeng.txyspring.dao.CommonActInfoDao;
 import com.tongmeng.txyspring.dao.UserActCltDao;
 import com.tongmeng.txyspring.dao.UserDao;
@@ -21,14 +19,9 @@ import com.tongmeng.txyspring.model.UserAll;
 import com.tongmeng.txyspring.service.identity.IdentityInterface;
 import com.tongmeng.txyspring.service.identity.UserInfoSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-
 @Service
 public class UserService {
 	
-	private static final Logger logger = LoggerFactory.getLogger(UserRestController.class);
 
 	@Autowired
 	private CommonActInfoDao commonActInfoDao;

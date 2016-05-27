@@ -13,6 +13,7 @@ import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.tongmeng.txyspring.model.CommonActImage;
 import com.tongmeng.txyspring.model.CommonActInfo;
 
 @Repository
@@ -93,6 +94,22 @@ public class CommonActInfoDao {
 
 		return commonActInfo;
 	}
+	
+	public void saveCommonActInfo(CommonActInfo commonActInfo) {
+
+		Session session = sessionFactory.getCurrentSession();
+
+		session.save(commonActInfo);
+		
+	}	
+	
+	public void saveCommonActInfo(CommonActImage commonActImage ) {
+
+		Session session = sessionFactory.getCurrentSession();
+
+		session.save(commonActImage);
+		
+	}	
 
 	public void addFavour(int id) {
 		Session session = sessionFactory.getCurrentSession();

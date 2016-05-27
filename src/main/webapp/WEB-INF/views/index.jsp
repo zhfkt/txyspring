@@ -15,7 +15,6 @@
   </head>
   <body>
     <div id="root" style="height:100%"></div>
-	</div>
     <script src='<spring:url value="/resources/lib/react.min.js"/>'></script>
     <script src='<spring:url value="/resources/lib/react-dom.min.js"/>'></script>
     <script src='<spring:url value="/resources/lib/zepto.min.js"/>'></script>

@@ -304,7 +304,7 @@ public class CommonActInfo implements java.io.Serializable {
 		this.isReversed = isReversed;
 	}
 
-	@OneToOne(optional = false, fetch = FetchType.LAZY, mappedBy = "commonActInfo")
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "commonActInfo")
 	public JobExtraInfo getJobExtraInfo() {
 		return this.jobExtraInfo;
 	}
@@ -322,7 +322,7 @@ public class CommonActInfo implements java.io.Serializable {
 		this.userActClts = userActClts;
 	}
 
-	@OneToOne(optional = false, fetch = FetchType.LAZY, mappedBy = "commonActInfo")
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "commonActInfo")
 	public ActExtraInfo getActExtraInfo() {
 		return this.actExtraInfo;
 	}

@@ -19,7 +19,6 @@ public class BackendCommonActInfo {
 	private String tel;
 	private String email;
 	private String qq;
-	private String organizer;
 	private String author;
 	private Integer needOrder;
 	private List<MultipartFile> pictures;
@@ -103,12 +102,6 @@ public class BackendCommonActInfo {
 	}
 	public void setQq(String qq) {
 		this.qq = qq;
-	}
-	public String getOrganizer() {
-		return organizer;
-	}
-	public void setOrganizer(String organizer) {
-		this.organizer = organizer;
 	}
 	public String getAuthor() {
 		return author;
