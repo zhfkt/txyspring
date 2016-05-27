@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import com.tongmeng.txyspring.model.CommonActImage;
 import com.tongmeng.txyspring.model.CommonActInfo;
+import com.tongmeng.txyspring.model.JobExtraInfo;
 
 @Repository
 public class CommonActInfoDao {
@@ -110,6 +111,13 @@ public class CommonActInfoDao {
 		session.save(commonActImage);
 		
 	}	
+	
+	public void saveJobExtraInfo(JobExtraInfo jobExtraInfo)
+	{
+		Session session = sessionFactory.getCurrentSession();
+
+		session.save(jobExtraInfo);
+	}
 
 	public void addFavour(int id) {
 		Session session = sessionFactory.getCurrentSession();

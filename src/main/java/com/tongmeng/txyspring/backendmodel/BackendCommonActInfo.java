@@ -23,6 +23,7 @@ public class BackendCommonActInfo {
 	private Integer needOrder;
 	private List<MultipartFile> pictures;
 	private MultipartFile coverImg;
+	private String info;
 	
 	
 	public Integer getActsubtype() {
@@ -126,6 +127,12 @@ public class BackendCommonActInfo {
 	}
 	public void setCoverImg(MultipartFile coverImg) {
 		this.coverImg = coverImg;
+	}
+	public String getInfo() {
+		return info;
+	}
+	public void setInfo(String info) {
+		this.info = info;
 	}
 	
 }

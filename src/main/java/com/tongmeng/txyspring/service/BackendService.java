@@ -17,6 +17,7 @@ import com.tongmeng.txyspring.dao.CommonActInfoDao;
 import com.tongmeng.txyspring.model.ActCode;
 import com.tongmeng.txyspring.model.CommonActImage;
 import com.tongmeng.txyspring.model.CommonActInfo;
+import com.tongmeng.txyspring.model.JobExtraInfo;
 import com.tongmeng.txyspring.model.SchCode;
 
 @Service
@@ -29,6 +30,12 @@ public class BackendService {
 	public void insertBackendCommonActInfo(BackendCommonActInfo backendCommonActInfo) {
 
 
+		//if needOrder exists
+		int needOrder = 0;
+		if(backendCommonActInfo.getNeedOrder()!=null)
+		{
+			needOrder = backendCommonActInfo.getNeedOrder();
+		}
 		
 		//2016-03-01 15:00:00
 		Date startDate = DateTime.parse(backendCommonActInfo.getStartDate() + backendCommonActInfo.getStartTime(),
@@ -36,7 +43,6 @@ public class BackendService {
 		Date endDate =  DateTime.parse( backendCommonActInfo.getEndDate() +  backendCommonActInfo.getEndTime(),
 				DateTimeFormat.forPattern("yyyy-MM-ddHH:mm")).toDate();
 		Date pubTime =  new DateTime().toDate();
-		
 		
 		CommonActInfo commonActInfo = new CommonActInfo(new ActCode(backendCommonActInfo.getActsubtype()),
 				new SchCode(backendCommonActInfo.getCampus()),
@@ -57,24 +63,34 @@ public class BackendService {
 				0,
 				"",
 				backendCommonActInfo.getAuthor(),
-				backendCommonActInfo.getNeedOrder(),
+				needOrder,
 				null,
 				null,
 				null,
 				null,
 				null); 
 		
+		//if Job exists
 		
-		
+		JobExtraInfo jobExtraInfo = null;
+		if(backendCommonActInfo.getInfo()!=null)
+		{
+			jobExtraInfo = new JobExtraInfo(commonActInfo, "", backendCommonActInfo.getInfo());
+			commonActInfo.setJobExtraInfo(jobExtraInfo);
+		}
+
 		//Pictures
 		
 		Set<CommonActImage> commonActImages = new HashSet<CommonActImage>();
 		List<MultipartFile> pictures = backendCommonActInfo.getPictures();
         if(pictures != null && pictures.size() != 0) {
-            for(MultipartFile picture : pictures) {
+            for(MultipartFile picture : pictures) {  	
+            	if(!picture.isEmpty())
+            	{
+                	CommonActImage commonActImage = new CommonActImage(commonActInfo,cloudImagePathSave(picture));
+                	commonActImages.add(commonActImage);	
+            	}
             	
-            	CommonActImage commonActImage = new CommonActImage(commonActInfo,cloudImagePathSave(picture));
-            	commonActImages.add(commonActImage);
             }
         }
         
@@ -84,8 +100,12 @@ public class BackendService {
         //Cover Image
         
         MultipartFile coverImg = backendCommonActInfo.getCoverImg();
-		String covImgUri = cloudImagePathSave(coverImg);
-		commonActInfo.setCovImgUri(covImgUri);
+        if(!coverImg.isEmpty())
+        {
+        	String covImgUri = cloudImagePathSave(coverImg);
+    		commonActInfo.setCovImgUri(covImgUri);	
+        }
+        
 		
 		
 		//save using hibernate
@@ -95,8 +115,11 @@ public class BackendService {
 		{
 			commonActInfoDao.saveCommonActInfo(commonActImage);
 		}
+		if(jobExtraInfo!=null)
+		{
+			commonActInfoDao.saveJobExtraInfo(jobExtraInfo);	
+		}
 		
-
 		return;
 	}
 	
@@ -104,7 +127,10 @@ public class BackendService {
 	
 	String cloudImagePathSave(MultipartFile img)
 	{
-		
+		if(img.isEmpty())
+		{
+			return null;
+		}
 		
 		return "https://raw.githubusercontent.com/zhfkt/txyspring/master/src/main/webapp/resources/images/gorilla.jpg";
 	}

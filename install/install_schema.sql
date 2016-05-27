@@ -181,6 +181,6 @@ values (20013,'其他信息');
 
 select * from common_act_image;
 select * from common_act_info;
-
+select * from job_extra_info;
 
 

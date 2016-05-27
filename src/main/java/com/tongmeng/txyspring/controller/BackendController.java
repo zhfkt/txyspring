@@ -35,6 +35,14 @@ public class BackendController {
 		return "backend/form";
 	}
 	
+	
+	@RequestMapping(value = "/form_info", method = RequestMethod.GET)
+	public String form_info(ModelMap model) {
+
+		model.put("form", new BackendCommonActInfo());
+		return "backend/form-info";
+	}
+	
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
 	public String form_insert(@ModelAttribute("form")  BackendCommonActInfo backendCommonActInfo) {
 				
@@ -44,9 +52,11 @@ public class BackendController {
 	}
 	
 	
-	@RequestMapping(value = "/form_info", method = RequestMethod.GET)
-	public String form_info(Locale locale, Model model) {
-
+	@RequestMapping(value = "/form_info", method = RequestMethod.POST)
+	public String form_info_insert(@ModelAttribute("form")  BackendCommonActInfo backendCommonActInfo) {
+				
+		backendService.insertBackendCommonActInfo(backendCommonActInfo);
+		
 		return "backend/form-info";
 	}
 	
