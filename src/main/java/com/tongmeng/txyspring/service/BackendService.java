@@ -7,12 +7,15 @@ import java.util.Set;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.tongmeng.txyspring.backendmodel.BackendCommonActInfo;
+import com.tongmeng.txyspring.controller.HomeRestController;
 import com.tongmeng.txyspring.dao.CommonActInfoDao;
 import com.tongmeng.txyspring.model.ActCode;
 import com.tongmeng.txyspring.model.CommonActImage;
@@ -23,6 +26,8 @@ import com.tongmeng.txyspring.model.SchCode;
 @Service
 public class BackendService {
 
+	private static final Logger logger = LoggerFactory.getLogger(BackendService.class);
+	
 	@Autowired
 	private CommonActInfoDao commonActInfoDao;
 
@@ -38,10 +43,24 @@ public class BackendService {
 		}
 		
 		//2016-03-01 15:00:00
-		Date startDate = DateTime.parse(backendCommonActInfo.getStartDate() + backendCommonActInfo.getStartTime(),
-				DateTimeFormat.forPattern("yyyy-MM-ddHH:mm")).toDate();
-		Date endDate =  DateTime.parse( backendCommonActInfo.getEndDate() +  backendCommonActInfo.getEndTime(),
-				DateTimeFormat.forPattern("yyyy-MM-ddHH:mm")).toDate();
+		
+		Date startDate = DateTime.parse("1971-01-0100:02",DateTimeFormat.forPattern("yyyy-MM-ddHH:mm")).toDate();
+		Date endDate = DateTime.parse("2038-01-1903:14",DateTimeFormat.forPattern("yyyy-MM-ddHH:mm")).toDate();
+		
+		try
+		{
+			startDate = DateTime.parse(backendCommonActInfo.getStartDate() + backendCommonActInfo.getStartTime(),
+					DateTimeFormat.forPattern("yyyy-MM-ddHH:mm")).toDate();
+			endDate =  DateTime.parse( backendCommonActInfo.getEndDate() +  backendCommonActInfo.getEndTime(),
+					DateTimeFormat.forPattern("yyyy-MM-ddHH:mm")).toDate();	
+		}
+		catch(IllegalArgumentException e)
+		{
+			logger.warn(e.toString());
+			logger.warn("DateTime.parse failed");
+		}
+		
+		
 		Date pubTime =  new DateTime().toDate();
 		
 		CommonActInfo commonActInfo = new CommonActInfo(new ActCode(backendCommonActInfo.getActsubtype()),
