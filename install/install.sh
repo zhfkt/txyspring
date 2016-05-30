@@ -9,6 +9,7 @@ service tomcat7 stop
 service tomcat stop
 
 cd /root/develop/txyspring/install
+
 #mysql -uroot -ppassword -v -t < install.sql 
 
 service tomcat7 start
