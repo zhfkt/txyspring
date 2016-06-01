@@ -1,5 +1,6 @@
 package com.tongmeng.txyspring.service;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -13,9 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import com.qcloud.*;
 
 import com.tongmeng.txyspring.backendmodel.BackendCommonActInfo;
-import com.tongmeng.txyspring.controller.HomeRestController;
 import com.tongmeng.txyspring.dao.CommonActInfoDao;
 import com.tongmeng.txyspring.model.ActCode;
 import com.tongmeng.txyspring.model.CommonActImage;
@@ -100,13 +101,15 @@ public class BackendService {
 
 		//Pictures
 		
+		ImageServiceUpload imageServiceUpload = new ImageServiceUpload();
+		
 		Set<CommonActImage> commonActImages = new HashSet<CommonActImage>();
 		List<MultipartFile> pictures = backendCommonActInfo.getPictures();
         if(pictures != null && pictures.size() != 0) {
             for(MultipartFile picture : pictures) {  	
             	if(!picture.isEmpty())
             	{
-                	CommonActImage commonActImage = new CommonActImage(commonActInfo,cloudImagePathSave(picture));
+                	CommonActImage commonActImage = new CommonActImage(commonActInfo,imageServiceUpload.cloudImagePathSave(picture));
                 	commonActImages.add(commonActImage);	
             	}
             	
@@ -121,7 +124,7 @@ public class BackendService {
         MultipartFile coverImg = backendCommonActInfo.getCoverImg();
         if(!coverImg.isEmpty())
         {
-        	String covImgUri = cloudImagePathSave(coverImg);
+        	String covImgUri = imageServiceUpload.cloudImagePathSave(coverImg);
     		commonActInfo.setCovImgUri(covImgUri);	
         }
         
@@ -141,8 +144,24 @@ public class BackendService {
 		
 		return;
 	}
+
+}
+
+
+
+class ImageServiceUpload
+{
+	private static final int APP_ID_V2 = 10042156;
+    private static final String SECRET_ID_V2 = "AKIDY0p0aiqAp7HOcG4OQlX2y4V5AgDXC2vu";
+    private static final String SECRET_KEY_V2 = "k9yR8HUe4aObQ6vBoTL1Yzm85YdIpXPq";
+    private static final String BUCKET = "txyspring";
+    private PicCloud pc;
 	
-	
+	public ImageServiceUpload()
+	{
+		pc = new PicCloud(APP_ID_V2, SECRET_ID_V2, SECRET_KEY_V2, BUCKET);
+		
+	}
 	
 	String cloudImagePathSave(MultipartFile img)
 	{
@@ -150,10 +169,27 @@ public class BackendService {
 		{
 			return null;
 		}
-		
-		return "https://raw.githubusercontent.com/zhfkt/txyspring/master/src/main/webapp/resources/images/gorilla.jpg";
+	
+        UploadResult result;
+		try {
+			result = pc.upload(img.getInputStream());
+		} catch (IOException e) {
+			throw new IllegalArgumentException(e.toString());
+		}
+
+        if(result != null){
+            result.print();
+        }
+        else
+        {
+        	throw new IllegalArgumentException("UploadResult result NULL "+ pc.getErrMsg() + ": " + pc.getError());
+        }
+        
+        String imageMobileUrl = result.downloadUrl + "/mobile";
+        
+		return imageMobileUrl;
 	}
 	
-	
-	
 }
+
+
