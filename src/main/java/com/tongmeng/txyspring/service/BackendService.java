@@ -64,8 +64,31 @@ public class BackendService {
 		
 		Date pubTime =  new DateTime().toDate();
 		
-		CommonActInfo commonActInfo = new CommonActInfo(new ActCode(backendCommonActInfo.getActsubtype()),
-				new SchCode(backendCommonActInfo.getCampus()),
+		ActCode actCode = null;
+		SchCode schCode = null;
+		
+		
+		if(backendCommonActInfo.getActsubtype()!=null)
+		{
+			actCode = new ActCode(backendCommonActInfo.getActsubtype());	
+		}
+		else
+		{
+			actCode = new ActCode(0);
+		}
+		
+		if(backendCommonActInfo.getCampus()!=null)
+		{
+			schCode = new SchCode(backendCommonActInfo.getCampus());
+		}
+		else
+		{
+			schCode = new SchCode(0);
+		}
+		
+		
+		CommonActInfo commonActInfo = new CommonActInfo(actCode,
+				schCode,
 				backendCommonActInfo.getTitle(),
 				startDate,
 				endDate,

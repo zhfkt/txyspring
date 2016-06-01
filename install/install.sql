@@ -152,6 +152,10 @@ values (10004,'同济大学沪西校区');
 insert act_code(Act_Subtype,Description_Subtype)
 values (10000,'校园活动');
 
+
+insert act_code(Act_Subtype,Description_Subtype)
+values (0,'未归类');
+
 insert act_code(Act_Subtype,Description_Subtype)
 values (10011,'讲座报告');
 
