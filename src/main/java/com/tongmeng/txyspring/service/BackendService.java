@@ -178,15 +178,15 @@ class ImageServiceUpload
     private static final String SECRET_ID_V2 = "AKIDY0p0aiqAp7HOcG4OQlX2y4V5AgDXC2vu";
     private static final String SECRET_KEY_V2 = "k9yR8HUe4aObQ6vBoTL1Yzm85YdIpXPq";
     private static final String BUCKET = "txyspring";
-    private PicCloud pc;
+    private PicCloudSliceUpload pc;
 	
 	public ImageServiceUpload()
 	{
-		pc = new PicCloud(APP_ID_V2, SECRET_ID_V2, SECRET_KEY_V2, BUCKET);
+		pc = new PicCloudSliceUpload(APP_ID_V2, SECRET_ID_V2, SECRET_KEY_V2, BUCKET);
 		
 	}
 	
-	String cloudImagePathSave(MultipartFile img)
+	public String cloudImagePathSave(MultipartFile img)
 	{
 		if(img.isEmpty())
 		{
@@ -195,7 +195,9 @@ class ImageServiceUpload
 	
         UploadResult result;
 		try {
-			result = pc.upload(img.getInputStream());
+			//result = pc.upload(img.getInputStream());
+			result = pc.simpleUploadSlice(img.getBytes(),(int) img.getSize(),512*1024);
+			
 		} catch (IOException e) {
 			throw new IllegalArgumentException(e.toString());
 		}
@@ -212,6 +214,37 @@ class ImageServiceUpload
         
 		return imageMobileUrl;
 	}
+	
+}
+
+class PicCloudSliceUpload extends PicCloud
+{
+	
+	public PicCloudSliceUpload(int appId, String secret_id, String secret_key, String bucket) 
+	{
+		super(appId, secret_id, secret_key, bucket);
+	}
+	
+	
+    public SliceUploadInfo simpleUploadSlice(byte[] data ,int fileSize,int sliceSize){
+
+        SliceUploadInfo info = initUploadSlice("", data, fileSize, sliceSize);
+        if(null == info){
+            return info;
+        }
+        
+        while(false == info.finishFlag){
+            SliceUploadInfo newInfo = UploadSlice(data, info);
+            if(newInfo == null){
+                setError(-1, "slice upload failed, need retry");
+                return null;
+            }
+            info = newInfo;
+        }
+        
+        setError(0, "success");
+        return info;
+    }
 	
 }
 
