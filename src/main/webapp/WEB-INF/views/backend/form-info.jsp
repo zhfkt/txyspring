@@ -21,7 +21,7 @@
       <form:form class="ui form" action="form_info" method="post" id="myform" enctype="multipart/form-data"  modelAttribute="form">
         <div class="inline field">
           <label>活动名称</label>
-          <form:input path="title" type="text" name="title" placeholder="" style="width: 500px" maxlength="10" />
+          <form:input path="title" type="text" name="title" placeholder="" style="width: 500px" maxlength="35" />
         </div>
         <div class="inline field">
           <label>活动类别</label>
