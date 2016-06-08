@@ -126,8 +126,7 @@ public class UserService {
 
 		if (oriId.equals("")) {
 			return 0;
-		}
-		
+		}	
 		
 		UserAll user = userDao.selectUserByOriId(schCode.getValue(), oriId);
 		

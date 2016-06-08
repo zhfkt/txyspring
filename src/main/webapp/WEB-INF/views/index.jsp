@@ -21,8 +21,8 @@
     <script>
     window.USERINFO = {
       image : 'http://tp4.sinaimg.cn/1991387607/180/40007947354/1',
-      id : 10000,
-      name : '大豆梓',
+      id : ${UserID},
+      name : '${UserID}',
       score: 0
     }
     </script>
