@@ -1,5 +1,5 @@
 package com.tongmeng.txyspring.model;
-// Generated 2016-5-28 0:24:07 by Hibernate Tools 4.3.1.Final
+// Generated 2016-6-8 14:16:35 by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -17,6 +17,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 import org.hibernate.annotations.Formula;
 
 /**
@@ -62,7 +63,7 @@ public class CommonActInfo implements java.io.Serializable {
 	public void setHot(double hot) {
 		this.hot = hot;
 	}	
-		
+
 	public CommonActInfo() {
 	}
 

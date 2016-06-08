@@ -1,5 +1,5 @@
 package com.tongmeng.txyspring.model;
-// Generated 2016-5-28 0:24:07 by Hibernate Tools 4.3.1.Final
+// Generated 2016-6-8 14:16:35 by Hibernate Tools 4.3.1.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
