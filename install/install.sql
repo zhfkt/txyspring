@@ -1,3 +1,6 @@
+#set @install_fake:=1;
+#set @install_fake:=null;
+
 DROP SCHEMA IF EXISTS txyspring;
 CREATE SCHEMA txyspring;
 USE txyspring;
@@ -17,9 +20,9 @@ CREATE TABLE act_code(
 CREATE TABLE common_act_info (
 	ID INT NOT NULL AUTO_INCREMENT,
 	Title TEXT,
-	Start_Date TIMESTAMP, 
-	End_Date TIMESTAMP,
-	Pub_Time TIMESTAMP,
+	Start_Date TIMESTAMP DEFAULT 0, 
+	End_Date TIMESTAMP DEFAULT 0,
+	Pub_Time TIMESTAMP DEFAULT 0,
 	Location TEXT,
 	People_Number INT,
  	NumRead INT,
@@ -187,11 +190,27 @@ insert act_code(Act_Subtype,Description_Subtype)
 values (20013,'其他信息');
 
 
+
 #---------------------------------
-# test data insert
+# test data insert   
+        
+delimiter #        
+create procedure insertMultipleFakeData()
+fakeproc:begin
 
-delimiter #
+declare fakeCount int;
+declare i int;
+set fakeCount = 10;
+set i = 1;
 
+	start transaction;
+    
+    
+	IF (SELECT @install_fake IS NULL)
+    THEN
+	 leave fakeproc;
+	END if;
+	
 
 insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,
 	CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_subtype,Organizer,Sponsor,Is_Reversed)
@@ -506,7 +525,7 @@ insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number
 '体育赛事011','2016/5/2 10:00','2016/5/2 11:00','2016/4/24 19:00','体育地点11','354','604','408','http://115.28.68.32:8080/resources/images/gorilla.jpg','内容无','13262986042','1210556@qq.com','415929235','',0,'10002','10013','化学系','','0'
 );
 insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_Subtype,Organizer,Sponsor,Is_Reversed) values ( 
-'体育赛事012','2016/5/3 10:00','2016/5/3 11:00','2016/4/25 19:00','体育地点12','554','559','82','http://115.28.68.32:8080/resources/images/gorilla.jpg','内容无','13262986043','1210557@qq.com','415929235','',0,'10001','10013','团学联体育部','','0's
+'体育赛事012','2016/5/3 10:00','2016/5/3 11:00','2016/4/25 19:00','体育地点12','554','559','82','http://115.28.68.32:8080/resources/images/gorilla.jpg','内容无','13262986043','1210557@qq.com','415929235','',0,'10001','10013','团学联体育部','','0'
 );
 insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_Subtype,Organizer,Sponsor,Is_Reversed) values ( 
 '体育赛事013','2016/5/4 10:00','2016/5/4 11:00','2016/4/26 19:00','体育地点13','489','778','357','http://115.28.68.32:8080/resources/images/gorilla.jpg','内容无','13262986044','1210558@qq.com','415929235','',0,'10001','10013','同济舞鞋','','0'
@@ -761,17 +780,9 @@ insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number
 insert common_act_info(Title,Start_Date,End_Date,Pub_Time,Location,People_Number,NumRead,NumFavo,CovImg_Uri,Intro,CtPer_Tel,CtPer_Mail,CtPer_QQ,OutLink,Stat_Code,Area_Code,Act_Subtype,Organizer,Sponsor,Is_Reversed) values ( 
 '测试下咯07','2016/7/21 10:00','2016/7/21 11:00','2016/7/13 19:00','测试地点07','991','656','132','http://115.28.68.32:8080/resources/images/gorilla.jpg','内容无','13262986122','1210636@qq.com','415929312','',0,'10003','20013','发布7','','1'
 );        
-        
-create procedure insertMultipleFakeData()
-begin
-	
-declare fakeCount int;
-declare i int;
-set fakeCount = 10;
-set i = 1;
-
-	start transaction;
-	
+         
+    
+    
 	while i < fakeCount do
 	    
 		insert sliders (Title,Act_ID,Image_Path,Link)
