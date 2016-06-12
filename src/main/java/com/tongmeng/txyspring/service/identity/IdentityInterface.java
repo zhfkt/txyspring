@@ -1,9 +1,6 @@
 package com.tongmeng.txyspring.service.identity;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -161,8 +158,8 @@ class TongjiIdentity extends IdentityInterface
 			return "";
 		}
 
-		if (obj.getType().equals("success")) {
-			logger.warn("obj.getType() error when accessing the data.tongji");
+		if (!obj.getType().equals("success")) {
+			logger.warn("obj.getType() error when accessing the data.tongji"+ obj.getResult());
 			return "";
 		}
 
