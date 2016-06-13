@@ -74,7 +74,7 @@ public class ActDetailAjax {
 		this.tel = commonActInfo.getCtPerTel();
 		this.email = commonActInfo.getCtPerMail();
 		this.qq = commonActInfo.getCtPerQq();
-		this.detail = commonActInfo.getIntro().replace("\n", "<br />");
+		this.detail = commonActInfo.getIntro();
 		this.more = commonActInfo.getOutLink();
 	}	
 	
