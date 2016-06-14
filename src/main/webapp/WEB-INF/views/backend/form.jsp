@@ -67,7 +67,7 @@
         </div>
         <div class="inline field">
           <label>活动地点</label>
-          <form:input path="location" type="text" name="location" placeholder="" style="width: 500px" maxlength="20" />
+          <form:input path="location" type="text" name="location" placeholder="" style="width: 500px" />
         </div>
         <div class="inline field">
           <label>规模人数</label>
