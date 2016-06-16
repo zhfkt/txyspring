@@ -10,7 +10,7 @@ import org.springframework.web.context.WebApplicationContext;
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class UserInfoSession {
 
-	final int NOT_LOGIN = 0;
+	public static final int NOT_LOGIN = 0;
 	private int userId = NOT_LOGIN;
 	
 	public int getUserId() {

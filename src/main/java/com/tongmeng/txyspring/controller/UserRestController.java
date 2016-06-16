@@ -22,6 +22,7 @@ import com.tongmeng.txyspring.ajaxmodel.AjaxJsonViews;
 import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody;
 import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody.RESPONSE_STATUS;
 import com.tongmeng.txyspring.service.UserService;
+import com.tongmeng.txyspring.service.identity.IdentityInterface;
 import com.tongmeng.txyspring.service.identity.UserInfoSession;
 
 import org.slf4j.Logger;
@@ -78,42 +79,22 @@ public class UserRestController {
 	@RequestMapping(value = "/Login", method = RequestMethod.GET)
 	public ModelAndView login(HttpServletRequest request) throws MissingServletRequestParameterException {
 		
-		try
-		{
-			int userId = userService.insertNewLoginId(request);
-			
-			// session setter and userInfoSession is session Scope
-			currentUserSession.setUserId(userId);
-			
-		}
-		catch(IllegalArgumentException e)
-		{
-	    	logger.warn(e.getMessage());
-	    	//throw new MissingServletRequestParameterException("auth login ticket", "String");
-		}
-		catch(ConstraintViolationException e)
-		{			
-			logger.info("For the normal existed user login");
-			
-			int userId = userService.selectLoginId(request);		
-			// session setter and userInfoSession is session Scope
-			currentUserSession.setUserId(userId);
-			
-		}
+		IdentityInterface.UserIdentity userIdentity = userService.getIdentity(request);
 		
-		/*
-		catch(ConnectException e)
+		if(userIdentity.ifLogin())
 		{
-	    	logger.warn(e.getMessage().toString());
+			int userId = userService.getUserAll(userIdentity);
+			
+			// session setter and userInfoSession is session Scope
+			currentUserSession.setUserId(userId);
 		}
-		catch(Exception e)
+		else
 		{
-	    	logger.warn(e.getMessage().toString());
+			currentUserSession.setUserId(UserInfoSession.NOT_LOGIN);
 		}
-		*/
 		
 
-	
+
 		return new ModelAndView("redirect:/");
 	}
 	

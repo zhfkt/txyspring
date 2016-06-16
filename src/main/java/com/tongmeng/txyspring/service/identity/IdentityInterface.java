@@ -11,18 +11,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public abstract class IdentityInterface {
 	
-	private SCHCODE schCode;
-
-	public abstract String getOriId(HttpServletRequest request);
-
-	public IdentityInterface(SCHCODE schCode) {
-		this.schCode = schCode;
-	}
-
-	public SCHCODE getSchCode() {
-		return this.schCode;
-	}
-
 	public enum SCHCODE {
 		TONGJI(10000), FUDAN(20000), ETC(0);
 
@@ -36,6 +24,66 @@ public abstract class IdentityInterface {
 			return id;
 		}
 	}
+	
+	protected SCHCODE schCode;
+	
+	public IdentityInterface(SCHCODE schCode) {
+		this.schCode = schCode;
+	}
+	
+	public class UserIdentity
+	{
+		protected final static String NOT_LOGIN = "NOT_LOGIN" ;
+
+		private String oriId;
+		private SCHCODE schCode; 
+		
+		public String getOriId() {
+			return oriId;
+		}
+
+		public void setOriId(String oriId) {
+			this.oriId = oriId;
+		}
+
+		public IdentityInterface.SCHCODE getSchCode() {
+			return schCode;
+		}
+
+		public void setSchCode(IdentityInterface.SCHCODE schCode) {
+			this.schCode = schCode;
+		}
+
+		public UserIdentity(String oriId,IdentityInterface.SCHCODE schCode)
+		{
+			this.oriId = oriId;
+			this.schCode = schCode;
+		}
+		
+		public boolean ifLogin()
+		{
+			if(this.oriId.equals(NOT_LOGIN))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}	
+	}
+	
+	public class notLoginUserIdentity extends UserIdentity
+	{
+		public notLoginUserIdentity()
+		{
+			super(NOT_LOGIN, SCHCODE.ETC);
+		}
+	}
+	
+
+	public abstract UserIdentity getUserIdentity(HttpServletRequest request);
+
 
 	public static IdentityInterface getSchFactory(HttpServletRequest request) {
 
@@ -44,7 +92,7 @@ public abstract class IdentityInterface {
 		switch (currentSchCode) {
 		case TONGJI:
 
-			return new TongjiIdentity(currentSchCode);
+			return new TongjiIdentity();
 
 		case FUDAN:
 
@@ -77,8 +125,8 @@ class TongjiIdentity extends IdentityInterface
 	
 	private static final Logger logger = LoggerFactory.getLogger(TongjiIdentity.class);
 	
-	public TongjiIdentity(SCHCODE schCode) {
-		super(schCode);
+	public TongjiIdentity() {
+		super(SCHCODE.TONGJI);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -105,17 +153,17 @@ class TongjiIdentity extends IdentityInterface
 	}
 
 	@Override
-	public String getOriId(HttpServletRequest request) {
+	public UserIdentity getUserIdentity(HttpServletRequest request) {
 		String ticket = request.getParameter("ticket");
 
 		if (ticket == null) {
-			throw new IllegalArgumentException("Empty case to get the user ticket in Tongji");
+			return new notLoginUserIdentity();
 		}
 		
 		if(ticket.equals("1"))
 		{
 			logger.warn("use test user to debug");
-			return ticket;
+			return new UserIdentity(ticket, schCode);
 		}
 		
 		/*
@@ -137,7 +185,7 @@ class TongjiIdentity extends IdentityInterface
 			obj = mapper.readValue(new URL(remoteUrl), ReturnStatus.class);
 		} catch (Exception e) {
 			logger.warn(e.toString());
-			return "";
+			return new notLoginUserIdentity();
 		}
 
 		/*
@@ -155,15 +203,15 @@ class TongjiIdentity extends IdentityInterface
 
 		if (obj == null) {
 			logger.warn("obj==null after skip the Exception e");
-			return "";
+			return new notLoginUserIdentity();
 		}
 
 		if (!obj.getType().equals("success")) {
 			logger.warn("obj.getType() error when accessing the data.tongji"+ obj.getResult());
-			return "";
+			return new notLoginUserIdentity();
 		}
 
-		return obj.getResult();
+		return new UserIdentity(ticket, schCode);
 	}
 	
 	

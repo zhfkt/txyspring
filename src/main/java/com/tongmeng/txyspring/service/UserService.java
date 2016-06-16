@@ -96,49 +96,36 @@ public class UserService {
 
 		return ajaxLstAct;
 	}
+	
+	
 
-	@Transactional
-	public int insertNewLoginId(HttpServletRequest request) {
-
+	
+	public IdentityInterface.UserIdentity getIdentity(HttpServletRequest request)
+	{
 		IdentityInterface identity = IdentityInterface.getSchFactory(request);
-
-		IdentityInterface.SCHCODE schCode = identity.getSchCode();
-		String oriId = identity.getOriId(request);
-
-		if (oriId.equals("")) {
-			return 0;
-		}
-
-		
-		UserAll user = userDao.insertUserByOriId(schCode.getValue(), oriId);
-		return user.getId();	
-		
-
+		return identity.getUserIdentity(request);
 	}
 	
-	@Transactional(readOnly = true)
-	public int selectLoginId(HttpServletRequest request) {
-		
-		IdentityInterface identity = IdentityInterface.getSchFactory(request);
 
-		IdentityInterface.SCHCODE schCode = identity.getSchCode();
-		String oriId = identity.getOriId(request);
 
-		if (oriId.equals("")) {
-			return 0;
-		}	
-		
-		UserAll user = userDao.selectUserByOriId(schCode.getValue(), oriId);
-		
-		if(user != null)
-		{
-			return user.getId();
-		}
-		else
-		{
-			return 0;
-		}
 	
+	@Transactional
+	public int getUserAll(IdentityInterface.UserIdentity userIdentity) {
+		
+		if(!userIdentity.ifLogin())
+		{
+			return UserInfoSession.NOT_LOGIN;
+		}
+
+		UserAll user = userDao.selectUserByOriId(userIdentity.getSchCode().getValue(), userIdentity.getOriId());
+		
+		if(user == null)
+		{
+			user = userDao.insertUserByOriId(userIdentity.getSchCode().getValue(), userIdentity.getOriId());
+		}
+		
+		return user.getId();
+
 	}
 	
 	@Transactional
