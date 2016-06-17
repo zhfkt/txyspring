@@ -1,6 +1,9 @@
 package com.tongmeng.txyspring.service.identity;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -151,6 +154,21 @@ class TongjiIdentity extends IdentityInterface
 		}
 
 	}
+	
+	
+	public boolean isAdmin(String ticket)
+	{
+		ArrayList<String> array = new ArrayList<String>(Arrays.asList("1","2")); 
+		if(array.contains(ticket))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
 
 	@Override
 	public UserIdentity getUserIdentity(HttpServletRequest request) {
@@ -160,7 +178,7 @@ class TongjiIdentity extends IdentityInterface
 			return new notLoginUserIdentity();
 		}
 		
-		if(ticket.equals("1"))
+		if(isAdmin(ticket))
 		{
 			logger.warn("use test user to debug");
 			return new UserIdentity(ticket, schCode);
