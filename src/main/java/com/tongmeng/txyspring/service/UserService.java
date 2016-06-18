@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tongmeng.txyspring.ajaxmodel.ActInfoAjax;
@@ -109,7 +110,7 @@ public class UserService {
 
 
 	
-	@Transactional
+	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public int getUserAll(IdentityInterface.UserIdentity userIdentity) {
 		
 		if(!userIdentity.ifLogin())
