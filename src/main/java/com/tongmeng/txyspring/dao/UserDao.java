@@ -1,6 +1,7 @@
 package com.tongmeng.txyspring.dao;
 
 import org.hibernate.Criteria;
+import org.hibernate.LockMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -27,6 +28,8 @@ public class UserDao {
 		criteria.add(Restrictions.ge("schCode.id", areaCode));
 		criteria.add(Restrictions.lt("schCode.id", areaCode + 10000));
 		criteria.add(Restrictions.eq("oriId", oriId));
+		
+		criteria.setLockMode(LockMode.PESSIMISTIC_WRITE);
 		
 		UserAll user = (UserAll)criteria.uniqueResult();
 		return user;
