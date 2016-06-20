@@ -110,7 +110,7 @@ public class UserService {
 
 
 	
-	@Transactional
+	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public int getUserAll(IdentityInterface.UserIdentity userIdentity) {
 		
 		if(!userIdentity.ifLogin())
