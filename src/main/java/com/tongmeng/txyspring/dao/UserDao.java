@@ -29,7 +29,7 @@ public class UserDao {
 		criteria.add(Restrictions.lt("schCode.id", areaCode + 10000));
 		criteria.add(Restrictions.eq("oriId", oriId));
 		
-		criteria.setLockMode(LockMode.PESSIMISTIC_WRITE);
+		//criteria.setLockMode(LockMode.PESSIMISTIC_WRITE);
 		
 		UserAll user = (UserAll)criteria.uniqueResult();
 		return user;
