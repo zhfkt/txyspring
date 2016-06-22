@@ -24,16 +24,17 @@ public class HomeController {
 	public String home(Locale locale, Model model) {
 
 		String userName = UserInfoSession.NOT_LOGIN_STRING;
+		int userId = UserInfoSession.NOT_LOGIN;
 		
 		if(userInfoSession.isLogined())
 		{
-			int userId = userInfoSession.getUserId();
+			userId = userInfoSession.getUserId();
 			userName = userService.getUserName(userId);
 		}
 		
 
-		model.addAttribute("UserID", userName);
-		//model.addAttribute("oriId", oriId);
+		model.addAttribute("UserID", userId);
+		model.addAttribute("UserName", userName);
 
 		return "index";
 	}

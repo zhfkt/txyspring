@@ -22,7 +22,7 @@
     window.USERINFO = {
       image : 'http://tp4.sinaimg.cn/1991387607/180/40007947354/1',
       id : ${UserID},
-      name : '${UserID}',
+      name : '${UserName}',
       score: 0
     }
     </script>

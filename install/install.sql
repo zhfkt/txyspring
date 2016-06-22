@@ -88,7 +88,7 @@ CREATE TABLE user_all(
     PSW VARCHAR(100),
 	Area_Code INT NOT NULL,
     Ori_ID VARCHAR(100) NOT NULL,
-    Ori_Name VARCHAR(10),
+    Ori_Name VARCHAR(100),
     Nick_Name VARCHAR(100),
     Age INT,
     Major VARCHAR(100),
