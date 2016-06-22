@@ -17,6 +17,15 @@ public class UserDao {
 
 	@Autowired(required = true)
 	private SessionFactory sessionFactory;
+	
+	public UserAll selectUserById(int id) {
+
+		Session session = sessionFactory.getCurrentSession();
+	
+		UserAll user = (UserAll) session.get(UserAll.class, id);
+		return user;
+	}	
+	
 
 	public UserAll selectUserByOriId(int areaCode, String oriId) {
 
@@ -40,7 +49,12 @@ public class UserDao {
 		Session session = sessionFactory.getCurrentSession();
 
 		SchCode schCode = new SchCode(areaCode);
-		UserAll userAll = new UserAll(schCode, oriId);			
+		UserAll userAll = new UserAll(schCode, oriId);
+		
+		String nickName = oriId;
+		userAll.setNickName(nickName);
+		
+		
 		session.save(userAll);
 		
 		return userAll;

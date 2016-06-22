@@ -83,7 +83,7 @@ public class UserRestController {
 		
 		if(userIdentity.ifLogin())
 		{
-			int userId = userService.getUserAll(userIdentity);
+			int userId = userService.getUserIdByIdentity(userIdentity);
 			
 			// session setter and userInfoSession is session Scope
 			currentUserSession.setUserId(userId);

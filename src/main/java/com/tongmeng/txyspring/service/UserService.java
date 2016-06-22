@@ -107,11 +107,26 @@ public class UserService {
 		return identity.getUserIdentity(request);
 	}
 	
+	@Transactional(readOnly = true)
+	public String getUserName(int id){
 
+		UserAll userAll = userDao.selectUserById(id);
+		
+		if(userAll==null)
+		{
+			return UserInfoSession.NOT_LOGIN_STRING;
+		}
+		else
+		{
+			return userAll.getNickName();
+		}
+		
+		
+	}
 
 	
 	@Transactional
-	public int getUserAll(IdentityInterface.UserIdentity userIdentity) {
+	public int getUserIdByIdentity(IdentityInterface.UserIdentity userIdentity) {
 		
 		if(!userIdentity.ifLogin())
 		{

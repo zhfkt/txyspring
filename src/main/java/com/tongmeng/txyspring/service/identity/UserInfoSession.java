@@ -11,6 +11,8 @@ import org.springframework.web.context.WebApplicationContext;
 public class UserInfoSession {
 
 	public static final int NOT_LOGIN = 0;
+	public static final String NOT_LOGIN_STRING = "未登录";
+	
 	private int userId = NOT_LOGIN;
 	
 	public int getUserId() {
