@@ -51,7 +51,7 @@ public class UserDao {
 		SchCode schCode = new SchCode(areaCode);
 		UserAll userAll = new UserAll(schCode, oriId);
 		
-		String nickName = oriId;
+		String nickName = "用户 " + oriId;
 		userAll.setNickName(nickName);
 		
 		
