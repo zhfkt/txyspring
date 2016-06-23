@@ -25,14 +25,16 @@ public class ActDetailAjax {
 	@JsonView(AjaxJsonViews.Public.class)
 	private String author;
 	
+	@JsonView(AjaxJsonViews.Public.class)
+	private long startTime;
+
+	@JsonView(AjaxJsonViews.Public.class)
+	private long endTime;
 
 	// GetDetail
 	
 	@JsonView(AjaxJsonViews.Public.class)
 	private ArrayList<String> images;
-
-	@JsonView(AjaxJsonViews.Public.class)
-	private long time;
 
 	@JsonView(AjaxJsonViews.Public.class)
 	private int favorNum;
@@ -60,7 +62,9 @@ public class ActDetailAjax {
 		this.location = commonActInfo.getSchCode().getDescription() + ": " + commonActInfo.getLocation();
 		this.isFavor = isFavoured ? 1 : 0;
 		this.author = commonActInfo.getOrganizer();
-
+		this.startTime = commonActInfo.getStartDate().getTime();
+		this.endTime = commonActInfo.getEndDate().getTime();
+		
 		// GetDetail	
 		
 		this.images = new ArrayList<String>();
@@ -69,7 +73,6 @@ public class ActDetailAjax {
 			this.images.add(commonActImages.getImage());
 		}
 		
-		this.time = commonActInfo.getStartDate().getTime();
 		this.favorNum = commonActInfo.getNumFavo();
 		this.tel = commonActInfo.getCtPerTel();
 		this.email = commonActInfo.getCtPerMail();
@@ -127,14 +130,22 @@ public class ActDetailAjax {
 		this.author = author;
 	}
 
-	public long getTime() {
-		return time;
+	public long getStartTime() {
+		return startTime;
 	}
 
-	public void setTime(long time) {
-		this.time = time;
+	public void setStartTime(long time) {
+		this.startTime = time;
 	}
 
+	public long getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(long endTime) {
+		this.endTime = endTime;
+	}
+	
 	public int getFavorNum() {
 		return favorNum;
 	}

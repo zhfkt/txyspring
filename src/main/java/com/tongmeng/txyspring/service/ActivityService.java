@@ -29,7 +29,7 @@ public class ActivityService {
 	private UserInfoSession userInfoSession;
 
 	@Transactional(readOnly = true)
-	public List<ActInfoAjax> listActivitiesByActCodeAndSchCode(int areacode, int subtype, int sort, int p, int type)
+	public List<ActInfoAjax> listActivitiesByActCodeAndSchCode(int areacode, int subtype, int sort, int p, int type, boolean isExpired)
 			throws CredentialException {
 
 		List<ActInfoAjax> ajaxLstAct = new ArrayList<ActInfoAjax>();
@@ -58,7 +58,7 @@ public class ActivityService {
 			subtype = type * 10000;
 		}
 
-		List<CommonActInfo> lstAct = commonActInfoDao.listCommonInfoByActAndSch(areacode, subtype, p, so);
+		List<CommonActInfo> lstAct = commonActInfoDao.listCommonInfoByActAndSch(areacode, subtype, p, so, isExpired);
 		for (CommonActInfo commonActInfo : lstAct) {
 			ajaxLstAct.add(new ActInfoAjax(commonActInfo, userService.isFavoured(commonActInfo.getId())));
 		}

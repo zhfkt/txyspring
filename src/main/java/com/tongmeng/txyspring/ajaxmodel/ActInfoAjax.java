@@ -26,17 +26,17 @@ public class ActInfoAjax {
 	
 	@JsonView(AjaxJsonViews.Public.class)
 	private String author;
-
-	// GetActivities
 	
-	@JsonView(AjaxJsonViews.Public.class)
-	private String image;
-
 	@JsonView(AjaxJsonViews.Public.class)
 	private long startTime;
 
 	@JsonView(AjaxJsonViews.Public.class)
 	private long endTime;
+
+	// GetActivities
+	
+	@JsonView(AjaxJsonViews.Public.class)
+	private String image;
 
 	@JsonView(AjaxJsonViews.Public.class)
 	private int personNum;
@@ -74,12 +74,12 @@ public class ActInfoAjax {
 		this.location = commonActInfo.getSchCode().getDescription() + ": " + commonActInfo.getLocation();
 		this.isFavor = isFavoured ? 1 : 0;
 		this.author = commonActInfo.getOrganizer();
+		this.startTime = commonActInfo.getStartDate().getTime();
+		this.endTime = commonActInfo.getEndDate().getTime();
 		
 		final int hotThreshold = 300;
 		
 		// GetActivities
-		this.startTime = commonActInfo.getStartDate().getTime();
-		this.endTime = commonActInfo.getEndDate().getTime();
 		this.personNum = commonActInfo.getPeopleNumber();
 		this.subType = commonActInfo.getActCode().getActSubtype();
 		this.type = this.subType / 10000;

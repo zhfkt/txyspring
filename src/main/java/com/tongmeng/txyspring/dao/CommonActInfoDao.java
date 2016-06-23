@@ -1,5 +1,6 @@
 package com.tongmeng.txyspring.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -30,7 +31,7 @@ public class CommonActInfoDao {
 	private SessionFactory sessionFactory;
 
 	public List<CommonActInfo> listCommonInfoByActAndSch(int areacode, int subtype, int startPage,
-			SortOption so) {
+			SortOption so, boolean isExpired) {
 
 		Session session = sessionFactory.getCurrentSession();
 
@@ -71,6 +72,16 @@ public class CommonActInfoDao {
 		default:
 			break;
 		}
+		
+		if(isExpired)
+		{
+			criteria.add(Restrictions.lt("endDate", new Date()));
+		}
+		else
+		{
+			criteria.add(Restrictions.ge("endDate", new Date()));
+		}
+		
 
 		criteria.setFirstResult(startPage * pageSize);
 		criteria.setMaxResults(pageSize);

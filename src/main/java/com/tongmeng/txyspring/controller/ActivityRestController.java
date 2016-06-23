@@ -35,7 +35,23 @@ public class ActivityRestController {
 
 
 		List<ActInfoAjax> ajaxLstAct = activityService.listActivitiesByActCodeAndSchCode(campus, subtype, sort, p,
-				type);
+				type, false);
+		return new AjaxResponseBody<List<ActInfoAjax>>(RESPONSE_STATUS.SUCCESS, ajaxLstAct);
+
+	}
+	
+	
+	@JsonView(AjaxJsonViews.Public.class)
+	@RequestMapping(value = "/GetExpiredActivities", method = RequestMethod.GET)
+	public AjaxResponseBody<List<ActInfoAjax>> GetExpiredActivities(@RequestParam(value = "type", required = true) int type,
+			@RequestParam(value = "campus", required = false, defaultValue = "0") int campus,
+			@RequestParam(value = "subtype", required = false, defaultValue = "0") int subtype,
+			@RequestParam(value = "sort", required = false, defaultValue = "1") int sort,
+			@RequestParam(value = "p", required = false, defaultValue = "0") int p) throws CredentialException {
+
+
+		List<ActInfoAjax> ajaxLstAct = activityService.listActivitiesByActCodeAndSchCode(campus, subtype, sort, p,
+				type, true);
 		return new AjaxResponseBody<List<ActInfoAjax>>(RESPONSE_STATUS.SUCCESS, ajaxLstAct);
 
 	}
