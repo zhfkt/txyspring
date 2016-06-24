@@ -1,8 +1,10 @@
 package com.tongmeng.txyspring.dao;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
@@ -22,7 +24,7 @@ import com.tongmeng.txyspring.model.JobExtraInfo;
 public class CommonActInfoDao {
 
 	public enum SortOption {
-		OrderByStarttime, OrderByHot, OrderByPubTime
+		NoOrder, OrderByStartCombineCurrentTime, OrderByHot, OrderByPubTime, OrderByEndTime
 	}
 
 	private final int pageSize = 10;
@@ -60,14 +62,19 @@ public class CommonActInfoDao {
 		}
 
 		switch (so) {
-		case OrderByStarttime:
-			criteria.addOrder(Order.asc("startDate"));
+		case OrderByStartCombineCurrentTime:
+			criteria.addOrder(Order.desc("startDate"));
 			break;
 		case OrderByHot:
 			criteria.addOrder(Order.desc("hot"));
 			break;
 		case OrderByPubTime:
 			criteria.addOrder(Order.desc("pubTime"));
+			break;
+		case OrderByEndTime:
+			criteria.addOrder(Order.desc("endDate"));
+			break;	
+		case NoOrder:
 			break;
 		default:
 			break;
@@ -90,6 +97,45 @@ public class CommonActInfoDao {
 		
 		return cai_list;
 	}
+	
+	public List<CommonActInfo> listTodayCommonInfoByActAndSch(int areacode, int subtype) {
+
+		Session session = sessionFactory.getCurrentSession();
+
+		Criteria criteria = session.createCriteria(CommonActInfo.class);
+
+		criteria.createCriteria("jobExtraInfo", JoinType.LEFT_OUTER_JOIN);
+		criteria.createCriteria("schCode", JoinType.INNER_JOIN);
+	
+		if (subtype % 10000 == 0) {
+			criteria.add(Restrictions.ge("actCode.id", subtype));
+			criteria.add(Restrictions.lt("actCode.id", subtype + 10000));
+
+		} else {
+			criteria.add(Restrictions.eq("actCode.id", subtype));
+		}
+
+		if (areacode != 0) {
+
+			if (areacode % 10000 == 0) {
+				criteria.add(Restrictions.ge("schCode.id", areacode));
+				criteria.add(Restrictions.lt("schCode.id", areacode + 10000));
+			} else {
+				criteria.add(Restrictions.eq("schCode.id", areacode));
+			}
+		}
+
+		criteria.addOrder(Order.desc("startDate"));
+		
+		Date todayEnd = DateUtils.addMilliseconds(DateUtils.ceiling(new Date(), Calendar.DATE), -1);
+		Date todayStart =  DateUtils.truncate(new Date(), Calendar.DATE);
+		criteria.add(Restrictions.lt("startDate", todayEnd));
+		criteria.add(Restrictions.ge("startDate", todayStart));
+		
+		List<CommonActInfo> cai_list = criteria.list();
+		
+		return cai_list;
+	}	
 
 	public CommonActInfo getCommonActInfo(int id) {
 		Session session = sessionFactory.getCurrentSession();

@@ -46,7 +46,7 @@ public class ActivityRestController {
 	public AjaxResponseBody<List<ActInfoAjax>> GetExpiredActivities(@RequestParam(value = "type", required = true) int type,
 			@RequestParam(value = "campus", required = false, defaultValue = "0") int campus,
 			@RequestParam(value = "subtype", required = false, defaultValue = "0") int subtype,
-			@RequestParam(value = "sort", required = false, defaultValue = "1") int sort,
+			@RequestParam(value = "sort", required = false, defaultValue = "0") int sort,
 			@RequestParam(value = "p", required = false, defaultValue = "0") int p) throws CredentialException {
 
 

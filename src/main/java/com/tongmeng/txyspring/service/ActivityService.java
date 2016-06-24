@@ -1,10 +1,12 @@
 package com.tongmeng.txyspring.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.security.auth.login.CredentialException;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,38 +33,75 @@ public class ActivityService {
 	@Transactional(readOnly = true)
 	public List<ActInfoAjax> listActivitiesByActCodeAndSchCode(int areacode, int subtype, int sort, int p, int type, boolean isExpired)
 			throws CredentialException {
-
+		
 		List<ActInfoAjax> ajaxLstAct = new ArrayList<ActInfoAjax>();
-
+		
+		if (subtype == 0) {
+			subtype = type * 10000;
+		}
+		
 		if (!userInfoSession.isLogined() && subtype >= 20000) {
 			// return ajaxLstAct; // for temp remove to test
 			// throw new CredentialException("Not login in
 			// listActivitiesByActCodeAndSchCode when subtype>=20000 ");
 		}
-
-		SortOption so = SortOption.OrderByStarttime;
+		
+		SortOption so = SortOption.NoOrder;
 
 		if (sort == 2) {
 			so = SortOption.OrderByHot;
-		} else {
-
-			if (subtype != 0) {
-				so = SortOption.OrderByStarttime;
-			} else {
-				//default page
+		} 
+		else //sort == 1 || sort == 0 || else
+		{
+			if (subtype < 20000 && subtype >= 10000 ) {
+				
+				
+				if(isExpired)
+				{
+					so = SortOption.OrderByEndTime;
+				}
+				else
+				{					
+					so = SortOption.OrderByStartCombineCurrentTime;
+				}
+			} else if(subtype >= 20000){
+				
 				so = SortOption.OrderByPubTime;
+				
+			}
+			
+		}
+				
+		List<CommonActInfo> lstAct = commonActInfoDao.listCommonInfoByActAndSch(areacode, subtype, p, so, isExpired);
+		
+		if(so == SortOption.OrderByStartCombineCurrentTime && p==0)
+		{
+			List<CommonActInfo> lstTodayAct = commonActInfoDao.listTodayCommonInfoByActAndSch(areacode, subtype);				
+
+			for (CommonActInfo commonActInfo : lstTodayAct) {
+				boolean isFavoured = userService.isFavoured(commonActInfo.getId());
+				ajaxLstAct.add(new ActInfoAjax(commonActInfo, isFavoured));
+			}				
+			
+			for (CommonActInfo commonActInfo : lstAct) {
+				
+				if(!lstTodayAct.contains(commonActInfo))
+				{
+					boolean isFavoured = userService.isFavoured(commonActInfo.getId());
+					ajaxLstAct.add(new ActInfoAjax(commonActInfo, isFavoured));
+				}	
+			}
+		}
+		else
+		{
+			for (CommonActInfo commonActInfo : lstAct) {
+				boolean isFavoured = userService.isFavoured(commonActInfo.getId());
+				ajaxLstAct.add(new ActInfoAjax(commonActInfo, isFavoured));
 			}
 		}
 
-		if (subtype == 0) {
-			subtype = type * 10000;
-		}
-
-		List<CommonActInfo> lstAct = commonActInfoDao.listCommonInfoByActAndSch(areacode, subtype, p, so, isExpired);
-		for (CommonActInfo commonActInfo : lstAct) {
-			ajaxLstAct.add(new ActInfoAjax(commonActInfo, userService.isFavoured(commonActInfo.getId())));
-		}
-
+		
+		
 		return ajaxLstAct;
 	}
 
