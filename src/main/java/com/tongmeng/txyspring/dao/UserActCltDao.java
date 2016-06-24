@@ -12,9 +12,9 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.tongmeng.txyspring.model.CommonActInfo;
-import com.tongmeng.txyspring.model.UserActClt;
-import com.tongmeng.txyspring.model.UserAll;
+import com.tongmeng.txyspring.model.hibernate.CommonActInfo;
+import com.tongmeng.txyspring.model.hibernate.UserActClt;
+import com.tongmeng.txyspring.model.hibernate.UserAll;
 
 
 @Repository
@@ -96,7 +96,7 @@ public class UserActCltDao {
 		criteria.add(Restrictions.ge("commonAct.actCode.id", subtype));
 		criteria.add(Restrictions.lt("commonAct.actCode.id", subtype + 10000));		
 		
-		List<UserActClt> listUseractclt = (List<UserActClt>) criteria.list();
+		List<UserActClt> listUseractclt = criteria.list();
 		
 		List<CommonActInfo> listCommonActInfo = new ArrayList<CommonActInfo>();
 		for(UserActClt useractclt : listUseractclt)

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tongmeng.txyspring.model.Sliders;
+import com.tongmeng.txyspring.model.hibernate.Sliders;
 
 
 @Repository
@@ -24,7 +24,7 @@ public class SlidersDao {
 	{
 		Session session = sessionFactory.getCurrentSession();
 		
-		List<Sliders> sl_list = (List<Sliders>) session.createCriteria(Sliders.class).list();
+		List<Sliders> sl_list = session.createCriteria(Sliders.class).list();
 		return sl_list;
 	}
 	

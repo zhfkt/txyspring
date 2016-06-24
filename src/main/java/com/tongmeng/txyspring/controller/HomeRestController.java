@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tongmeng.txyspring.ajaxmodel.AjaxJsonViews;
-import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody;
-import com.tongmeng.txyspring.ajaxmodel.SlidersAjax;
-import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody.RESPONSE_STATUS;
+import com.tongmeng.txyspring.model.ajax.AjaxJsonViews;
+import com.tongmeng.txyspring.model.ajax.AjaxResponseBody;
+import com.tongmeng.txyspring.model.ajax.SlidersAjax;
+import com.tongmeng.txyspring.model.ajax.AjaxResponseBody.RESPONSE_STATUS;
 import com.tongmeng.txyspring.service.SlidersService;
 
 import okhttp3.OkHttpClient;

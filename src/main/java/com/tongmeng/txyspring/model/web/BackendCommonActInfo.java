@@ -1,4 +1,4 @@
-package com.tongmeng.txyspring.backendmodel;
+package com.tongmeng.txyspring.model.web;
 
 import java.util.List;
 

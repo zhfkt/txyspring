@@ -1,7 +1,7 @@
-package com.tongmeng.txyspring.ajaxmodel;
+package com.tongmeng.txyspring.model.ajax;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.tongmeng.txyspring.model.Sliders;
+import com.tongmeng.txyspring.model.hibernate.Sliders;
 
 public class SlidersAjax {
 	

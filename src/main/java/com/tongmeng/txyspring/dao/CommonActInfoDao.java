@@ -16,9 +16,9 @@ import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.tongmeng.txyspring.model.CommonActImage;
-import com.tongmeng.txyspring.model.CommonActInfo;
-import com.tongmeng.txyspring.model.JobExtraInfo;
+import com.tongmeng.txyspring.model.hibernate.CommonActImage;
+import com.tongmeng.txyspring.model.hibernate.CommonActInfo;
+import com.tongmeng.txyspring.model.hibernate.JobExtraInfo;
 
 @Repository
 public class CommonActInfoDao {

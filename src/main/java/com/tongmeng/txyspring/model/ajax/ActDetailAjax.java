@@ -1,10 +1,10 @@
-package com.tongmeng.txyspring.ajaxmodel;
+package com.tongmeng.txyspring.model.ajax;
 
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.tongmeng.txyspring.model.CommonActImage;
-import com.tongmeng.txyspring.model.CommonActInfo;
+import com.tongmeng.txyspring.model.hibernate.CommonActImage;
+import com.tongmeng.txyspring.model.hibernate.CommonActInfo;
 
 public class ActDetailAjax {
 	

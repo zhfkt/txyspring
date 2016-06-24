@@ -15,14 +15,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import com.qcloud.*;
-
-import com.tongmeng.txyspring.backendmodel.BackendCommonActInfo;
 import com.tongmeng.txyspring.dao.CommonActInfoDao;
-import com.tongmeng.txyspring.model.ActCode;
-import com.tongmeng.txyspring.model.CommonActImage;
-import com.tongmeng.txyspring.model.CommonActInfo;
-import com.tongmeng.txyspring.model.JobExtraInfo;
-import com.tongmeng.txyspring.model.SchCode;
+import com.tongmeng.txyspring.model.hibernate.ActCode;
+import com.tongmeng.txyspring.model.hibernate.CommonActImage;
+import com.tongmeng.txyspring.model.hibernate.CommonActInfo;
+import com.tongmeng.txyspring.model.hibernate.JobExtraInfo;
+import com.tongmeng.txyspring.model.hibernate.SchCode;
+import com.tongmeng.txyspring.model.web.BackendCommonActInfo;
 
 @Service
 public class BackendService {

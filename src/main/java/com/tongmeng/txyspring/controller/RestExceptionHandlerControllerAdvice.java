@@ -12,9 +12,9 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.tongmeng.txyspring.ajaxmodel.AjaxJsonViews;
-import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody;
-import com.tongmeng.txyspring.ajaxmodel.AjaxResponseBody.RESPONSE_STATUS;
+import com.tongmeng.txyspring.model.ajax.AjaxJsonViews;
+import com.tongmeng.txyspring.model.ajax.AjaxResponseBody;
+import com.tongmeng.txyspring.model.ajax.AjaxResponseBody.RESPONSE_STATUS;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

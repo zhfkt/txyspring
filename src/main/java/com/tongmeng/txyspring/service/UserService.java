@@ -8,15 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tongmeng.txyspring.ajaxmodel.ActInfoAjax;
 import com.tongmeng.txyspring.dao.CommonActInfoDao;
 import com.tongmeng.txyspring.dao.UserActCltDao;
 import com.tongmeng.txyspring.dao.UserDao;
-import com.tongmeng.txyspring.model.CommonActInfo;
-import com.tongmeng.txyspring.model.UserAll;
+import com.tongmeng.txyspring.model.ajax.ActInfoAjax;
+import com.tongmeng.txyspring.model.hibernate.CommonActInfo;
+import com.tongmeng.txyspring.model.hibernate.UserAll;
 import com.tongmeng.txyspring.service.identity.IdentityInterface;
 import com.tongmeng.txyspring.service.identity.UserInfoSession;
 

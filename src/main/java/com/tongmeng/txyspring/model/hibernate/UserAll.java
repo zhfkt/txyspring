@@ -1,4 +1,4 @@
-package com.tongmeng.txyspring.model;
+package com.tongmeng.txyspring.model.hibernate;
 // Generated 2016-6-8 14:16:35 by Hibernate Tools 4.3.1.Final
 
 import java.util.HashSet;

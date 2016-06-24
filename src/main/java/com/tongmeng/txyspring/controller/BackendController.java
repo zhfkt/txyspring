@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.tongmeng.txyspring.backendmodel.BackendCommonActInfo;
+import com.tongmeng.txyspring.model.web.BackendCommonActInfo;
 import com.tongmeng.txyspring.service.BackendService;
 
 

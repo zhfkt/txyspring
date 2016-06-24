@@ -22,15 +22,15 @@
 		<property name="hibernate.c3p0.max_statements">50</property>
 		<property name="hibernate.c3p0.idle_test_period">3000</property>        
         
-		<mapping class="com.tongmeng.txyspring.model.ActCode" />
-        <mapping class="com.tongmeng.txyspring.model.UserAll" />
-        <mapping class="com.tongmeng.txyspring.model.UserActClt" />
-        <mapping class="com.tongmeng.txyspring.model.ActExtraInfo" />
-        <mapping class="com.tongmeng.txyspring.model.CommonActInfo" />
-        <mapping class="com.tongmeng.txyspring.model.Sliders" />
-        <mapping class="com.tongmeng.txyspring.model.CommonActImage" />
-        <mapping class="com.tongmeng.txyspring.model.JobExtraInfo" />
-        <mapping class="com.tongmeng.txyspring.model.SchCode" />
+		<mapping class="com.tongmeng.txyspring.model.hibernate.ActCode" />
+        <mapping class="com.tongmeng.txyspring.model.hibernate.UserAll" />
+        <mapping class="com.tongmeng.txyspring.model.hibernate.UserActClt" />
+        <mapping class="com.tongmeng.txyspring.model.hibernate.ActExtraInfo" />
+        <mapping class="com.tongmeng.txyspring.model.hibernate.CommonActInfo" />
+        <mapping class="com.tongmeng.txyspring.model.hibernate.Sliders" />
+        <mapping class="com.tongmeng.txyspring.model.hibernate.CommonActImage" />
+        <mapping class="com.tongmeng.txyspring.model.hibernate.JobExtraInfo" />
+        <mapping class="com.tongmeng.txyspring.model.hibernate.SchCode" />
   
     </session-factory>
 </hibernate-configuration>

@@ -1,22 +1,20 @@
 package com.tongmeng.txyspring.service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.security.auth.login.CredentialException;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tongmeng.txyspring.ajaxmodel.ActDetailAjax;
-import com.tongmeng.txyspring.ajaxmodel.ActInfoAjax;
 import com.tongmeng.txyspring.dao.CommonActInfoDao;
-import com.tongmeng.txyspring.model.CommonActInfo;
 import com.tongmeng.txyspring.service.identity.UserInfoSession;
 import com.tongmeng.txyspring.dao.CommonActInfoDao.SortOption;
+import com.tongmeng.txyspring.model.ajax.ActDetailAjax;
+import com.tongmeng.txyspring.model.ajax.ActInfoAjax;
+import com.tongmeng.txyspring.model.hibernate.CommonActInfo;
 
 @Service
 public class ActivityService {

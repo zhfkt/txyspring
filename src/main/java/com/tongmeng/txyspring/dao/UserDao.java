@@ -1,7 +1,6 @@
 package com.tongmeng.txyspring.dao;
 
 import org.hibernate.Criteria;
-import org.hibernate.LockMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,8 +8,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.tongmeng.txyspring.model.SchCode;
-import com.tongmeng.txyspring.model.UserAll;
+import com.tongmeng.txyspring.model.hibernate.SchCode;
+import com.tongmeng.txyspring.model.hibernate.UserAll;
 
 @Repository
 public class UserDao {

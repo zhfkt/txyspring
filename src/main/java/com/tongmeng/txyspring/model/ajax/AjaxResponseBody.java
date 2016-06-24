@@ -1,4 +1,4 @@
-package com.tongmeng.txyspring.ajaxmodel;
+package com.tongmeng.txyspring.model.ajax;
 
 import com.fasterxml.jackson.annotation.JsonView;
 

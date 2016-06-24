@@ -1,9 +1,9 @@
-package com.tongmeng.txyspring.ajaxmodel;
+package com.tongmeng.txyspring.model.ajax;
 
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.tongmeng.txyspring.model.CommonActInfo;
+import com.tongmeng.txyspring.model.hibernate.CommonActInfo;
 
 import org.joda.time.Days;
 import org.joda.time.DateTime;
