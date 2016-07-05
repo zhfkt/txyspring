@@ -16,12 +16,15 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import com.qcloud.*;
 import com.tongmeng.txyspring.dao.CommonActInfoDao;
+import com.tongmeng.txyspring.dao.SlidersDao;
 import com.tongmeng.txyspring.model.hibernate.ActCode;
 import com.tongmeng.txyspring.model.hibernate.CommonActImage;
 import com.tongmeng.txyspring.model.hibernate.CommonActInfo;
 import com.tongmeng.txyspring.model.hibernate.JobExtraInfo;
 import com.tongmeng.txyspring.model.hibernate.SchCode;
+import com.tongmeng.txyspring.model.hibernate.Sliders;
 import com.tongmeng.txyspring.model.web.BackendCommonActInfo;
+import com.tongmeng.txyspring.model.web.BackendSliders;
 
 @Service
 public class BackendService {
@@ -30,6 +33,43 @@ public class BackendService {
 	
 	@Autowired
 	private CommonActInfoDao commonActInfoDao;
+	
+	@Autowired
+	private SlidersDao slidersDao;
+	
+	@Transactional
+	public void insertBackendSliders(BackendSliders backendSliders) {
+		
+		//ID
+		
+		CommonActInfo commonActInfo = new CommonActInfo();
+		commonActInfo.setId(backendSliders.getId());
+		
+		//Pictures
+		
+		String imagePath = "";
+		
+		ImageServiceUpload imageServiceUpload = new ImageServiceUpload();
+		
+		MultipartFile picture = backendSliders.getPictures();
+		if(!picture.isEmpty())
+    	{
+			imagePath = imageServiceUpload.cloudImagePathSave(picture);
+    	}
+
+
+		//new Slider 
+		Sliders sliders = new Sliders(commonActInfo,
+									  backendSliders.getTitle(),
+									  imagePath,
+									  backendSliders.getLink()
+									 );
+		
+		//save sliders
+		slidersDao.saveSliders(sliders);
+		
+	}
+
 
 	@Transactional
 	public void insertBackendCommonActInfo(BackendCommonActInfo backendCommonActInfo) {

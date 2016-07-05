@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tongmeng.txyspring.model.web.BackendCommonActInfo;
+import com.tongmeng.txyspring.model.web.BackendSliders;
 import com.tongmeng.txyspring.service.BackendService;
 
 
@@ -41,6 +42,14 @@ public class BackendController {
 		return "backend/form-info";
 	}
 	
+	
+	@RequestMapping(value = "/form_slider", method = RequestMethod.GET)
+	public String form_slider_insert(ModelMap model) {
+
+		model.put("form", new BackendSliders());
+		return "backend/form-slider";
+	}
+	
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
 	public String form_insert(@ModelAttribute("form")  BackendCommonActInfo backendCommonActInfo) {
 				
@@ -58,6 +67,14 @@ public class BackendController {
 		return "backend/form-info";
 	}
 	
+	
+	@RequestMapping(value = "/form_slider", method = RequestMethod.POST)
+	public String form_slider_insert(@ModelAttribute("form")  BackendSliders backendSliders) {
+				
+		backendService.insertBackendSliders(backendSliders);
+		
+		return "backend/form-slider";
+	}
 	
 	
 }

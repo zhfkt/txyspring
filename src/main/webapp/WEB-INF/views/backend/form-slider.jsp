@@ -16,29 +16,29 @@
 </head>
 <body>
 
-  <div class="container">
-      <h2 class="ui dividing header" style="font-family: Microsoft Yahei">信息类录入</h2>
-      <form:form class="ui form" action="form_info" method="post" id="myform" enctype="multipart/form-data"  modelAttribute="form">
-        <div class="container">
-          <h2 class="ui dividing header" style="font-family: Microsoft Yahei">Slider录入</h2>
-          <form class="ui form" action="form_slider" method="post" id="myform" enctype="multipart/form-data">
+ 	<div class="container">
+	<h2 class="ui dividing header" style="font-family: Microsoft Yahei">Slider录入</h2>
+    	<form:form class="ui form" action="form_slider" method="post" id="myform" enctype="multipart/form-data"  modelAttribute="form">
+	        <div class="inline field">
+	          <label>标题</label>
+	          <form:input path="title" type="text" name="title" placeholder="" style="width: 500px" maxlength="35" />
+	        </div>
             <div class="inline field">
               <label>图片</label>
-              <input type="file" name="pictures" multiple="multiple">
+              <form:input path="pictures" type="file" name="pictures" />
             </div>
             <div class="inline field">
               <label>活动id</label>
-              <input type="tel" name="id" placeholder="">
+              <form:input path="id" type="tel" name="id" placeholder="" />
             </div>
             <div class="inline field">
               <label>静态链接</label>
-              <input type="text" name="link" placeholder="">
+              <form:input path="link" type="text" name="link" placeholder="" />
             </div>
             <button class="ui primary button" type="submit">提交</button>
-          </form>
-        </div>
-      </form:form>
-    </div>
+    	</form:form>
+	</div>
+
 
 </body>
 </html>

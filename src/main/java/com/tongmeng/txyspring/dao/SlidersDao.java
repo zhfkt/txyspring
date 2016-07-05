@@ -18,14 +18,20 @@ public class SlidersDao {
 	@Autowired(required=true)
     private SessionFactory sessionFactory;
 		
-	
-	@Transactional(readOnly=true)
 	public List<Sliders> listSliders()
 	{
 		Session session = sessionFactory.getCurrentSession();
 		
 		List<Sliders> sl_list = session.createCriteria(Sliders.class).list();
 		return sl_list;
+	}
+	
+
+	public void saveSliders(Sliders sliders)
+	{
+		Session session = sessionFactory.getCurrentSession();
+
+		session.save(sliders);
 	}
 	
 }
