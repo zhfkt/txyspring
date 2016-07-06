@@ -28,7 +28,7 @@
               <form:input path="pictures" type="file" name="pictures" />
             </div>
             <div class="inline field">
-              <label>活动id</label>
+              <label>活动id (If not exist, pls input 0) </label>
               <form:input path="id" type="tel" name="id" placeholder="" />
             </div>
             <div class="inline field">
