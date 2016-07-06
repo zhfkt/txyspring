@@ -46,8 +46,7 @@ public class BackendService {
 		
 		for(String deleteImage: deleteImages)
 		{
-			String fileId = imageServiceUpload.getFileId(deleteImage);
-			imageServiceUpload.deleteImage(fileId);
+			imageServiceUpload.deleteImage(deleteImage);
 		}
 	}
 	
@@ -276,7 +275,8 @@ class ImageServiceUpload
 	
 	public void deleteImage(String image)
 	{
-		//http://txyspring-10042156.image.myqcloud.com/d20e45c8-bcb5-4844-8a48-877e63564488/mobile
+		//http://web.image.myqcloud.com/photos/v2/10042156/txyspring/0/12604a93-b92e-4922-b090-791e48eec403
+		//http://txyspring-10042156.image.myqcloud.com/12604a93-b92e-4922-b090-791e48eec403
 		
 		String fileId = getFileId(image);
 		
