@@ -1,8 +1,10 @@
 package com.tongmeng.txyspring.dao;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.hibernate.Criteria;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Repository;
 import com.tongmeng.txyspring.model.hibernate.CommonActImage;
 import com.tongmeng.txyspring.model.hibernate.CommonActInfo;
 import com.tongmeng.txyspring.model.hibernate.JobExtraInfo;
+import com.tongmeng.txyspring.model.hibernate.Sliders;
 
 @Repository
 public class CommonActInfoDao {
@@ -31,6 +34,43 @@ public class CommonActInfoDao {
 
 	@Autowired(required = true)
 	private SessionFactory sessionFactory;
+	
+	
+	public List<String> deleteActivitiy(int id)
+	{
+		ArrayList<String> deleteImages = new ArrayList<String>();
+		
+		Session session = sessionFactory.getCurrentSession();
+
+		
+		//Get deleteImage
+		CommonActInfo commonActInfo = (CommonActInfo)session.load(CommonActInfo.class,id);
+		
+		String covImgUri = commonActInfo.getCovImgUri();
+		deleteImages.add(covImgUri);
+		
+		Set<Sliders> sliders = commonActInfo.getSliderses();
+		for(Sliders slider: sliders)
+		{
+			deleteImages.add(slider.getImagePath());
+		}
+		
+		Set<CommonActImage> commonActImages = commonActInfo.getCommonActImages();
+		for(CommonActImage commonActImage : commonActImages)
+		{
+			deleteImages.add(commonActImage.getImage());
+		}
+		
+		
+		
+		//delete
+	    session.delete(commonActInfo);
+	    
+	    
+	    return deleteImages;
+
+	}
+	
 
 	public List<CommonActInfo> listCommonInfoByActAndSch(int areacode, int subtype, int startPage,
 			SortOption so, boolean isExpired) {

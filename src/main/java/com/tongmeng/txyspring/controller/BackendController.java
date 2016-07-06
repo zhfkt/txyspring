@@ -1,18 +1,17 @@
 package com.tongmeng.txyspring.controller;
 
-
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tongmeng.txyspring.model.web.BackendCommonActInfo;
 import com.tongmeng.txyspring.model.web.BackendSliders;
+
 import com.tongmeng.txyspring.service.BackendService;
 
 
@@ -21,10 +20,17 @@ import com.tongmeng.txyspring.service.BackendService;
 @RequestMapping(value = "/backend")
 public class BackendController {	
 	
-	private static final Logger logger = LoggerFactory.getLogger(BackendController.class);
-
 	@Autowired
 	private BackendService backendService;
+
+	@RequestMapping(value = "/actDelete", method = RequestMethod.GET)
+	@ResponseBody
+	public String actDelete(@RequestParam(value = "id", required = true) int id) {
+
+		backendService.deleteActivitiy(id);
+		
+		return "success";
+	}
 	
 	
 	@RequestMapping(value = "/form", method = RequestMethod.GET)

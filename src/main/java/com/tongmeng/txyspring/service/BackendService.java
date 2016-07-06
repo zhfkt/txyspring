@@ -38,12 +38,33 @@ public class BackendService {
 	private SlidersDao slidersDao;
 	
 	@Transactional
+	public void deleteActivitiy(int id) {
+			
+		List<String> deleteImages = commonActInfoDao.deleteActivitiy(id);
+		
+		ImageServiceUpload imageServiceUpload = new ImageServiceUpload();
+		
+		for(String deleteImage: deleteImages)
+		{
+			String fileId = imageServiceUpload.getFileId(deleteImage);
+			imageServiceUpload.deleteImage(fileId);
+		}
+	}
+	
+	@Transactional
 	public void insertBackendSliders(BackendSliders backendSliders) {
 		
 		//ID
 		
-		CommonActInfo commonActInfo = new CommonActInfo();
-		commonActInfo.setId(backendSliders.getId());
+		CommonActInfo commonActInfo = null;
+		
+		if(backendSliders.getId()!=0)
+		{
+			commonActInfo = new CommonActInfo();
+			commonActInfo.setId(backendSliders.getId());
+		}
+		
+		
 		
 		//Pictures
 		
@@ -222,7 +243,6 @@ class ImageServiceUpload
 	public ImageServiceUpload()
 	{
 		pc = new PicCloudSliceUpload(APP_ID_V2, SECRET_ID_V2, SECRET_KEY_V2, BUCKET);
-		
 	}
 	
 	public String cloudImagePathSave(MultipartFile img)
@@ -232,7 +252,7 @@ class ImageServiceUpload
 			return null;
 		}
 	
-        UploadResult result;
+        UploadResult result = null;
 		try {
 			//result = pc.upload(img.getInputStream());
 			result = pc.simpleUploadSlice(img.getBytes(),(int) img.getSize(),512*1024);
@@ -253,6 +273,55 @@ class ImageServiceUpload
         
 		return imageMobileUrl;
 	}
+	
+	public void deleteImage(String image)
+	{
+		//http://txyspring-10042156.image.myqcloud.com/d20e45c8-bcb5-4844-8a48-877e63564488/mobile
+		
+		String fileId = getFileId(image);
+		
+		if(fileId.equals(""))
+		{
+			return;
+		}
+		
+		int ret = pc.delete(fileId);
+		
+		if(ret!=0)
+		{
+			throw new IllegalArgumentException(pc.getErrMsg());
+		}
+		
+		return;
+	}
+	
+	public String getFileId(String image)
+	{
+		if(image.equals(""))
+		{
+			return "";
+		}
+		
+		int startIndex = image.indexOf("myqcloud.com");
+		if(startIndex==-1)
+		{
+			return "";
+		}
+		startIndex+=13;
+		
+		int endIndex = image.indexOf('/', startIndex);
+		if(endIndex==-1)
+		{
+			endIndex = image.length();
+		}
+		
+		String fileId = image.substring(startIndex, endIndex);
+		return fileId;
+		
+	}
+	
+	
+	
 	
 }
 
