@@ -91,15 +91,15 @@ public class CommonActInfoDao {
 			criteria.add(Restrictions.eq("actCode.id", subtype));
 		}
 
-		if (areacode != 0) {
+		//if (areacode != 0) {
 
-			if (areacode % 10000 == 0) {
-				criteria.add(Restrictions.ge("schCode.id", areacode));
-				criteria.add(Restrictions.lt("schCode.id", areacode + 10000));
-			} else {
-				criteria.add(Restrictions.eq("schCode.id", areacode));
-			}
+		if (areacode % 10000 == 0) {
+			criteria.add(Restrictions.ge("schCode.id", areacode));
+			criteria.add(Restrictions.lt("schCode.id", areacode + 10000));
+		} else {
+			criteria.add(Restrictions.eq("schCode.id", areacode));
 		}
+		//}
 
 		switch (so) {
 		case OrderByStartCombineCurrentTime:

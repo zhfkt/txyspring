@@ -72,7 +72,7 @@ public class ActivityService {
 				
 		List<CommonActInfo> lstAct = commonActInfoDao.listCommonInfoByActAndSch(areacode, subtype, p, so, isExpired);
 		
-		if(so == SortOption.OrderByStartCombineCurrentTime && p==0)
+		if(so == SortOption.OrderByStartCombineCurrentTime && (p==0 || p==1))
 		{
 			List<CommonActInfo> lstTodayAct = commonActInfoDao.listTodayCommonInfoByActAndSch(areacode, subtype);				
 
