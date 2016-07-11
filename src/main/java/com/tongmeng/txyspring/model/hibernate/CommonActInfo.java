@@ -53,8 +53,8 @@ public class CommonActInfo implements java.io.Serializable {
 	private ActExtraInfo actExtraInfo;
 	private Set<Sliders> sliderses = new HashSet<Sliders>(0);
 	private Set<CommonActImage> commonActImages = new HashSet<CommonActImage>(0);
-	private double hot;
-	 
+	
+	private double hot;	 
 	@Formula("NumRead*0.3+NumFavo*0.7")
 	public double getHot() {
 		return hot;
@@ -63,6 +63,18 @@ public class CommonActInfo implements java.io.Serializable {
 	public void setHot(double hot) {
 		this.hot = hot;
 	}	
+	
+	private double dateDifference;
+	@Formula("abs(Start_Date-now())")
+	public double getDateDifference() {
+		return dateDifference;
+	}
+
+	public void setDateDifference(double dateDifference) {
+		this.dateDifference = dateDifference;
+	}
+	
+	
 
 	public CommonActInfo() {
 	}
